@@ -1,8 +1,9 @@
 #ifndef COLORBLINK_H
 #define COLORBLINK_H
 
+#include <Arduino.h>
 #include <Adafruit_NeoPixel.h>
-#include "Arduino.h"
+
 
 class ColorBlink {
 public:

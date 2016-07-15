@@ -1,0 +1,8 @@
+{
+  "name": "ColorBlink",
+  "keywords": "NeoPixel, WS2811, WS2812, SK6812, RGB, RGBW, Blink",
+  "description": "A library to blink led",
+  "version": "0.1",
+  "frameworks": "arduino",
+  "platforms": "*"
+}
