@@ -7,12 +7,11 @@
 
 class ColorBlink {
 public:
-  ColorBlink(Adafruit_NeoPixel led);
-  void red();
-  void green();
-  void blue();
+  ColorBlink();
+  void red(Adafruit_NeoPixel *led, int time, int count);
+  void green(Adafruit_NeoPixel *led, int time, int count);
+  void blue(Adafruit_NeoPixel *led, int time, int count);
 private:
-  Adafruit_NeoPixel _led;
 };
 
 #endif

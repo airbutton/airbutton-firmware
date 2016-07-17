@@ -2,21 +2,42 @@
 #include "ColorBlink.h"
 #include <Adafruit_NeoPixel.h>
 
-#define RGBPIN 5
-#define LEDNR 1
-
-ColorBlink::ColorBlink(Adafruit_NeoPixel led){
-  Adafruit_NeoPixel _led = led;
+ColorBlink::ColorBlink(){
 };
 
-void ColorBlink::red(){
-  _led.setPixelColor(0, _led.Color(0, 255, 0));
-}
+void ColorBlink::red(Adafruit_NeoPixel *led, int time, int count){
+  int i = 0;
+  led->begin();
+  while (count > i ){
+    led->setPixelColor(0, led->Color(255, 0, 0, 0));
+    led->show();
+    delay(time);
+    led->setPixelColor(0, led->Color(255, 255, 255, 0));
+    led->show();
+    i++;
+  };
+};
 
-void ColorBlink::green(){
-  _led.setPixelColor(0, _led.Color(255, 0, 0));
-}
+void ColorBlink::green(Adafruit_NeoPixel *led, int time, int count){
+  int i = 0;
+  while (count > i ){
+    led->setPixelColor(0, led->Color(0, 255, 0));
+    led->show();
+    delay(time);
+    led->setPixelColor(0, led->Color(0, 0, 0));
+    led->show();
+    i++;
+  };
+};
 
-void ColorBlink::blue(){
-  _led.setPixelColor(0, _led.Color(0, 0, 255));
-}
+void ColorBlink::blue(Adafruit_NeoPixel *led, int time, int count){
+  int i = 0;
+  while (count > i ){
+    led->setPixelColor(0, led->Color(0, 0, 255));
+    led->show();
+    delay(time);
+    led->setPixelColor(0, led->Color(0, 0, 0));
+    led->show();
+    i++;
+  };
+};
