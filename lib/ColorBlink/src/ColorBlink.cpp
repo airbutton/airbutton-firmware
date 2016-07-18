@@ -12,8 +12,9 @@ void ColorBlink::red(Adafruit_NeoPixel *led, int time, int count){
     led->setPixelColor(0, led->Color(255, 0, 0, 0));
     led->show();
     delay(time);
-    led->setPixelColor(0, led->Color(255, 255, 255, 0));
+    led->setPixelColor(0, led->Color(0, 0, 0, 0));
     led->show();
+    delay(time);
     i++;
   };
 };
@@ -26,6 +27,7 @@ void ColorBlink::green(Adafruit_NeoPixel *led, int time, int count){
     delay(time);
     led->setPixelColor(0, led->Color(0, 0, 0));
     led->show();
+    delay(time);
     i++;
   };
 };
@@ -38,6 +40,7 @@ void ColorBlink::blue(Adafruit_NeoPixel *led, int time, int count){
     delay(time);
     led->setPixelColor(0, led->Color(0, 0, 0));
     led->show();
+    delay(time);
     i++;
   };
 };
