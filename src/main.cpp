@@ -26,8 +26,6 @@ void setup() {
 
 // the loop function runs over and over again forever
 void loop() {
-  Serial.println("Loop Init");
-  blinkLed.blue(&led, 50, 10);
-  Serial.println("Loop End");
-  delay(3000);
+  if (setupModeStatus)
+        WEB_SERVER.handleClient();
 };

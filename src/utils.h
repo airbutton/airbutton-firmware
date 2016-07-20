@@ -1,7 +1,7 @@
 boolean checkWiFiConnection() {
   int count = 0;
-  Serial.print("Waiting to connect to the specified WiFi network");
-  while ( count < 30 ) {
+  Serial.print("Waiting to connect to WiFi network");
+  while ( count < 10 ) {
     if (WiFi.status() == WL_CONNECTED) {
       Serial.println();
       Serial.println("Connected!");
