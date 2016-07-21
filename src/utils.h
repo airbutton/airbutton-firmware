@@ -1,3 +1,6 @@
+#ifndef UTILS_H
+#define UTILS_H
+
 boolean checkWiFiConnection() {
   int count = 0;
   Serial.print("Waiting to connect to WiFi network");
@@ -17,3 +20,17 @@ boolean checkWiFiConnection() {
   blinkLed.red(&led, 1000, 1);
   return false;
 }
+
+String ssidList(){
+	int n = WiFi.scanNetworks();
+	String SSID_LIST = "";
+	for (int i = 0; i < n; ++i) {
+			SSID_LIST += "<option value=\"";
+			SSID_LIST += WiFi.SSID(i);
+			SSID_LIST += "\">";
+			SSID_LIST += WiFi.SSID(i);
+			SSID_LIST += "</option>";
+		}
+	return SSID_LIST;
+}
+#endif

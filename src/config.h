@@ -6,6 +6,8 @@
 
 #define RGBPIN 5
 #define LEDNR 1
+String DEVICE_TITLE="gallAButton";
+
 Adafruit_NeoPixel led = Adafruit_NeoPixel(1, RGBPIN, NEO_GRB + NEO_KHZ800);
 ColorBlink blinkLed = ColorBlink();
 

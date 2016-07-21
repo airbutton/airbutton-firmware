@@ -18,7 +18,7 @@ void setup() {
   blinkLed.green(&led, 100, 20);
   //Check connection
   if (!checkWiFiConnection()){
-    Serial.print("ERROR: Connection lost");
+    Serial.println("ERROR: Connection lost");
     blinkLed.red(&led, 50, 20);
     setupMode();
   }
