@@ -22,26 +22,27 @@ void setupMode() {
 	delay(200);
 
 	//Write SSID_LIST in html
-	blinkLed.blue(&led, 500, 2);
-	Serial.println("");
+	blinkLed.blue(&led, 500, 1);
+	Serial.println("Scan WiFi networks");
 	SSID_LIST = ssidList();
 	delay(100);
 
 	//WiFi start in access point mode
-	blinkLed.blue(&led, 500, 3);
+	blinkLed.blue(&led, 500, 1);
 	WiFi.mode(WIFI_AP);
 	WiFi.softAPConfig(AP_IP, AP_IP, IPAddress(255, 255, 255, 0));
 	WiFi.softAP(AP_SSID);
 	DNS_SERVER.start(53, "*", AP_IP);
 	Serial.print("Starting Access Point at ");
 	Serial.println(WiFi.softAPIP());
+    blinkLed.blue(&led, 500, 1);
 
 	//TODO
 	// Settings Page
 	WEB_SERVER.onNotFound(handleNotFound);
-	WEB_SERVER.on("/", handleRoot);
 	WEB_SERVER.on("/settings", handleSettings);
-
+	WEB_SERVER.on("/setap", handleSetap);
 	WEB_SERVER.begin();
 }
+
 
