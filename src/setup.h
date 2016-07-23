@@ -11,6 +11,7 @@
 #include "webserver.h"
 
 void setupMode() {
+	digitalWrite(RETPIN, HIGH);
 	Serial.println("Setup mode started");
 	setupModeStatus = true;
 	DNSServer DNS_SERVER;

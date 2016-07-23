@@ -47,17 +47,12 @@ void setup() {
     	}
     }
 
-    //Check if button is still pressed
-    if (buttonStillPressed()){
-        Serial.println("WARNING: Button pressed ");
-        blinkLed.red(&led, 50, 20);
-        setupMode();
-        return;
-    }
-    //TODO Deep sleep mode
-    //power off
+    //put retain pin to LOW
     digitalWrite(RETPIN, LOW);
-    ESP.restart();
+
+    //If chip is still on, button is pressed
+    Serial.println("WARNING: Button pressed ");
+    setupMode();
 }
 
 // the loop function runs over and over again forever
