@@ -26,6 +26,6 @@ ESP8266WebServer WEB_SERVER(80);
 //TODO create a config page on web server
 // IFTTT Definitions
 const char* IFTTT_URL= "maker.ifttt.com";
-String IFTTT_KEY= "caLX5eFSmUZaXFtXVyBAEB";
-String IFTTT_EVENT = "button_pressed";
+String IFTTT_KEY= "bh2t7puZws-85s9yA1d0kx";
+String IFTTT_EVENT = "gallAButton";
 #endif

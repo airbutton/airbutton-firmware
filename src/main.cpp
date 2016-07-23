@@ -54,6 +54,7 @@ void setup() {
         setupMode();
         return;
     }
+    //TODO Deep sleep mode
     //power off
     digitalWrite(RETPIN, LOW);
     ESP.restart();
