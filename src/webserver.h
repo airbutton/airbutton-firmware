@@ -13,11 +13,11 @@ void handleSettings() {
 	String s = "<h2>Wi-Fi Settings</h2>\n";
 	s += "<p>Please select the SSID of the network you wish to connect to and then enter the password and submit.</p>\n";
 	s += "<form method=\"get\" action=\"setap\">\n";
-	s += "<label>SSID: </label>\n<select name=\"ssid\">\n";
+	s += "<label>SSID: </label>\n<select name=\"ssid\">";
 	s += SSID_LIST;
-	s += "</select>\n";
+	s += "\n</select>\n";
 	s += "<br><br>Password: <input name=\"pass\" length=64 type=\"password\">\n";
-	s += "<br><br><input type=\"submit\" value=\"Send\"></form>";
+	s += "<br><br><input type=\"submit\" value=\"Send\">\n</form>";
 	WEB_SERVER.send(200, "text/html", makePage("Wi-Fi Settings", s));
 }
 

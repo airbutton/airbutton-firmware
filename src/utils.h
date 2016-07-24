@@ -1,23 +1,25 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#include <Arduino.h>
+#include <EEPROM.h>
+#include <ESP8266WiFi.h>
+#include <ESP8266WebServer.h>
+
+// Load WiFi configuration from EEPROM
 boolean loadWiFiSavedConfig() {
 	Serial.println("\nReading Saved Config....");
-
 	if (EEPROM.read(0) != 0) {
 		for (int i = 0; i < 32; ++i) {
 			ssid += char(EEPROM.read(i));
 		}
 		Serial.print("SSID: ");
 		Serial.println(ssid);
-
 		for (int i = 32; i < 96; ++i) {
 			password += char(EEPROM.read(i));
 		}
-
 		Serial.print("Password: ");
 		Serial.println(password);
-
 		WiFi.begin(ssid.c_str(), password.c_str());
 		return true;
 	} else {
@@ -37,13 +39,13 @@ boolean checkWiFiConnection() {
 			blinkLed.green(&led, 1000, 1);
 			return true;
 		}
-		delay(500);
+		delay(1000);
 		Serial.print(".");
 		blinkLed.blue(&led, 100, 1);
 		count++;
 	}
 	Serial.println("Timed out.");
-	blinkLed.red(&led, 5000, 1);
+	blinkLed.red(&led, 4000, 1);
 	return false;
 }
 
@@ -119,10 +121,10 @@ String urlDecode(String input) {
 	s.replace("%60", "`");
 	return s;
 }
-
-//TODO
+//Put the board in deepsleep mode
 void powerOff() {
 	Serial.println("Power OFF");
+	WiFi.mode(WIFI_OFF);
 	delay(250);
 	ESP.deepSleep(0, WAKE_RF_DEFAULT);
 }

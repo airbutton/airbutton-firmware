@@ -52,7 +52,6 @@ boolean ifttt() {
 		client.println("Connection: close");
 		Serial.println("Connection: close");
 		client.println();
-		Serial.println();
 		client.println(data);
 		Serial.println(data);
 	}

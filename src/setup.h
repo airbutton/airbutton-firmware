@@ -36,7 +36,7 @@ void setupMode() {
 	DNS_SERVER.start(53, "*", AP_IP);
 	Serial.print("Starting Access Point at ");
 	Serial.println(WiFi.softAPIP());
-    blinkLed.blue(&led, 500, 1);
+  blinkLed.blue(&led, 500, 1);
 
 	//TODO
 	// Settings Page
@@ -45,5 +45,3 @@ void setupMode() {
 	WEB_SERVER.on("/setap", handleSetap);
 	WEB_SERVER.begin();
 }
-
-
