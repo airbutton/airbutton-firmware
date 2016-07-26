@@ -58,9 +58,19 @@ DEFINES += "ARDUINO=20300"
 
 OTHER_FILES += platformio.ini
 
-HEADERS += src/config.h
+HEADERS += src/config.h \
+    lib/ColorBlink/src/ColorBlink.h
 HEADERS += src/ifttt.h
 HEADERS += src/setup.h
 HEADERS += src/webserver.h
 HEADERS += src/utils.h
-SOURCES += src/main.cpp
+SOURCES += src/main.cpp \
+    lib/ColorBlink/src/ColorBlink.cpp \
+    src/utils.cpp
+
+DISTFILES += \
+    lib/ColorBlink/library.json \
+    lib/readme.txt \
+    CMakeListsPrivate.txt \
+    CMakeLists.txt \
+    README.md

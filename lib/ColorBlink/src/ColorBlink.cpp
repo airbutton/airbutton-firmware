@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "ColorBlink.h"
+#include <ColorBlink.h>
 #include <Adafruit_NeoPixel.h>
 
 ColorBlink::ColorBlink(){
