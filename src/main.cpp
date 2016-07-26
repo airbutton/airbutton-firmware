@@ -1,16 +1,22 @@
 #include <Arduino.h>
 #include <EEPROM.h>
 #include <Adafruit_NeoPixel.h>
-
 #include <ColorBlink.h>
+#include <ESP8266WebServer.h>
 #include "config.h"
 #include "utils.h"
+
+// Global objects
+Adafruit_NeoPixel led  = Adafruit_NeoPixel(1, RGBPIN, NEO_GRB + NEO_KHZ800);
+ColorBlink blinkLed  = ColorBlink();
+ESP8266WebServer  WEB_SERVER(80);
+
 #include "setup.h"
 #include "ifttt.h"
 
 void setup() {
 	WiFi.mode(WIFI_STA);
-	//Set GPIO4 to HIGH
+    //Set GPIO4 to HIGH for retain on APixel board useless on others boards
 	pinMode(RETPIN, OUTPUT);
 	digitalWrite(RETPIN, HIGH);
 	// Init Serial port
@@ -20,19 +26,19 @@ void setup() {
 	// Init LED
 	led.begin();
 	led.show();
-	blinkLed.green(&led, 50, 20);
+    blinkLed.green(&led, 30, 30);
 
 	//Try to connect with saved config
 	if (!loadWiFiSavedConfig()) {
 		Serial.println("WARNING: WiFi configuration not found");
-		blinkLed.red(&led, 50, 20);
+        blinkLed.red(&led, 30, 30);
 		setupMode();
 		return;
 	}
 	//Check connection
-	if (!checkWiFiConnection()) {
+    if (!checkWiFiConnection(&led,&blinkLed)) {
 		Serial.println("ERROR: Connection lost");
-		blinkLed.red(&led, 50, 20);
+        blinkLed.red(&led, 30, 30);
 		setupMode();
 		return;
 	}
@@ -40,19 +46,21 @@ void setup() {
 	for (int i = 0; i < 3; i++) {
 		if (ifttt()) {
 			Serial.println("Success!");
-			blinkLed.green(&led, 50, 20);
+            blinkLed.green(&led, 30, 30);
 			break;
 		} else {
 			Serial.println("WARNING: IFTTT failed! attempt nr " + i);
-			blinkLed.red(&led, 50, 20);
+            blinkLed.red(&led, 30, 30);
 		}
 	}
 
-	//put retain pin to LOW
+    //TODO
+    //put retain pin to LOW for power off APixel board
 	digitalWrite(RETPIN, LOW);
+    //comment out powerOff() functin for APixel board
 	powerOff();
 
-	//If chip is still on, button is pressed
+    //If chip is still on, button is pressed (Apixel board)
 	Serial.println("WARNING: Button pressed ");
 	setupMode();
 }

@@ -33,27 +33,38 @@ boolean ifttt() {
 		// Sent HTTP POST Request with JSON data
 		client.println("POST " + url + " HTTP/1.1");
 		Serial.println("POST " + url + " HTTP/1.1");
+        blinkLed.blue(&led, 100, 1);
 		client.println("Host: " + String(IFTTT_URL));
 		Serial.println("Host: " + String(IFTTT_URL));
+        blinkLed.blue(&led, 100, 1);
 		client.println("User-Agent: Arduino/1.0");
 		Serial.println("User-Agent: Arduino/1.0");
+        blinkLed.blue(&led, 100, 1);
 		client.print("Accept: *");
 		Serial.print("Accept: *");
+        blinkLed.blue(&led, 100, 1);
 		client.print("/");
 		Serial.print("/");
+        blinkLed.blue(&led, 100, 1);
 		client.println("*");
 		Serial.println("*");
+        blinkLed.blue(&led, 100, 1);
 		client.print("Content-Length: ");
 		Serial.print("Content-Length: ");
+        blinkLed.blue(&led, 100, 1);
 		client.println(data.length());
 		Serial.println(data.length());
+        blinkLed.blue(&led, 100, 1);
 		client.println("Content-Type: application/json");
 		Serial.println("Content-Type: application/json");
+        blinkLed.blue(&led, 100, 1);
 		client.println("Connection: close");
 		Serial.println("Connection: close");
+        blinkLed.blue(&led, 100, 1);
 		client.println();
 		client.println(data);
 		Serial.println(data);
+        blinkLed.blue(&led, 100, 1);
 	}
 	Serial.println("IFTTT request sent. Goodbye");
 	return true;

@@ -1,18 +1,11 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include <ESP8266WebServer.h>
-
 // Global config
 #define RGBPIN 5
 #define RETPIN 4
 #define AP_SSID "gallAButton"
 String DEVICE_TITLE="gallAButton";
-
-// Global objects
-Adafruit_NeoPixel led  = Adafruit_NeoPixel(1, RGBPIN, NEO_GRB + NEO_KHZ800);
-ColorBlink blinkLed  = ColorBlink();
-ESP8266WebServer  WEB_SERVER(80);
 
 // Setup mode
 boolean setupModeStatus = false;

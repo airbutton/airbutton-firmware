@@ -6,7 +6,7 @@
 
 void handleNotFound() {
     String s = "<h3>Config Mode</h3>\n<p><a href=\"/settings\">Configuration</a></p>";
-    WEB_SERVER.send(200, "text/html", makePage("Config mode", s));
+    WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,"Config mode", s));
 }
 
 void handleSettings() {
@@ -18,7 +18,7 @@ void handleSettings() {
 	s += "\n</select>\n";
 	s += "<br><br>Password: <input name=\"pass\" length=64 type=\"password\">\n";
 	s += "<br><br><input type=\"submit\" value=\"Send\">\n</form>";
-	WEB_SERVER.send(200, "text/html", makePage("Wi-Fi Settings", s));
+    WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,"Wi-Fi Settings", s));
 }
 
 void handleSetap() {
@@ -48,7 +48,7 @@ void handleSetap() {
 	String s = "<h1>WiFi Setup complete.</h1><p>The button will restart and will try to connected to ";
 	s += ssid;
 	s += ".";
-	WEB_SERVER.send(200, "text/html", makePage("Wi-Fi Settings", s));
+    WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,"Wi-Fi Settings", s));
 
 	//TODO power off is better
 	Serial.println("Rebooting...");
