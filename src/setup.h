@@ -11,37 +11,37 @@
 #include "webserver.h"
 
 void setupMode() {
-	digitalWrite(RETPIN, HIGH);
-	Serial.println("Setup mode started");
-	setupModeStatus = true;
-	DNSServer DNS_SERVER;
+    digitalWrite(RETPIN, HIGH);
+    Serial.println("Setup mode started");
+    setupModeStatus = true;
+    DNSServer DNS_SERVER;
 
-	//WiFI start in client mode
-	blinkLed.blue(&led, 500, 1);
-	WiFi.mode(WIFI_STA);
-	WiFi.disconnect();
-	delay(200);
+    //WiFI start in client mode
+    blinkLed.violet(&led, 500, 1);
+    WiFi.mode(WIFI_STA);
+    WiFi.disconnect();
+    delay(200);
 
-	//Write SSID_LIST in html
-	blinkLed.blue(&led, 500, 1);
-	Serial.println("Scan WiFi networks");
-	SSID_LIST = ssidList();
-	delay(100);
+    //Write SSID_LIST in html
+    blinkLed.violet(&led, 500, 1);
+    Serial.println("Scan WiFi networks");
+    SSID_LIST = ssidList();
+    delay(100);
 
-	//WiFi start in access point mode
-	blinkLed.blue(&led, 500, 1);
-	WiFi.mode(WIFI_AP);
-	WiFi.softAPConfig(AP_IP, AP_IP, IPAddress(255, 255, 255, 0));
-	WiFi.softAP(AP_SSID);
-	DNS_SERVER.start(53, "*", AP_IP);
-	Serial.print("Starting Access Point at ");
-	Serial.println(WiFi.softAPIP());
-  blinkLed.blue(&led, 500, 1);
+    //WiFi start in access point mode
+    blinkLed.violet(&led, 500, 1);
+    WiFi.mode(WIFI_AP);
+    WiFi.softAPConfig(AP_IP, AP_IP, IPAddress(255, 255, 255, 0));
+    WiFi.softAP(AP_SSID);
+    DNS_SERVER.start(53, "*", AP_IP);
+    Serial.print("Starting Access Point at ");
+    Serial.println(WiFi.softAPIP());
+    blinkLed.violet(&led, 1000, 2);
 
-	//TODO
-	// Settings Page
-	WEB_SERVER.onNotFound(handleNotFound);
-	WEB_SERVER.on("/settings", handleSettings);
-	WEB_SERVER.on("/setap", handleSetap);
-	WEB_SERVER.begin();
+    //TODO
+    // Settings Page
+    WEB_SERVER.onNotFound(handleNotFound);
+    WEB_SERVER.on("/settings", handleSettings);
+    WEB_SERVER.on("/setap", handleSetap);
+    WEB_SERVER.begin();
 }

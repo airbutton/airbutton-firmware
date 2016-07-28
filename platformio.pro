@@ -73,4 +73,5 @@ DISTFILES += \
     lib/readme.txt \
     CMakeListsPrivate.txt \
     CMakeLists.txt \
-    README.md
+    README.md \
+    src/config.txt
