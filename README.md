@@ -1,6 +1,6 @@
 # gallAButton
 
-Instruction for Teopost ;-)
+Instructions for @Teopost ;-)
 
 Install QTCreator
 
