@@ -5,6 +5,7 @@
 #include <ESP8266WebServer.h>
 #include "config.h"
 #include "utils.h"
+#include "ifttt.h"
 
 // Global objects
 Adafruit_NeoPixel led  = Adafruit_NeoPixel(1, RGBPIN, NEO_GRB + NEO_KHZ800);
@@ -12,7 +13,7 @@ ColorBlink blinkLed  = ColorBlink();
 ESP8266WebServer  WEB_SERVER(80);
 
 #include "setup.h"
-#include "ifttt.h"
+
 
 void setup() {
     //Wipe EEPROM for testing only!
@@ -46,7 +47,7 @@ void setup() {
     }
     //Button is connected! try to call to IFTTT
     for (int i = 0; i < 3; i++) {
-        if (ifttt()) {
+        if (ifttt(&led,&blinkLed)) {
             Serial.println("Success!");
             blinkLed.green(&led, 50, 10);
             break;

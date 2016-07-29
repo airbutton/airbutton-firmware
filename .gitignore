@@ -1,10 +1,14 @@
 .pioenvs
 .clang_complete
 .gcc-flags.json
+
 .idea/clion.iml
 .idea/misc.xml
 .idea/modules.xml
 .idea/platformio.iml
 .idea/vcs.xml
 .idea/workspace.xml
+
 src/utils.h.gch
+
+gallAButton.pro.user

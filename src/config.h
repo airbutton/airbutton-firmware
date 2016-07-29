@@ -1,6 +1,9 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#include <Arduino.h>
+#include <ESP8266WebServer.h>
+
 // Global config
 #define APixelBoard true
 #define RGBPIN 5

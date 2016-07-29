@@ -58,16 +58,16 @@ boolean checkWiFiConnection(Adafruit_NeoPixel *led,ColorBlink *blinkLed) {
         if (WiFi.status() == WL_CONNECTED) {
             Serial.println();
             Serial.println("Connected!");
-            blinkLed->green(led, 1000, 1);
+            blinkLed->green(led, 300, 2);
             return true;
         }
-        delay(1000);
+        delay(100);
         Serial.print(".");
         blinkLed->blue(led, 100, 1);
         count++;
     }
     Serial.println("Timed out.");
-    blinkLed->red(led, 4000, 1);
+    blinkLed->red(led, 300, 2);
     return false;
 }
 
