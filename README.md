@@ -19,9 +19,13 @@ File -> Open File or Project -> (select gallAButton.pro) -> Configure Project
 ![](images/qtcreator2.png)
 
 Build -> "Build All" or hammer icon   = Build project
+
 Build -> Rebuild All                  = Clean and Build
+
 Build -> Clean All                    = Clean all
+
 Build -> Deploy All                   = Clean,Build & Upload
+
 Build -> Run                          = Clean,Build,Upload & open Serial Monitor
 
 Remenber to close serial monitor window before re-deploy.
