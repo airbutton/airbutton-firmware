@@ -1,2 +1,0 @@
-//String IFTTT_KEY = "bh2t7puZws-85s9yA1d0kx";
-//String IFTTT_EVENT = "gallAButton";
