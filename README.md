@@ -2,16 +2,20 @@
 
 Instructions for @Teopost ;-)
 
-Install QTCreator
+Install Platformio CLI and QTCreator
 
-git clone https://github.com/gallochri/gallAButton.git
+$ git clone https://github.com/gallochri/gallAButton.git
 
-cd gallAButton
-platformio init --ide qtcreator
-mv platformio.pro gallAButton.pro
+$ cd gallAButton
+
+$ platformio init --ide qtcreator
+
+$ mv platformio.pro gallAButton.pro
 
 Open QTCreator
+
 File -> Open File or Project -> (select gallAButton.pro) -> Configure Project
+
 (Left panel) Projects ->
 
 ![](images/qtcreator1.png)
