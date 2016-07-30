@@ -1,6 +1,6 @@
 # gallAButton
 
-A button with a cagarissimo name !
+A beautifull IOT button with a cagarissimo name !
 
 [![](http://img.youtube.com/vi/AoWVcrVlDQk/0.jpg)](http://www.youtube.com/watch?v=AoWVcrVlDQk)
 
@@ -43,3 +43,7 @@ Build -> Run                          = Clean,Build,Upload & open Serial Monitor
 ````
 
 > Remenber to close serial monitor window before re-deploy.
+
+References
+---
+- https://github.com/teopost/iot-button
