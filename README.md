@@ -8,7 +8,7 @@ A beautifull IOT button with a cagarissimo name !
 Getting Started with QT Creator
 ---
 
-1. Install Platformio CLI and QTCreator
+**Install Platformio CLI and QTCreator**
 
 ```
 $ git clone https://github.com/gallochri/gallAButton.git
@@ -20,7 +20,7 @@ $ platformio init --ide qtcreator
 $ mv platformio.pro gallAButton.pro
 ````
 
-2. Open QTCreator
+**Open QTCreator**
 
 Click on File -> Open File or Project -> (select gallAButton.pro) -> Configure Project
 
@@ -32,13 +32,9 @@ Click on File -> Open File or Project -> (select gallAButton.pro) -> Configure P
 
 ```
 Build -> "Build All" or hammer icon   = Build project
-
 Build -> Rebuild All                  = Clean and Build
-
 Build -> Clean All                    = Clean all
-
 Build -> Deploy All                   = Clean,Build & Upload
-
 Build -> Run                          = Clean,Build,Upload & open Serial Monitor
 ````
 
