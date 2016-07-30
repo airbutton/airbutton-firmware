@@ -1,11 +1,16 @@
 # gallAButton
 
+A button with a cagarissimo name !
 
 [![](http://img.youtube.com/vi/AoWVcrVlDQk/0.jpg)](http://www.youtube.com/watch?v=AoWVcrVlDQk)
 
 
-Install Platformio CLI and QTCreator
+Getting Started with QT Creator
+---
 
+1. Install Platformio CLI and QTCreator
+
+```
 $ git clone https://github.com/gallochri/gallAButton.git
 
 $ cd gallAButton
@@ -13,10 +18,11 @@ $ cd gallAButton
 $ platformio init --ide qtcreator
 
 $ mv platformio.pro gallAButton.pro
+````
 
-Open QTCreator
+2. Open QTCreator
 
-File -> Open File or Project -> (select gallAButton.pro) -> Configure Project
+Click on File -> Open File or Project -> (select gallAButton.pro) -> Configure Project
 
 (Left panel) Projects ->
 
@@ -24,6 +30,7 @@ File -> Open File or Project -> (select gallAButton.pro) -> Configure Project
 ![](images/qtcreator2.png)
 ![](images/qtcreator2.png)
 
+```
 Build -> "Build All" or hammer icon   = Build project
 
 Build -> Rebuild All                  = Clean and Build
@@ -33,5 +40,6 @@ Build -> Clean All                    = Clean all
 Build -> Deploy All                   = Clean,Build & Upload
 
 Build -> Run                          = Clean,Build,Upload & open Serial Monitor
+````
 
-Remenber to close serial monitor window before re-deploy.
+> Remenber to close serial monitor window before re-deploy.
