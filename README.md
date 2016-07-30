@@ -27,7 +27,9 @@ Click on File -> Open File or Project -> (select gallAButton.pro) -> Configure P
 (Left panel) Projects ->
 
 ![](images/qtcreator1.png)
+
 ![](images/qtcreator2.png)
+
 ![](images/qtcreator2.png)
 
 ```
