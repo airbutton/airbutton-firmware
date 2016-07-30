@@ -3,6 +3,7 @@
 #include <Adafruit_NeoPixel.h>
 #include <ColorBlink.h>
 #include <ESP8266WebServer.h>
+#include <TimedAction.h>
 #include "config.h"
 #include "utils.h"
 #include "ifttt.h"
@@ -12,8 +13,15 @@ Adafruit_NeoPixel led  = Adafruit_NeoPixel(1, RGBPIN, NEO_GRB + NEO_KHZ800);
 ColorBlink blinkLed  = ColorBlink();
 ESP8266WebServer  WEB_SERVER(80);
 
-#include "setup.h"
+//TODO Better code this
+//Power off APixelBoard
+void offAPixel(){
+  digitalWrite(RETPIN, LOW);
+}
+TimedAction timedAction = TimedAction(90000,offAPixel);
+//TODO end here
 
+#include "setup.h"
 
 void setup() {
     //Wipe EEPROM for testing only!
@@ -74,6 +82,8 @@ void setup() {
 void loop() {
     if (setupModeStatus) {
         WEB_SERVER.handleClient();
+        blinkLed.violet(&led, 1,1);
+        timedAction.check();
     } else {
         Serial.println("ERROR: Something wrong :-( ");
         blinkLed.red(&led, 200, 1);

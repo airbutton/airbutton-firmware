@@ -161,4 +161,3 @@ void wipeEEPROM() {
     EEPROM.end();
     EEPROM.begin(512);
 }
-
