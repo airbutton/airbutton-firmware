@@ -152,6 +152,11 @@ void powerOff() {
     ESP.deepSleep(0, WAKE_RF_DEFAULT);
 }
 
+//Power off APixelBoard
+void APixelPowerOff(uint8_t pin){
+  digitalWrite(pin, LOW);
+}
+
 // Wipe EEPROM
 void wipeEEPROM() {
     EEPROM.begin(512);

@@ -26,6 +26,8 @@ String urlDecode(String input);
 //Put the board in deepsleep mode
 void powerOff();
 
+//Power off APixelBoard
+void APixelPowerOff(uint8_t pin);
 // Wipe EEPROM
 void wipeEEPROM();
 

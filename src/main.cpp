@@ -3,7 +3,6 @@
 #include <Adafruit_NeoPixel.h>
 #include <ColorBlink.h>
 #include <ESP8266WebServer.h>
-#include <TimedAction.h>
 #include "config.h"
 #include "utils.h"
 #include "ifttt.h"
@@ -13,19 +12,12 @@ Adafruit_NeoPixel led  = Adafruit_NeoPixel(1, RGBPIN, NEO_GRB + NEO_KHZ800);
 ColorBlink blinkLed  = ColorBlink();
 ESP8266WebServer  WEB_SERVER(80);
 
-//TODO Better code this
-//Power off APixelBoard
-void offAPixel(){
-  digitalWrite(RETPIN, LOW);
-}
-TimedAction timedAction = TimedAction(90000,offAPixel);
-//TODO end here
-
 #include "setup.h"
 
 void setup() {
     //Wipe EEPROM for testing only!
     //wipeEEPROM();
+    //Set WiFi to station mode
     WiFi.mode(WIFI_STA);
     //Set GPIO4 to HIGH for retain on APixel board useless on others boards
     pinMode(RETPIN, OUTPUT);
@@ -68,7 +60,7 @@ void setup() {
     if (APixelBoard) {
         //put retain pin to LOW for power off APixel board
         Serial.println("WARNING: APixel Board power off");
-        digitalWrite(RETPIN, LOW);
+        APixelPowerOff(RETPIN);
     } else {
         Serial.println("WARNING: Deep Sleep Mode");
         powerOff();
@@ -83,7 +75,12 @@ void loop() {
     if (setupModeStatus) {
         WEB_SERVER.handleClient();
         blinkLed.violet(&led, 1,1);
-        timedAction.check();
+        if ((millis()-startTime) > TIMEOUT){
+          Serial.println("Set up mode timed out.");
+          Serial.println("WARNING: APixel Board power off");
+          delay(1000);
+          APixelPowerOff(RETPIN);
+        }
     } else {
         Serial.println("ERROR: Something wrong :-( ");
         blinkLed.red(&led, 200, 1);

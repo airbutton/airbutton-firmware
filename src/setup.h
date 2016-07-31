@@ -44,4 +44,5 @@ void setupMode() {
     WEB_SERVER.on("/settings", handleSettings);
     WEB_SERVER.on("/setap", handleSetap);
     WEB_SERVER.begin();
+    startTime = millis();
 }

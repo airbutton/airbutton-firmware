@@ -12,6 +12,8 @@
 String DEVICE_TITLE="gallAButton";
 
 // Setup mode
+unsigned long startTime;
+#define TIMEOUT (120*1000)  //Setupmode timeout in milliseconds
 boolean setupModeStatus = false;
 const IPAddress AP_IP(192, 168, 5, 1);
 String ssid = "";
