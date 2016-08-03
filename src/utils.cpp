@@ -27,20 +27,6 @@ boolean loadWiFiSavedConfig() {
         password = password.c_str();
         Serial.print("Password: ");
         Serial.println(password);
-        //IFTTT Key
-        for (int i = 96; i < 128; ++i) {
-            IFTTT_KEY += char(EEPROM.read(i));
-        }
-        IFTTT_KEY = IFTTT_KEY.c_str();
-        Serial.print("IFTTT Key: ");
-        Serial.println(IFTTT_KEY);
-        //IFTTT Event
-        for (int i = 128; i < 160; ++i) {
-            IFTTT_EVENT += char(EEPROM.read(i));
-        }
-        IFTTT_EVENT = IFTTT_EVENT.c_str();
-        Serial.print("IFTTT Event: ");
-        Serial.println(IFTTT_EVENT);
         //Wifi Connect
         WiFi.begin(ssid.c_str(), password.c_str());
         return true;

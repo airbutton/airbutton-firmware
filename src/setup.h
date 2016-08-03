@@ -17,26 +17,26 @@ void setupMode() {
     DNSServer DNS_SERVER;
 
     //WiFI start in client mode
-    blinkLed.violet(&led, 500, 1);
+    blinkLed.violet(&led, 100, 1);
     WiFi.mode(WIFI_STA);
     WiFi.disconnect();
-    delay(200);
+    delay(100);
 
     //Write SSID_LIST in html
-    blinkLed.violet(&led, 500, 1);
+    blinkLed.violet(&led, 100, 1);
     Serial.println("Scan WiFi networks");
     SSID_LIST = ssidList();
     delay(100);
 
     //WiFi start in access point mode
-    blinkLed.violet(&led, 500, 1);
+    blinkLed.violet(&led, 100, 1);
     WiFi.mode(WIFI_AP);
     WiFi.softAPConfig(AP_IP, AP_IP, IPAddress(255, 255, 255, 0));
     WiFi.softAP(AP_SSID);
     DNS_SERVER.start(53, "*", AP_IP);
     Serial.print("Starting Access Point at ");
     Serial.println(WiFi.softAPIP());
-    blinkLed.violet(&led, 1000, 2);
+    blinkLed.violet(&led, 100, 1);
 
     //TODO
     // Settings Page
