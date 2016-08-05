@@ -29,23 +29,23 @@ boolean loadWiFiSavedConfig() {
 }
 
 // Wi-Fi check connection
-boolean checkWiFiConnection(Adafruit_NeoPixel *led,ColorBlink *blinkLed) {
+boolean checkWiFiConnection() {
     int count = 0;
     Serial.print("Waiting to connect to WiFi network");
     while (count < 20) {
+        delay(1000);
         if (WiFi.status() == WL_CONNECTED) {
             Serial.println();
             Serial.println("Connected!");
-            blinkLed->green(led, 300, 2);
+            blinkLed.green(&led, 100, 3);
             return true;
         }
-        delay(100);
         Serial.print(".");
-        blinkLed->blue(led, 300, 1);
+        blinkLed.blue(&led, 100, 1);
         count++;
     }
     Serial.println("Timed out.");
-    blinkLed->red(led, 300, 2);
+    blinkLed.red(&led, 100, 3);
     return false;
 }
 
@@ -142,5 +142,5 @@ void powerOff() {
 
 //Power off APixelBoard
 void APixelPowerOff(uint8_t pin){
-  digitalWrite(pin, LOW);
+    digitalWrite(pin, LOW);
 }

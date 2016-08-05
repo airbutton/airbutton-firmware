@@ -21,32 +21,32 @@ void setup(){
     //Init RGB LED
     led.begin();
     led.show();
-    blinkLed.green(&led, 100, 3);
+    blinkLed.green(&led, 100, 2);
 
     //Try to connect with saved config
     if (!loadWiFiSavedConfig()) {
         Serial.println("WARNING: WiFi configuration not found");
-        blinkLed.red(&led, 50, 10);
-        setupMode(&led,&blinkLed);
+        blinkLed.red(&led, 100, 2);
+        setupMode();
         return;
     }
 
     //Check connection
-    if (!checkWiFiConnection(&led,&blinkLed)) {
+    if (!checkWiFiConnection()) {
         Serial.println("ERROR: Connection lost");
-        blinkLed.red(&led, 50, 10);
-        setupMode(&led,&blinkLed);
+        blinkLed.red(&led, 100, 2);
+        setupMode();
         return;
     }
     //Button is connected! try to call to IFTTT
     for (int i = 0; i < 3; i++) {
-        if (ifttt(&led,&blinkLed)) {
+        if (ifttt()) {
             Serial.println("Success!");
-            blinkLed.green(&led, 50, 10);
+            blinkLed.green(&led, 100, 2);
             break;
         } else {
             Serial.println("WARNING: IFTTT failed! attempt nr " + i);
-            blinkLed.red(&led, 50, 10);
+            blinkLed.red(&led, 100, 2);
         }
     }
     if (APixelBoard) {
@@ -59,7 +59,7 @@ void setup(){
     }
     //If chip is still on, button is pressed (Apixel board)
     Serial.println("WARNING: Button pressed ");
-    setupMode(&led,&blinkLed);
+    setupMode();
 }
 
 
@@ -68,10 +68,10 @@ void loop() {
         WEB_SERVER.handleClient();
         blinkLed.violet(&led, 1,1);
         if ((millis()-startTime) > TIMEOUT){
-          Serial.println("Set up mode timed out.");
-          Serial.println("WARNING: APixel Board power off");
-          delay(1000);
-          APixelPowerOff(RETPIN);
+            Serial.println("Set up mode timed out.");
+            Serial.println("WARNING: APixel Board power off");
+            delay(1000);
+            APixelPowerOff(RETPIN);
         }
     } else {
         Serial.println("ERROR: Something wrong :-( ");

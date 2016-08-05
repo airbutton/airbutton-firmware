@@ -18,8 +18,9 @@ extern const char *AP_SSID;
 extern unsigned long startTime;
 extern String SSID_LIST;
 extern ESP8266WebServer WEB_SERVER;
+extern Adafruit_NeoPixel led;
+extern ColorBlink blinkLed;
 
-void setupMode(Adafruit_NeoPixel *led,
-               ColorBlink *blinkLed);
+void setupMode();
 
 #endif // SETUPMODE_H

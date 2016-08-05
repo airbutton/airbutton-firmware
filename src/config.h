@@ -15,16 +15,16 @@ uint8_t RETPIN = 4;
 uint8_t RGBPIN = 5;
 
 //Global objects
-Adafruit_NeoPixel led  = Adafruit_NeoPixel(1, RGBPIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel led = Adafruit_NeoPixel(1, RGBPIN, NEO_GRB + NEO_KHZ800);
 ColorBlink blinkLed = ColorBlink();
-ESP8266WebServer  WEB_SERVER(80);
+ESP8266WebServer WEB_SERVER(80);
 
 //Global vars
 boolean setupModeStatus = false;
 
 //Setup Mode Config
-#define TIMEOUT (120*1000)  //Setupmode timeout in milliseconds
 unsigned long startTime;
+#define TIMEOUT (120*1000)  //Setupmode timeout in milliseconds
 IPAddress AP_IP(192, 168, 5, 1);
 const char *AP_SSID = "gallAButton";
 String DEVICE_TITLE = "gallAButton";

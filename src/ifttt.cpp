@@ -28,7 +28,7 @@ String get_ifttt_event(){
     }
 }
 
-boolean ifttt(Adafruit_NeoPixel *led,ColorBlink *blinkLed) {
+boolean ifttt() {
     const char* IFTTT_URL= "maker.ifttt.com";
     String IFTTT_KEY = get_ifttt_key();
     String IFTTT_EVENT = get_ifttt_event();
@@ -53,7 +53,7 @@ boolean ifttt(Adafruit_NeoPixel *led,ColorBlink *blinkLed) {
         // Sent HTTP POST Request with JSON data
         client.println("POST " + url + " HTTP/1.1");
         Serial.println("POST " + url + " HTTP/1.1");
-        blinkLed->blue(led, 10, 5);
+        blinkLed.blue(&led, 100, 1);
         client.println("Host: " + String(IFTTT_URL));
         Serial.println("Host: " + String(IFTTT_URL));
         client.println("User-Agent: Arduino/1.0");
@@ -75,7 +75,7 @@ boolean ifttt(Adafruit_NeoPixel *led,ColorBlink *blinkLed) {
         client.println();
         client.println(data);
         Serial.println(data);
-        blinkLed->blue(led, 10, 5);
+        blinkLed.blue(&led, 100, 1);
     }
     Serial.println("IFTTT request sent. Goodbye");
     return true;

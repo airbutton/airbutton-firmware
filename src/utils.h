@@ -7,11 +7,14 @@
 #include <Adafruit_NeoPixel.h>
 #include <ColorBlink.h>
 
+extern Adafruit_NeoPixel led;
+extern ColorBlink blinkLed;
+
 // Load WiFi configuration from EEPROM
 boolean loadWiFiSavedConfig();
 
 // Wi-Fi check connection
-boolean checkWiFiConnection(Adafruit_NeoPixel *led,ColorBlink *blinkLed);
+boolean checkWiFiConnection();
 
 // Wi-Fi access point list
 String ssidList();

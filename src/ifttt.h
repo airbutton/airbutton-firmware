@@ -7,8 +7,11 @@
 #include <Adafruit_NeoPixel.h>
 #include <ColorBlink.h>
 
+extern Adafruit_NeoPixel led;
+extern ColorBlink blinkLed;
+
 String get_ifttt_key();
 String get_ifttt_event();
-boolean ifttt(Adafruit_NeoPixel *led,ColorBlink *blinkLed);
+boolean ifttt();
 
 #endif // IFTT_H
