@@ -1,8 +1,9 @@
-#ifndef IFTTT_H
-#define IFTTT_H
+#ifndef IFTT_H
+#define IFTT_H
 
-#include <ESP8266WiFi.h>
+#include <Arduino.h>
 #include <EEPROM.h>
+#include <ESP8266WiFi.h>
 #include <Adafruit_NeoPixel.h>
 #include <ColorBlink.h>
 
@@ -10,4 +11,4 @@ String get_ifttt_key();
 String get_ifttt_event();
 boolean ifttt(Adafruit_NeoPixel *led,ColorBlink *blinkLed);
 
-#endif // IFTTT_H
+#endif // IFTT_H

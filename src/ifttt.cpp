@@ -1,7 +1,4 @@
-#include <ESP8266WiFi.h>
-#include <EEPROM.h>
-#include <Adafruit_NeoPixel.h>
-#include <ColorBlink.h>
+#include "ifttt.h"
 
 String get_ifttt_key(){
     String key;

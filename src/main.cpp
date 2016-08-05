@@ -1,20 +1,13 @@
 #include <Arduino.h>
+#include <ESP8266WiFi.h>
 #include <EEPROM.h>
-#include <Adafruit_NeoPixel.h>
-#include <ColorBlink.h>
-#include <ESP8266WebServer.h>
+
 #include "config.h"
 #include "utils.h"
+#include "setupmode.h"
 #include "ifttt.h"
 
-// Global objects
-Adafruit_NeoPixel led  = Adafruit_NeoPixel(1, RGBPIN, NEO_GRB + NEO_KHZ800);
-ColorBlink blinkLed  = ColorBlink();
-ESP8266WebServer  WEB_SERVER(80);
-
-#include "setup.h"
-
-void setup() {
+void setup(){
     //Wipe EEPROM for testing only!
     //wipeEEPROM();
     //Set WiFi to station mode
@@ -22,27 +15,27 @@ void setup() {
     //Set GPIO4 to HIGH for retain on APixel board useless on others boards
     pinMode(RETPIN, OUTPUT);
     digitalWrite(RETPIN, HIGH);
-    // Init Serial port
+    //Init Serial port and EEPROM
     Serial.begin(115200);
-    // Init EEPROM
     EEPROM.begin(512);
-    // Init LED
+    //Init RGB LED
     led.begin();
     led.show();
-    blinkLed.green(&led, 50, 10);
+    blinkLed.green(&led, 100, 3);
 
     //Try to connect with saved config
     if (!loadWiFiSavedConfig()) {
         Serial.println("WARNING: WiFi configuration not found");
         blinkLed.red(&led, 50, 10);
-        setupMode();
+        setupMode(&led,&blinkLed);
         return;
     }
+
     //Check connection
     if (!checkWiFiConnection(&led,&blinkLed)) {
         Serial.println("ERROR: Connection lost");
         blinkLed.red(&led, 50, 10);
-        setupMode();
+        setupMode(&led,&blinkLed);
         return;
     }
     //Button is connected! try to call to IFTTT
@@ -56,7 +49,6 @@ void setup() {
             blinkLed.red(&led, 50, 10);
         }
     }
-
     if (APixelBoard) {
         //put retain pin to LOW for power off APixel board
         Serial.println("WARNING: APixel Board power off");
@@ -67,10 +59,10 @@ void setup() {
     }
     //If chip is still on, button is pressed (Apixel board)
     Serial.println("WARNING: Button pressed ");
-    setupMode();
+    setupMode(&led,&blinkLed);
 }
 
-// the loop function runs over and over again forever
+
 void loop() {
     if (setupModeStatus) {
         WEB_SERVER.handleClient();
@@ -88,3 +80,4 @@ void loop() {
         blinkLed.green(&led, 200, 1);
     }
 }
+

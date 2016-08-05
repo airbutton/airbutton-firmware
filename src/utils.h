@@ -4,7 +4,6 @@
 #include <Arduino.h>
 #include <EEPROM.h>
 #include <ESP8266WiFi.h>
-#include <ESP8266WebServer.h>
 #include <Adafruit_NeoPixel.h>
 #include <ColorBlink.h>
 
@@ -18,7 +17,10 @@ boolean checkWiFiConnection(Adafruit_NeoPixel *led,ColorBlink *blinkLed);
 String ssidList();
 
 // HTML Page maker
-String makePage(String DEVICE_TITLE, String title, String contents);
+String makePage(String device_title,String page_title, String contents);
+
+// Wipe EEPROM
+void wipeEEPROM();
 
 // Decode URL
 String urlDecode(String input);
@@ -28,7 +30,5 @@ void powerOff();
 
 //Power off APixelBoard
 void APixelPowerOff(uint8_t pin);
-// Wipe EEPROM
-void wipeEEPROM();
 
-#endif
+#endif // UTILS_H

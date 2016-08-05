@@ -1,16 +1,8 @@
-#include <Arduino.h>
-#include <EEPROM.h>
-#include <ESP8266WiFi.h>
-#include <ESP8266WebServer.h>
-#include <Adafruit_NeoPixel.h>
-#include <ColorBlink.h>
+#include "utils.h"
 
-// Load WiFi configuration from EEPROM
 boolean loadWiFiSavedConfig() {
     String ssid;
     String password;
-    String IFTTT_KEY;
-    String IFTTT_EVENT;
     Serial.println("\nReading Saved Config....");
     if (EEPROM.read(0) != 0) {
         //WiFi SSID
@@ -49,7 +41,7 @@ boolean checkWiFiConnection(Adafruit_NeoPixel *led,ColorBlink *blinkLed) {
         }
         delay(100);
         Serial.print(".");
-        blinkLed->blue(led, 100, 1);
+        blinkLed->blue(led, 300, 1);
         count++;
     }
     Serial.println("Timed out.");
@@ -59,20 +51,20 @@ boolean checkWiFiConnection(Adafruit_NeoPixel *led,ColorBlink *blinkLed) {
 
 // Wi-Fi access point list
 String ssidList() {
+    String ssid_list;
     int n = WiFi.scanNetworks();
-    String SSID_LIST = "";
     for (int i = 0; i < n; ++i) {
-        SSID_LIST += "\n<option value=\"";
-        SSID_LIST += WiFi.SSID(i);
-        SSID_LIST += "\">";
-        SSID_LIST += WiFi.SSID(i);
-        SSID_LIST += "</option>";
+        ssid_list += "\n<option value=\"";
+        ssid_list += WiFi.SSID(i);
+        ssid_list += "\">";
+        ssid_list += WiFi.SSID(i);
+        ssid_list += "</option>";
     }
-    return SSID_LIST;
+    return ssid_list;
 }
 
 // HTML Page maker
-String makePage(String DEVICE_TITLE,String title, String contents) {
+String makePage(String device_title,String page_title, String contents) {
     String s = "<!DOCTYPE html>\n<html>\n<head>\n";
     s += "<meta name=\"viewport\" content=\"width=device-width,user-scalable=0\">\n";
     s += "<style>";
@@ -84,14 +76,24 @@ String makePage(String DEVICE_TITLE,String title, String contents) {
     s +="header{width:100%;background-color: #2c3e50;top: 0;min-height:60px;margin-bottom:21px;font-size:15px;color: #fff}.content-body{padding:0 1em 0 1em}header p{font-size: 1.25rem;float: left;position: relative;z-index: 1000;line-height: normal; margin: 15px 0 0 10px}";
     s += "</style>\n";
     s += "<title>";
-    s += title;
+    s += page_title;
     s += "</title>\n</head>\n<body>\n";
-    s += "<header><h1>" + DEVICE_TITLE + "</h1></header>\n";
+    s += "<header><h1>" + device_title + "</h1></header>\n";
     s += "<div class=\"content-body\">\n";
     s += contents;
     s += "\n</div>\n";
     s += "</body>\n</html>";
     return s;
+}
+
+// Wipe EEPROM
+void wipeEEPROM() {
+    EEPROM.begin(512);
+    // write a 0 to all 512 bytes of the EEPROM
+    for (int i = 0; i < 512; i++)
+        EEPROM.write(i, 0);
+    EEPROM.end();
+    EEPROM.begin(512);
 }
 
 // Decode URL
@@ -141,14 +143,4 @@ void powerOff() {
 //Power off APixelBoard
 void APixelPowerOff(uint8_t pin){
   digitalWrite(pin, LOW);
-}
-
-// Wipe EEPROM
-void wipeEEPROM() {
-    EEPROM.begin(512);
-    // write a 0 to all 512 bytes of the EEPROM
-    for (int i = 0; i < 512; i++)
-        EEPROM.write(i, 0);
-    EEPROM.end();
-    EEPROM.begin(512);
 }
