@@ -11,6 +11,8 @@ extern Adafruit_NeoPixel led;
 extern ColorBlink blinkLed;
 
 // Load WiFi configuration from EEPROM
+String get_ssid();
+String get_wifi_pwd();
 boolean loadWiFiSavedConfig();
 
 // Wi-Fi check connection

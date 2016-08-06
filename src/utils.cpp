@@ -1,31 +1,48 @@
 #include "utils.h"
 
-boolean loadWiFiSavedConfig() {
+// Load WiFi configuration from EEPROM
+String get_ssid(){
     String ssid;
-    String password;
-    Serial.println("\nReading Saved Config....");
     if (EEPROM.read(0) != 0) {
         //WiFi SSID
-        for (int i = 0; i < 32; ++i) {
+        for (int i = 0; i < 32; ++i){
             ssid += char(EEPROM.read(i));
         }
         ssid = ssid.c_str();
-        Serial.print("SSID: ");
-        Serial.println(ssid);
+        return ssid;
+    }
+    Serial.println("ERROR: SSID not found");
+    return "";
+}
+
+String get_wifi_pwd(){
+    String wifi_pwd;
+    if (EEPROM.read(32) != 0){
         //WiFi Password
         for (int i = 32; i < 96; ++i) {
-            password += char(EEPROM.read(i));
+            wifi_pwd += char(EEPROM.read(i));
         }
-        password = password.c_str();
-        Serial.print("Password: ");
-        Serial.println(password);
-        //Wifi Connect
-        WiFi.begin(ssid.c_str(), password.c_str());
-        return true;
-    } else {
-        Serial.println("Saved Configuration not found.");
+        wifi_pwd = wifi_pwd.c_str();
+        return wifi_pwd;
+    }
+    Serial.println("WARNING: empty WiFi password");
+    return wifi_pwd;
+}
+
+boolean loadWiFiSavedConfig() {
+    String ssid = get_ssid();
+    if (ssid == ""){
         return false;
     }
+    String password = get_wifi_pwd();
+    if (WiFi.begin(ssid.c_str(), password.c_str())){
+        Serial.print("SSID: ");
+        Serial.println(ssid);
+        Serial.print("Password: ");
+        Serial.println(password);
+        return true;
+    }
+    return false;
 }
 
 // Wi-Fi check connection

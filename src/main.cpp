@@ -23,7 +23,7 @@ void setup(){
     led.show();
     blinkLed.green(&led, 100, 2);
 
-    //Try to connect with saved config
+    //Try to load saved config
     if (!loadWiFiSavedConfig()) {
         Serial.println("WARNING: WiFi configuration not found");
         blinkLed.red(&led, 100, 2);
