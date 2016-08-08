@@ -24,10 +24,10 @@ boolean setupModeStatus = false;
 
 //Setup Mode Config
 unsigned long startTime;
-#define TIMEOUT (120*1000)  //Setupmode timeout in milliseconds
+#define TIMEOUT (240*1000)  //Setupmode timeout in milliseconds
 IPAddress AP_IP(192, 168, 5, 1);
-const char *AP_SSID = "gallAButton";
-String DEVICE_TITLE = "gallAButton";
+const char *AP_SSID = "**AIRBUTTON**";
+String DEVICE_TITLE = "AIRBUTTON";
 String SSID_LIST;
 
 #endif // CONFIG_H

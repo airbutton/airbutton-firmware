@@ -80,3 +80,45 @@ boolean ifttt() {
     Serial.println("IFTTT request sent. Goodbye");
     return true;
 }
+
+void handleIFTTT(){
+    String s = "<h2>IFTTT Settings</h2>\n";
+    s += "<form method='get' action='setifttt'>\n";
+    s += "<label>IFTTT Key: </label><input name='IFTTT_KEY' maxlenght='32'><br>\n";
+    s += "<br><label>IFTTT Event: </label><input name='IFTTT_EVENT' maxlenght='32'><br>\n";
+    s += "<br><br><input type='submit' value='Submit'>\n</form>";
+    WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,"IFTTT Settings", s));
+}
+
+void handleSetIFTTT(){
+
+    wipeConfig(96,160);
+
+    String IFTTT_KEY = urlDecode(WEB_SERVER.arg("IFTTT_KEY"));
+    Serial.print("IFTTT Key: ");
+    Serial.println(IFTTT_KEY);
+
+    String IFTTT_EVENT = urlDecode(WEB_SERVER.arg("IFTTT_EVENT"));
+    Serial.print("IFTTT Event: ");
+    Serial.println(IFTTT_EVENT);
+
+    Serial.println("Writing IFTTT Key to EEPROM...");
+    for (int i = 0; i < IFTTT_KEY.length(); ++i) {
+        EEPROM.write(96 + i, IFTTT_KEY[i]);
+    }
+    Serial.println("Writing IFTTT Event to EEPROM...");
+    for (int i = 0; i < IFTTT_EVENT.length(); ++i) {
+        EEPROM.write(128 + i, IFTTT_EVENT[i]);
+    }
+    EEPROM.commit();
+    Serial.println("IFTTT settings write to EEPROM done!");
+    String s = "<h1>IFTTT Setup complete.</h1>\n";
+    s += "<p>At restart airbutton will try to send data to <br>\n";
+    s += "IFTTT event: ";
+    s += IFTTT_EVENT;
+    s += " with key: ";
+    s += IFTTT_KEY;
+    s += " .\n";
+    s +="\n<a href='/'>Back</a></p>\n";
+    WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,"Write IFTTT Settings", s));
+}

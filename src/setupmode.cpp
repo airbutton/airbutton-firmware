@@ -28,11 +28,13 @@ void setupMode(){
     Serial.println(WiFi.softAPIP());
     blinkLed.violet(&led, 100, 2);
 
-    //TODO
     // Settings Page
     WEB_SERVER.onNotFound(handleNotFound);
-    WEB_SERVER.on("/settings", handleSettings);
-    WEB_SERVER.on("/setap", handleSetap);
+    WEB_SERVER.on("/wifi", handleWiFi);
+    WEB_SERVER.on("/ifttt", handleIFTTT);
+    WEB_SERVER.on("/setwifi", handleSetWiFi);
+    WEB_SERVER.on("/setifttt", handleSetIFTTT);
+    WEB_SERVER.on("/reboot",handleReboot);
     WEB_SERVER.begin();
     startTime = millis();
 }

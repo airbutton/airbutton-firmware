@@ -113,6 +113,20 @@ void wipeEEPROM() {
     EEPROM.begin(512);
 }
 
+// Wipe only specific config
+// WIFI
+// ssid 0-32 pass 32-96
+// IFTTT
+// event 96-128 key 128-160
+void wipeConfig(int start, int end) {
+    EEPROM.begin(512);
+    for (int i = start; i < end; i++)
+        EEPROM.write(i, 0);
+    EEPROM.end();
+    EEPROM.begin(512);
+}
+
+
 // Decode URL
 String urlDecode(String input) {
     String s = input;
