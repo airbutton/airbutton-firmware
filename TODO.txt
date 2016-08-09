@@ -1,0 +1,19 @@
+-Aggiungere altri servizi configurabili in setup mode (blynk, etc...)
+
+-Aggiungere i pulsanti indietro senza modificare la configurazione
+ nelle pagine di setup dei servizi
+
+-Valutare la fattibilità di saltare la pagina di riepilogo configurazione
+ del servizio e tornare direttamente alla home
+
+-Creare un branch con pagine in HTML puro
+
+-Aggiungere la possibilità di bloccare la configurazione
+
+-Aggiungere un time-out di pochi secondi con il tasto premuto per passare
+ in setupmode
+
+-Aggiungere un campo con la tensione corrente per valutare lo stato della
+ batteria
+
+

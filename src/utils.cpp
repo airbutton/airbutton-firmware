@@ -173,5 +173,6 @@ void powerOff() {
 
 //Power off APixelBoard
 void APixelPowerOff(uint8_t pin){
+    WiFi.disconnect();
     digitalWrite(pin, LOW);
 }
