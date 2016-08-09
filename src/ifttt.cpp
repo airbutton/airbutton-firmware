@@ -45,7 +45,7 @@ boolean ifttt() {
     // Build JSON data string
     String value_1 = WiFi.macAddress();
     String value_2 = WiFi.SSID();
-    String value_3 = WiFi.hostname();
+    float value_3 = vcc();
     String data = "";
     data = data + "\n" + "{\"value1\":\"" + value_1 + "\",\"value2\":\"" + value_2 + "\",\"value3\":\"" + value_3 + "\"}";
     // Post the button press to IFTTT

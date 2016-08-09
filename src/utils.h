@@ -9,6 +9,9 @@
 
 extern Adafruit_NeoPixel led;
 extern ColorBlink blinkLed;
+extern "C" {
+#include "user_interface.h"
+}
 
 // Load WiFi configuration from EEPROM
 String get_ssid();
@@ -34,5 +37,8 @@ String urlDecode(String input);
 void powerOff();
 //Power off APixelBoard
 void APixelPowerOff(uint8_t pin);
+
+//get vcc
+float vcc();
 
 #endif // UTILS_H

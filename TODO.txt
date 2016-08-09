@@ -16,4 +16,3 @@
 -Aggiungere un campo con la tensione corrente per valutare lo stato della
  batteria
 
-

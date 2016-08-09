@@ -176,3 +176,10 @@ void APixelPowerOff(uint8_t pin){
     WiFi.disconnect();
     digitalWrite(pin, LOW);
 }
+
+//Get VCC
+float vcc(){
+    float vdd;
+    vdd = (float)ESP.getVcc() / (float)1000;
+    return vdd;
+}

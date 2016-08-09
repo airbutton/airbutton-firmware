@@ -6,6 +6,8 @@
 #include <ColorBlink.h>
 #include <ESP8266WebServer.h>
 
+//This for ESP.getVcc()
+ADC_MODE(ADC_VCC)
 
 //Board definition
 boolean APixelBoard = true;
