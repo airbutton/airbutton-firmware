@@ -180,6 +180,6 @@ void APixelPowerOff(uint8_t pin){
 //Get VCC
 float vcc(){
     float vdd;
-    vdd = (float)ESP.getVcc() / (float)1000;
+    vdd = (float)ESP.getVcc() / (float)924;
     return vdd;
 }
