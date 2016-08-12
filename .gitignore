@@ -1,15 +1,15 @@
+.pioenvs
 .clang_complete
+.gcc-flags.json
 CMakeListsPrivate.txt
 CMakeLists.txt
 .cproject
 .directory
 gallAButton.pro
 gallAButton.pro.user
-.gcc-flags.json
 .idea/
 .kdev4/
 *.kdev4
-.pioenvs
 .project
 .settings/
 src/utils.h.gch

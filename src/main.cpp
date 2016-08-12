@@ -7,8 +7,6 @@
 #include "setupmode.h"
 #include "ifttt.h"
 
-
-
 void setup(){
     //Wipe EEPROM for testing only!
     //wipeEEPROM();
@@ -64,11 +62,10 @@ void setup(){
     setupMode();
 }
 
-
 void loop() {
     if (setupModeStatus) {
         WEB_SERVER.handleClient();
-        blinkLed.violet(&led, 0,1);
+        blinkLed.violet(&led, 0,10);
         if ((millis()-startTime) > TIMEOUT){
             Serial.println("Set up mode timed out.");
             Serial.println("WARNING: APixel Board power off");
@@ -82,4 +79,3 @@ void loop() {
         blinkLed.green(&led, 200, 1);
     }
 }
-

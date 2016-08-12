@@ -12,7 +12,7 @@ void handleReboot(){
     String s = "<h2>Rebooting!</h2>\n";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,"Rebooting", s));
     Serial.println("Rebooting...");
-    WiFi.disconnect();
+    WiFi.mode(WIFI_OFF);
     delay(500);
     ESP.restart();
     //NOTE only the first time after flash Reboot will stuck the chip
