@@ -1,5 +1,5 @@
-#ifndef IFTT_H
-#define IFTT_H
+#ifndef CUSTOMURL_H
+#define CUSTOMURL_H
 
 #include <Arduino.h>
 #include <EEPROM.h>
@@ -10,10 +10,11 @@
 extern Adafruit_NeoPixel led;
 extern ColorBlink blinkLed;
 
-String get_ifttt_key();
-String get_ifttt_event();
-boolean ifttt();
-void handleIFTTT();
-void handleSetIFTTT();
+String get_base_host();
+String get_base_host();
 
-#endif // IFTT_H
+boolean customurl();
+void handleCustomURL();
+void handleSetCustomURL();
+
+#endif // CUSTOMURL_H

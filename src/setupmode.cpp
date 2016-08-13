@@ -1,4 +1,8 @@
 #include "setupmode.h"
+#include "ifttt.h"
+#include "customurl.h"
+
+//void handleCustomURL();
 
 void setupMode(){
     digitalWrite(RETPIN,HIGH);
@@ -32,8 +36,12 @@ void setupMode(){
     WEB_SERVER.onNotFound(handleNotFound);
     WEB_SERVER.on("/wifi", handleWiFi);
     WEB_SERVER.on("/ifttt", handleIFTTT);
+    WEB_SERVER.on("/customurl", handleCustomURL);
+
     WEB_SERVER.on("/setwifi", handleSetWiFi);
     WEB_SERVER.on("/setifttt", handleSetIFTTT);
+    WEB_SERVER.on("/setcustomurl", handleSetCustomURL);
+
     WEB_SERVER.on("/reboot",handleReboot);
     WEB_SERVER.begin();
     startTime = millis();
