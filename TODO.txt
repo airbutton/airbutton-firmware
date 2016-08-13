@@ -16,3 +16,8 @@
 -Aggiungere un campo con la tensione corrente per valutare lo stato della
  batteria
 
+-Aggiungere OTA configurabile in setupmode
+
+-cercare libreria REST
+
+-Campi di modifica configurazione con i valori correnti.
