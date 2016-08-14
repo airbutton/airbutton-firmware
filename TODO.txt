@@ -10,11 +10,9 @@
 
 -Aggiungere la possibilità di bloccare la configurazione
 
--Aggiungere un time-out di pochi secondi con il tasto premuto per passare
- in setupmode
+-Aggiungere un time-out di pochi secondi con il tasto premuto per passare in setupmode
 
--Aggiungere un campo con la tensione corrente per valutare lo stato della
- batteria
+-DONE-Aggiungere un campo con la tensione corrente per valutare lo stato della batteria
 
 -Aggiungere OTA configurabile in setupmode
 
