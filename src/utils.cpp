@@ -118,6 +118,8 @@ void wipeEEPROM() {
 // ssid 0-32 pass 32-96
 // IFTTT
 // event 96-128 key 128-160
+// Custom Service
+// host 160-224 url 224-288
 void wipeConfig(int start, int end) {
     EEPROM.begin(512);
     for (int i = start; i < end; i++)

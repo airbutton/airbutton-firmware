@@ -1,5 +1,4 @@
 #include "customurl.h"
-#include "setupmode.h"
 
 String get_base_host(){
     String key;
@@ -32,7 +31,6 @@ String get_customurl(){
 boolean customurl() {
     String BASE_HOST = get_base_host();
     String CUSTOM_URL = get_customurl();
-
 
     Serial.println("Custom URL called");
     // Define the WiFi Client
@@ -80,12 +78,12 @@ boolean customurl() {
         client.println(data);
         Serial.println(data);
 
-        Serial.println("\n--------IFTTT Response--------");
+        Serial.println("\n--------Server Response--------");
         while (client.connected()) {
-          if (client.available()){
-            char response = client.read();
-            Serial.print(response);
-          }
+            if (client.available()){
+                char response = client.read();
+                Serial.print(response);
+            }
         }
         Serial.println("\n--------------End-------------");
 
