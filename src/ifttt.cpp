@@ -1,4 +1,5 @@
 #include "ifttt.h"
+#include "setupmode.h"
 
 String get_ifttt_key(){
     String key;
@@ -40,6 +41,7 @@ boolean ifttt() {
         Serial.println("ERROR: Can't connect to IFTTT!");
         return false;
     }
+    
     // We now create a URI for the request
     String url = "/trigger/" + IFTTT_EVENT + "/with/key/" + IFTTT_KEY;
     // Build JSON data string

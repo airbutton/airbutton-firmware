@@ -1,9 +1,12 @@
 #include "webserver.h"
+#include "utils.h"
+#include "setupmode.h"
 
 void handleNotFound() {
     String s = "<h2>Configuration Mode</h2>\n";
     s += "<p>\n<a href='/wifi'>WiFi</a></p>\n";
     s += "<p>\n<a href='/ifttt'>IFTTT</a></p>\n";
+    s += "<p>\n<a href='/customurl'>Custom URL</a></p>\n";
     s += "<p>All done! Please <a href='/reboot'>Reboot</a></p>\n";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,"Configuration mode", s));
 }

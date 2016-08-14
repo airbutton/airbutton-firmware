@@ -6,6 +6,7 @@
 #include "utils.h"
 #include "setupmode.h"
 #include "ifttt.h"
+#include "customurl.h"
 
 void setup(){
     //Wipe EEPROM for testing only!
@@ -39,9 +40,10 @@ void setup(){
         return;
     }
     //Button is connected! try to call to IFTTT
+
     for (int i = 0; i < 3; i++) {
         if (ifttt()) {
-            Serial.println("Success!");
+            Serial.println("Success ifttt!");
             blinkLed.green(&led, 100, 2);
             break;
         } else {
@@ -49,6 +51,19 @@ void setup(){
             blinkLed.red(&led, 100, 2);
         }
     }
+
+    //Button is connected! try to call to IFTTT
+    for (int i = 0; i < 3; i++) {
+        if (customurl()) {
+            Serial.println("Success custom url!");
+            blinkLed.green(&led, 100, 2);
+            break;
+        } else {
+            Serial.println("WARNING: Custom URL failed! attempt nr " + i);
+            blinkLed.red(&led, 100, 2);
+        }
+    }
+
     if (APixelBoard) {
         //put retain pin to LOW for power off APixel board
         Serial.println("WARNING: APixel Board power off");
