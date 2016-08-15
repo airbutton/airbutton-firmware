@@ -1,4 +1,11 @@
--Aggiungere altri servizi configurabili in setup mode (blynk, etc...)
+-Aggiungere altri servizi configurabili in setup mode:
+  -IFTTT
+  -Custom URL
+  -Blynk
+  -https://thingspeak.com/
+  -https://ubidots.com/
+  -http://Initialstate.com
+  -http://freeboard.io
 
 -Aggiungere i pulsanti indietro senza modificare la configurazione
  nelle pagine di setup dei servizi
