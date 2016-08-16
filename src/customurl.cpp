@@ -1,5 +1,4 @@
 #include "customurl.h"
-#include "setupmode.h"
 
 String get_base_host(){
     String key;
@@ -47,8 +46,6 @@ boolean customurl() {
 
     String data;
     data = "{\"macaddress\":\"" + vMac + "\",\"ssid\":\"" + vSid + "\",\"vcc\":\"" + vVCC + "\"}";
-
-    // Post the button press to Custom URL
 
     blinkLed.blue(&led, 100, 1);
 

@@ -1,6 +1,4 @@
 #include "webserver.h"
-#include "utils.h"
-#include "setupmode.h"
 
 void handleNotFound() {
     String s = "<h2>Configuration Mode</h2>\n";
@@ -31,7 +29,7 @@ void handleWiFi() {
     s += "\n</select>\n";
     s += "<br><label>or</label>\n<input name='dssid' maxlength='32' placeholder='SSID'/>\n";
     s += "<br><br><label>Password: </label>\n<input name='pass' maxlength='64' type='password' placeholder='password'>\n";
-/*  s += "<br><br><h2>IFTTT Settings</h2>\n";
+    /*  s += "<br><br><h2>IFTTT Settings</h2>\n";
     s += "<label>IFTTT Key: </label><input name='IFTTT_KEY' maxlenght='32'><br>\n";
     s += "<br><label>IFTTT Event: </label><input name='IFTTT_EVENT' maxlenght='32'><br>\n";
 */  s += "<br><br><input type='submit' value='Submit'>\n</form>";

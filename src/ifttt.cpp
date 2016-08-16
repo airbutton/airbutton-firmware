@@ -1,5 +1,4 @@
 #include "ifttt.h"
-#include "setupmode.h"
 
 String get_ifttt_key(){
     String key;
@@ -77,6 +76,16 @@ boolean ifttt() {
         client.println();
         client.println(data);
         Serial.println(data);
+
+        Serial.println("\n--------Server Response--------");
+        while (client.connected()) {
+            if (client.available()){
+                char response = client.read();
+                Serial.print(response);
+            }
+        }
+        Serial.println("\n--------------End-------------");
+
         blinkLed.blue(&led, 100, 1);
     }
     Serial.println("IFTTT request sent. Goodbye");
