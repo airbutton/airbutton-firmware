@@ -9,8 +9,6 @@ String get_base_host(){
             key += char(EEPROM.read(i));
         }
         key = key.c_str();
-        Serial.print("Host: ");
-        Serial.println(key);
         return key;
     }
 }
@@ -23,74 +21,61 @@ String get_customurl(){
             key += char(EEPROM.read(i));
         }
         key = key.c_str();
-        Serial.print("Custom URL: ");
-        Serial.println(key);
         return key;
     }
 }
 
 boolean customurl() {
+    Serial.println("Custom URL called");
+
     String BASE_HOST = get_base_host();
     String CUSTOM_URL = get_customurl();
 
-
-    Serial.println("Custom URL called");
     // Define the WiFi Client
     WiFiClient client;
-    // Make sure we can connect
 
+    // Make sure we can connect
     if (!client.connect(BASE_HOST.c_str(), 80)) {
         Serial.println("ERROR: Can't connect to host!");
         return false;
     }
 
-    // We now create a URI for the request
-
     // Build JSON data string
-    String value_1 = WiFi.macAddress();
-    String value_2 = WiFi.SSID();
-    float value_3 = vcc();
-    String data = "";
-    data = data + "\n" + "{\"value1\":\"" + value_1 + "\",\"value2\":\"" + value_2 + "\",\"value3\":\"" + value_3 + "\"}";
+    String vMac = WiFi.macAddress();
+    String vSid = WiFi.SSID();
+    String vVCC = String(vcc());
+
+    String data;
+    data = "{\"macaddress\":\"" + vMac + "\",\"ssid\":\"" + vSid + "\",\"vcc\":\"" + vVCC + "\"}";
+
     // Post the button press to Custom URL
-    if (client.connect(BASE_HOST.c_str(), 80)) {  // TODO
-        // Sent HTTP POST Request with JSON data
-        client.println("POST " + CUSTOM_URL + " HTTP/1.1");
-        Serial.println("POST " + CUSTOM_URL + " HTTP/1.1");
-        blinkLed.blue(&led, 100, 1);
-        client.println("Host: " + BASE_HOST);
-        Serial.println("Host: " + BASE_HOST);
-        client.println("User-Agent: Arduino/1.0");
-        Serial.println("User-Agent: Arduino/1.0");
-        client.print("Accept: *");
-        Serial.print("Accept: *");
-        client.print("/");
-        Serial.print("/");
-        client.println("*");
-        Serial.println("*");
-        client.print("Content-Length: ");
-        Serial.print("Content-Length: ");
-        client.println(data.length());
-        Serial.println(data.length());
-        client.println("Content-Type: application/json");
-        Serial.println("Content-Type: application/json");
-        client.println("Connection: close");
-        Serial.println("Connection: close");
-        client.println();
-        client.println(data);
-        Serial.println(data);
 
-        Serial.println("\n--------IFTTT Response--------");
-        while (client.connected()) {
-          if (client.available()){
-            char response = client.read();
-            Serial.print(response);
-          }
-        }
-        Serial.println("\n--------------End-------------");
+    blinkLed.blue(&led, 100, 1);
 
-        blinkLed.blue(&led, 100, 1);
+    Serial.println("=== Custom URL ===");
+
+    String strPayload;
+    strPayload += "POST " + CUSTOM_URL + " HTTP/1.1\r\n";
+    strPayload += "Host: " + BASE_HOST + "\r\n";
+    strPayload += "User-Agent: Arduino/1.0\r\n";
+    strPayload += "Connection: close\r\n";
+    strPayload += "Content-Type: application/json\r\n";
+    strPayload += "Content-Length:" + String(data.length()) + "\r\n\r\n";
+    strPayload += data + "\r\n\r\n";
+    client.println(strPayload);
+
+    Serial.println(strPayload);
+
+    // Wait for a response
+    while (client.connected()) {
+      if (client.available()){
+        char response = client.read();
+        Serial.print(response);
+      }
     }
+
+    blinkLed.blue(&led, 100, 1);
+
     Serial.println("Custom URL request sent. Goodbye");
     return true;
 }

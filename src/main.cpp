@@ -39,8 +39,8 @@ void setup(){
         setupMode();
         return;
     }
-    //Button is connected! try to call to IFTTT
 
+    //Button is connected! try to call to IFTTT
     for (int i = 0; i < 3; i++) {
         if (ifttt()) {
             Serial.println("Success ifttt!");
