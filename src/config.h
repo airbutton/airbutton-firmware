@@ -30,7 +30,7 @@ boolean setupModeStatus = false;
 unsigned long startTime;
 #define TIMEOUT (240*1000)  //Setupmode timeout in milliseconds
 IPAddress AP_IP(192, 168, 5, 1);
-const char *AP_SSID = "**AIRBUTTON**";
+String AP_SSID = "**AIRBUTTON-" + String(ESP.getChipId()) + "**";
 String DEVICE_TITLE = "AIRBUTTON";
 String SSID_LIST;
 
