@@ -6,7 +6,9 @@
 #include <ESP8266WiFi.h>
 #include <Adafruit_NeoPixel.h>
 #include <ColorBlink.h>
+#include <EEPROMconfig.h>
 
+extern EEPROMconfig ABconfigs;
 extern Adafruit_NeoPixel led;
 extern ColorBlink blinkLed;
 extern "C" {
@@ -14,8 +16,6 @@ extern "C" {
 }
 
 // Load WiFi configuration from EEPROM
-String get_ssid();
-String get_wifi_pwd();
 boolean loadWiFiSavedConfig();
 // Wi-Fi check connection
 boolean checkWiFiConnection();
