@@ -26,7 +26,7 @@ void setupMode(){
     blinkLed.violet(&led, 100, 1);
     WiFi.mode(WIFI_AP);
     WiFi.softAPConfig(AP_IP, AP_IP, IPAddress(255, 255, 255, 0));
-    WiFi.softAP(AP_SSID);
+    WiFi.softAP(AP_SSID.c_str());
     DNS_SERVER.start(53, "*", AP_IP);
     Serial.print("Starting Access Point at ");
     Serial.println(WiFi.softAPIP());

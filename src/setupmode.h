@@ -14,7 +14,7 @@
 extern uint8_t RETPIN;
 extern boolean setupModeStatus;
 extern IPAddress AP_IP;
-extern const char *AP_SSID;
+extern String AP_SSID;
 extern unsigned long startTime;
 extern String SSID_LIST;
 extern ESP8266WebServer WEB_SERVER;
