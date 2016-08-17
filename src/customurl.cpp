@@ -65,10 +65,10 @@ boolean customurl() {
 
     // Wait for a response
     while (client.connected()) {
-      if (client.available()){
-        char response = client.read();
-        Serial.print(response);
-      }
+        if (client.available()){
+            char response = client.read();
+            Serial.print(response);
+        }
     }
 
     blinkLed.blue(&led, 100, 1);

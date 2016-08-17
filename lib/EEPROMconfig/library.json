@@ -1,0 +1,8 @@
+{
+    "name": "EEPROMconfig",
+    "keywords": "EEPROM, AirButton, Config, Parameters",
+    "description": "A library store parameters on EEPROM, born per AIRButton",
+    "version": "0.1",
+    "frameworks": "arduino",
+    "platforms": "*"
+}

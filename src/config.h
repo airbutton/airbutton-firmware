@@ -3,8 +3,9 @@
 
 #include <Arduino.h>
 #include <Adafruit_NeoPixel.h>
-#include <ColorBlink.h>
 #include <ESP8266WebServer.h>
+#include <ColorBlink.h>
+#include <EEPROMconfig.h>
 
 //This for ESP.getVcc()
 ADC_MODE(ADC_VCC)
@@ -17,6 +18,7 @@ uint8_t RETPIN = 4;
 uint8_t RGBPIN = 5;
 
 //Global objects
+EEPROMconfig ABconfigs;
 Adafruit_NeoPixel led = Adafruit_NeoPixel(1, RGBPIN, NEO_GRB + NEO_KHZ800);
 ColorBlink blinkLed = ColorBlink();
 ESP8266WebServer WEB_SERVER(80);
