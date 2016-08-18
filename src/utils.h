@@ -25,11 +25,6 @@ String ssidList();
 // HTML Page maker
 String makePage(String device_title,String page_title, String contents);
 
-// Wipe EEPROM
-void wipeEEPROM();
-// Wipe only specific config
-void wipeConfig(int start, int end);
-
 // Decode URL
 String urlDecode(String input);
 

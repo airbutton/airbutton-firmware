@@ -4,14 +4,14 @@ boolean ifttt() {
     Serial.println("IFTT Button fired");
 
     const char* IFTTT_URL= "maker.ifttt.com";
-    String KEY = ABconfigs.getparam(IFTTT_KEY);
-    String EVENT = ABconfigs.getparam(IFTTT_EVENT);
+    String KEY = ABconfigs.getParam(IFTTT_KEY);
+    String EVENT = ABconfigs.getParam(IFTTT_EVENT);
 
     // Define the WiFi Client
     WiFiClient client;
 
     // Make sure we can connect
-    if (!client.connect(IFTTT_URL, 80)) {
+    if (!client.connect(IFTTT_URL, 80) || KEY=="" || EVENT=="") {
         Serial.println("ERROR: Can't connect to IFTTT!");
         return false;
     }
@@ -60,15 +60,15 @@ boolean ifttt() {
 void handleIFTTT(){
     String s = "<h2>IFTTT Settings</h2>\n";
     s += "<form method='get' action='setifttt'>\n";
-    s += "<label>IFTTT Key: </label><input value='" + ABconfigs.getparam(IFTTT_KEY) + "' name='KEY' maxlenght='32'><br>\n";
-    s += "<br><label>IFTTT Event: </label><input value='" + ABconfigs.getparam(IFTTT_EVENT) + "' name='EVENT' maxlenght='32'><br>\n";
+    s += "<label>IFTTT Key: </label><input value='" + ABconfigs.getParam(IFTTT_KEY) + "' name='KEY' maxlenght='32'><br>\n";
+    s += "<br><label>IFTTT Event: </label><input value='" + ABconfigs.getParam(IFTTT_EVENT) + "' name='EVENT' maxlenght='32'><br>\n";
     s += "<br><br><input type='submit' value='Submit'>\n</form>";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,"IFTTT Settings", s));
 }
 
 void handleSetIFTTT(){
 
-    wipeConfig(96,160);
+    ABconfigs.delParam(IFTTT);
 
     String KEY = urlDecode(WEB_SERVER.arg("KEY"));
     Serial.print("IFTTT Key: ");

@@ -1,11 +1,11 @@
 #include "utils.h"
 
 boolean loadWiFiSavedConfig() {
-    String ssid = ABconfigs.getparam(WIFI_SSID);
+    String ssid = ABconfigs.getParam(WIFI_SSID);
     if (ssid == ""){
         return false;
     }
-    String password = ABconfigs.getparam(WIFI_PSW);
+    String password = ABconfigs.getParam(WIFI_PSW);
     if (WiFi.begin(ssid.c_str(), password.c_str())){
         Serial.print("SSID: ");
         Serial.println(ssid);
@@ -73,32 +73,6 @@ String makePage(String device_title,String page_title, String contents) {
     s += "</body>\n</html>";
     return s;
 }
-
-// Wipe EEPROM
-void wipeEEPROM() {
-    EEPROM.begin(512);
-    // write a 0 to all 512 bytes of the EEPROM
-    for (int i = 0; i < 512; i++)
-        EEPROM.write(i, 0);
-    EEPROM.end();
-    EEPROM.begin(512);
-}
-
-// Wipe only specific config
-// WIFI
-// ssid 0-32 pass 32-96
-// IFTTT
-// event 96-128 key 128-160
-// Custom Service
-// host 160-224 url 224-288
-void wipeConfig(int start, int end) {
-    EEPROM.begin(512);
-    for (int i = start; i < end; i++)
-        EEPROM.write(i, 0);
-    EEPROM.end();
-    EEPROM.begin(512);
-}
-
 
 // Decode URL
 String urlDecode(String input) {

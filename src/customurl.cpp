@@ -1,40 +1,16 @@
 #include "customurl.h"
 
-String get_base_host(){
-    String key;
-    if (EEPROM.read(0) != 0) {
-        // Read custom URL key from eprom
-        for (int i = 160; i < 224; ++i) {
-            key += char(EEPROM.read(i));
-        }
-        key = key.c_str();
-        return key;
-    }
-}
-
-String get_customurl(){
-    String key;
-    if (EEPROM.read(0) != 0) {
-        // Read custom URL key from eprom
-        for (int i = 224; i < 288; ++i) {
-            key += char(EEPROM.read(i));
-        }
-        key = key.c_str();
-        return key;
-    }
-}
-
 boolean customurl() {
     Serial.println("Custom URL called");
 
-    String BASE_HOST = get_base_host();
-    String CUSTOM_URL = get_customurl();
+    String HOST = ABconfigs.getParam(CUSTOM_HOST);
+    String URL = ABconfigs.getParam(CUSTOM_URL);
 
     // Define the WiFi Client
     WiFiClient client;
 
     // Make sure we can connect
-    if (!client.connect(BASE_HOST.c_str(), 80)) {
+    if (!client.connect(HOST.c_str(), 80)) {
         Serial.println("ERROR: Can't connect to host!");
         return false;
     }
@@ -52,8 +28,8 @@ boolean customurl() {
     Serial.println("=== Custom URL ===");
 
     String strPayload;
-    strPayload += "POST " + CUSTOM_URL + " HTTP/1.1\r\n";
-    strPayload += "Host: " + BASE_HOST + "\r\n";
+    strPayload += "POST " + URL + " HTTP/1.1\r\n";
+    strPayload += "Host: " + HOST + "\r\n";
     strPayload += "User-Agent: Arduino/1.0\r\n";
     strPayload += "Connection: close\r\n";
     strPayload += "Content-Type: application/json\r\n";
@@ -80,31 +56,31 @@ boolean customurl() {
 void handleCustomURL(){
     String s = "<h2>Custom URL Settings</h2>\n";
     s += "<form method='get' action='setcustomurl'>\n";
-    s += "<label>Host: </label><input value='" + get_base_host() + "' name='BASE_HOST' maxlenght='200'><br>\n";
-    s += "<label>Custom URL: </label><input value='" +  get_customurl()+ "' name='CUSTOM_URL' maxlenght='200'><br>\n";
+    s += "<label>Host: </label><input value='" + ABconfigs.getParam(CUSTOM_HOST) + "' name='HOST' maxlenght='200'><br>\n";
+    s += "<label>Custom URL: </label><input value='" +  ABconfigs.getParam(CUSTOM_URL) + "' name='URL' maxlenght='200'><br>\n";
     s += "<br><br><input type='submit' value='Submit'>\n</form>";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,"Custom URL Settings", s));
 }
 
 void handleSetCustomURL(){
 
-    wipeConfig(160,288);
+    ABconfigs.delParam(CUSTOM);
 
-    String CUSTOM_URL = urlDecode(WEB_SERVER.arg("CUSTOM_URL"));
-    String BASE_HOST = urlDecode(WEB_SERVER.arg("BASE_HOST"));
+    String URL = urlDecode(WEB_SERVER.arg("URL"));
+    String HOST = urlDecode(WEB_SERVER.arg("HOST"));
     Serial.print("Custom URL: ");
-    Serial.println(CUSTOM_URL);
+    Serial.println(URL);
     Serial.print("Base Host: ");
-    Serial.println(BASE_HOST);
+    Serial.println(HOST);
 
     Serial.println("Writing Custom URL to EEPROM...");
-    for (int i = 0; i < BASE_HOST.length(); ++i) {
-        EEPROM.write(160 + i, BASE_HOST[i]);
+    for (int i = 0; i < HOST.length(); ++i) {
+        EEPROM.write(160 + i, HOST[i]);
     }
 
     Serial.println("Writing Custom URL to EEPROM...");
-    for (int i = 0; i < CUSTOM_URL.length(); ++i) {
-        EEPROM.write(224 + i, CUSTOM_URL[i]);
+    for (int i = 0; i < URL.length(); ++i) {
+        EEPROM.write(224 + i, URL[i]);
     }
 
 
@@ -113,7 +89,7 @@ void handleSetCustomURL(){
     String s = "<h1>Custom URL Setup complete.</h1>\n";
     s += "<p>At restart airbutton will try to send data to <br>\n";
     s += "Custom URL: ";
-    s += CUSTOM_URL;
+    s += URL;
     s += " .\n";
     s +="\n<a href='/'>Back</a></p>\n";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE, "Write Custom URL Settings", s));

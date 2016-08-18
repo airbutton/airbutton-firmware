@@ -1,18 +1,31 @@
 ﻿#include <EEPROMconfig.h>
 
 EEPROMconfig::EEPROMconfig(){
-    wifiParam[0] = 0;                   //Init WiFi SSID (default 0)
-    wifiParam[1] = wifiParam[0]+32;     //End SSID, init WiFi Password (default 32)
-    wifiParam[2] = wifiParam[1]+64;     //End Wifi,init IFTTT key (default 96)
-    iftttParam[0] = wifiParam[2]+32;    //End IFTTT key, init IFTTT event (default 128)
-    iftttParam[1] = iftttParam[0]+32;   //End IFTTT, init custom host (default 160)
-    customParam[0] = iftttParam[1]+64;  //End custom host, init custom url (default 224)
-    customParam[1] = customParam[0]+64; //End custom url (default 288)
+    // WIFI
+    // ssid 0-31 pass 32-95
+    // IFTTT
+    // event 96-128 key 128-159
+    // Custom Service
+    // host 160-224 url 224-287
+    wifiParam[0] = 0;                   // 0
+    wifiParam[1] = wifiParam[0]+32;     // 32
+    wifiParam[2] = wifiParam[1]+64;     // 96
+    iftttParam[0] = wifiParam[2]+32;    // 128
+    iftttParam[1] = iftttParam[0]+32;   // 160
+    customParam[0] = iftttParam[1]+64;  // 224
+    customParam[1] = customParam[0]+64; // 288
 }
 
 int *EEPROMconfig::eepromRange(int configs){
     int *range = new int[2];
     switch (configs) {
+    case ALL:
+        range[0] = wifiParam[0];
+        range[1] = customParam[1];
+    case WIFI:
+        range[0] = wifiParam[0];
+        range[1] = wifiParam[2];
+        break;
     case WIFI_SSID:
         range[0] = wifiParam[0];
         range[1] = wifiParam[1];
@@ -21,6 +34,10 @@ int *EEPROMconfig::eepromRange(int configs){
         range[0] = wifiParam[1];
         range[1] = wifiParam[2];
         break;
+    case IFTTT:
+        range[0] = wifiParam[2];
+        range[1] = iftttParam[1];
+        break;
     case IFTTT_KEY:
         range[0] = wifiParam[2];
         range[1] = iftttParam[0];
@@ -28,6 +45,10 @@ int *EEPROMconfig::eepromRange(int configs){
     case IFTTT_EVENT:
         range[0] = iftttParam[0];
         range[1] = iftttParam[1];
+        break;
+    case CUSTOM:
+        range[0] = iftttParam[1];
+        range[1] = customParam[1];
         break;
     case CUSTOM_HOST:
         range[0] = iftttParam[1];
@@ -43,7 +64,7 @@ int *EEPROMconfig::eepromRange(int configs){
     return range;
 }
 
-String EEPROMconfig::getparam(int configs){
+String EEPROMconfig::getParam(int configs){
     int *range=eepromRange(configs);
     String param = "";
     if (EEPROM.read(0) != 0) {
@@ -52,6 +73,16 @@ String EEPROMconfig::getparam(int configs){
         }
         param = param.c_str();
     }
-        return param;
+    return param;
+}
+
+void EEPROMconfig::delParam(int configs){
+    int *range=eepromRange(configs);
+    EEPROM.begin(512);
+    for (int i = range[0]; i < range[1]; ++i){
+        EEPROM.write(i, 0);
+    }
+    EEPROM.end();
+    EEPROM.begin(512);
 }
 

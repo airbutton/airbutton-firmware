@@ -10,7 +10,7 @@
 
 void setup(){
     //Wipe EEPROM for testing only!
-    //wipeEEPROM();
+    //ABconfigs.delParam(ALL);
     //Set WiFi to station mode
     WiFi.mode(WIFI_STA);
     //Set GPIO4 to HIGH for retain on APixel board useless on others boards
@@ -40,26 +40,27 @@ void setup(){
         return;
     }
 
+    //TODO
     //Button is connected! try to call to IFTTT
     for (int i = 0; i < 3; i++) {
         if (ifttt()) {
-            Serial.println("Success ifttt!");
             blinkLed.green(&led, 100, 2);
             break;
         } else {
-            Serial.println("WARNING: IFTTT failed! attempt nr " + i);
+            int attempt = i+1;
+            Serial.println("WARNING: IFTTT failed! attempt nr " + String(attempt));
             blinkLed.red(&led, 100, 2);
         }
     }
 
-    //Button is connected! try to call to IFTTT
+    //Button is connected! try to call custom URL
     for (int i = 0; i < 3; i++) {
         if (customurl()) {
-            Serial.println("Success custom url!");
             blinkLed.green(&led, 100, 2);
             break;
         } else {
-            Serial.println("WARNING: Custom URL failed! attempt nr " + i);
+            int attempt = i+1;
+            Serial.println("WARNING: Custom URL failed! attempt nr " + String(attempt));
             blinkLed.red(&led, 100, 2);
         }
     }

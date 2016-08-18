@@ -38,7 +38,7 @@ void handleWiFi() {
 
 void handleSetWiFi() {
 
-    wipeConfig(0,96);
+    ABconfigs.delParam(WIFI);
 
     String ssid = urlDecode(WEB_SERVER.arg("ssid"));
     Serial.print("SSID: ");
