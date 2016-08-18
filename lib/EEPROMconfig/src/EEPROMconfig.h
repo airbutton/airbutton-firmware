@@ -7,8 +7,8 @@
 typedef enum {
     WIFI_SSID,
     WIFI_PSW,
-    IFTTT_EVENT,
     IFTTT_KEY,
+    IFTTT_EVENT,
     CUSTOM_HOST,
     CUSTOM_URL
 } configs;

@@ -59,8 +59,8 @@ boolean customurl() {
     strPayload += "Content-Type: application/json\r\n";
     strPayload += "Content-Length:" + String(data.length()) + "\r\n\r\n";
     strPayload += data + "\r\n\r\n";
-    client.println(strPayload);
 
+    client.println(strPayload);
     Serial.println(strPayload);
 
     // Wait for a response

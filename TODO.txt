@@ -1,6 +1,6 @@
 -Aggiungere altri servizi configurabili in setup mode:
   -IFTTT
-  -Custom URL
+  -Custom URL (test: http://requestb.in/)
   -Blynk
   -https://thingspeak.com/
   -https://ubidots.com/
