@@ -1,4 +1,4 @@
-﻿#include <EEPROMconfig.h>
+#include <EEPROMconfig.h>
 
 EEPROMconfig::EEPROMconfig(){
     // WIFI
@@ -74,6 +74,26 @@ String EEPROMconfig::getParam(int configs){
         param = param.c_str();
     }
     return param;
+}
+
+void EEPROMconfig::setParam(int configs, String param){
+    int *range=eepromRange(configs);
+    for (int i = 0; i < param.length(); ++i){
+        EEPROM.write(range[0] + i, param[i]);
+    }
+    EEPROM.commit();
+}
+
+void EEPROMconfig::setParam(int configs, String par1, String par2){
+    int *range1=eepromRange(configs+1);
+    int *range2=eepromRange(configs+2);
+    for (int i = 0; i < par1.length(); ++i){
+        EEPROM.write(range1[0] + i, par1[i]);
+    }
+    for (int i = 0; i < par2.length(); ++i){
+        EEPROM.write(range2[0] + i, par2[i]);
+    }
+    EEPROM.commit();
 }
 
 void EEPROMconfig::delParam(int configs){

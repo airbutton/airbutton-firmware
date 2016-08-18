@@ -66,31 +66,23 @@ void handleSetCustomURL(){
 
     ABconfigs.delParam(CUSTOM);
 
-    String URL = urlDecode(WEB_SERVER.arg("URL"));
     String HOST = urlDecode(WEB_SERVER.arg("HOST"));
-    Serial.print("Custom URL: ");
-    Serial.println(URL);
     Serial.print("Base Host: ");
     Serial.println(HOST);
 
-    Serial.println("Writing Custom URL to EEPROM...");
-    for (int i = 0; i < HOST.length(); ++i) {
-        EEPROM.write(160 + i, HOST[i]);
-    }
+    String URL = urlDecode(WEB_SERVER.arg("URL"));
+    Serial.print("Custom URL: ");
+    Serial.println(URL);
 
-    Serial.println("Writing Custom URL to EEPROM...");
-    for (int i = 0; i < URL.length(); ++i) {
-        EEPROM.write(224 + i, URL[i]);
-    }
+    Serial.println("Writing Custom HOST and URL to EEPROM...");
+    ABconfigs.setParam(CUSTOM,HOST,URL);
 
-
-    EEPROM.commit();
     Serial.println("Custom URL setting write to EEPROM done!");
     String s = "<h1>Custom URL Setup complete.</h1>\n";
     s += "<p>At restart airbutton will try to send data to <br>\n";
-    s += "Custom URL: ";
-    s += URL;
-    s += " .\n";
-    s +="\n<a href='/'>Back</a></p>\n";
+    s += "Custom URL: <b>";
+    s += HOST + URL;
+    s += "</b>.\n";
+    s +="<br><a href='/'>Back</a></p>";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE, "Write Custom URL Settings", s));
 }

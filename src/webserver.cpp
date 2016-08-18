@@ -41,40 +41,27 @@ void handleSetWiFi() {
     ABconfigs.delParam(WIFI);
 
     String ssid = urlDecode(WEB_SERVER.arg("ssid"));
+    String dssid = urlDecode(WEB_SERVER.arg("dssid"));
+    if (!dssid.equals("")){
+        ssid = dssid;
+    }
     Serial.print("SSID: ");
     Serial.println(ssid);
-
-    String dssid = urlDecode(WEB_SERVER.arg("dssid"));
-    Serial.print("dSSID: ");
-    Serial.println(dssid);
 
     String pass = urlDecode(WEB_SERVER.arg("pass"));
     Serial.print("Password: ");
     Serial.println(pass);
 
-    Serial.println("Writing SSID to EEPROM...");
-    if (dssid == ""){
-        for (int i = 0; i < ssid.length(); ++i) {
-            EEPROM.write(i, ssid[i]);
-        }
-    } else {
-        for (int i = 0; i < dssid.length(); ++i) {
-            EEPROM.write(i, dssid[i]);
-        }
-    }
-    Serial.println("Writing Password to EEPROM...");
-    for (int i = 0; i < pass.length(); ++i) {
-        EEPROM.write(32 + i, pass[i]);
-    }
+    Serial.println("Writing SSID and Password to EEPROM...");
+    ABconfigs.setParam(WIFI,ssid,pass);
 
-    EEPROM.commit();
     Serial.println("WiFi settings write to EEPROM done!");
     String s = "<h1>Wifi Setup complete.</h1>\n";
-    s += "<p>At restart airbutton will try to connected to ";
+    s += "<p>At restart airbutton will try to connected to <b>";
     s += ssid;
-    s += " net, with ";
+    s += "</b> net, with <b>";
     s += pass;
-    s += " as password.\n";
-    s +="\n<a href='/'>Back</a></p>\n";
+    s += "</b> as password.\n";
+    s +="<br><a href='/'>Back</a></p>";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,"Write Wi-Fi Settings", s));
 }

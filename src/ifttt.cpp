@@ -78,23 +78,17 @@ void handleSetIFTTT(){
     Serial.print("IFTTT Event: ");
     Serial.println(EVENT);
 
-    Serial.println("Writing IFTTT Key to EEPROM...");
-    for (int i = 0; i < KEY.length(); ++i) {
-        EEPROM.write(96 + i, KEY[i]);
-    }
-    Serial.println("Writing IFTTT Event to EEPROM...");
-    for (int i = 0; i < EVENT.length(); ++i) {
-        EEPROM.write(128 + i, EVENT[i]);
-    }
-    EEPROM.commit();
+    Serial.println("Writing IFTTT Key and event to EEPROM...");
+    ABconfigs.setParam(IFTTT,KEY,EVENT);
+
     Serial.println("IFTTT settings write to EEPROM done!");
     String s = "<h1>IFTTT Setup complete.</h1>\n";
     s += "<p>At restart airbutton will try to send data to <br>\n";
-    s += "IFTTT event: ";
+    s += "IFTTT event: <b>";
     s += EVENT;
-    s += " with key: ";
+    s += "</b> with key: <b>";
     s += KEY;
-    s += " .\n";
-    s +="\n<a href='/'>Back</a></p>\n";
+    s += "</b>.\n";
+    s +="<br><a href='/'>Back</a></p>";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,"Write IFTTT Settings", s));
 }

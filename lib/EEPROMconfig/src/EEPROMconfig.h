@@ -28,7 +28,8 @@ class EEPROMconfig{
 public:
     EEPROMconfig();
     String getParam(int configs);
-    //    void setParam(int configs, String param);
+    void setParam(int configs, String param);
+    void setParam(int configs, String param1, String param2);
     void delParam(int configs);
 
 private:
