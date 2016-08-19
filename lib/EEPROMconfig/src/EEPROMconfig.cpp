@@ -22,6 +22,7 @@ int *EEPROMconfig::eepromRange(int configs){
     case ALL:
         range[0] = wifiParam[0];
         range[1] = customParam[1];
+        break;
     case WIFI:
         range[0] = wifiParam[0];
         range[1] = wifiParam[2];
