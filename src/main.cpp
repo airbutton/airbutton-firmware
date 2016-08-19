@@ -9,8 +9,6 @@
 #include "customurl.h"
 
 void setup(){
-    //Wipe EEPROM for testing only!
-    //ABconfigs.delParam(ALL);
     //Set WiFi to station mode
     WiFi.mode(WIFI_STA);
     //Set GPIO4 to HIGH for retain on APixel board useless on others boards
@@ -23,6 +21,9 @@ void setup(){
     led.begin();
     led.show();
     blinkLed.green(&led, 100, 2);
+
+    //Wipe EEPROM for testing only!
+    //ABconfigs.delParam(ALL);
 
     //Try to load saved config
     if (!loadWiFiSavedConfig()) {

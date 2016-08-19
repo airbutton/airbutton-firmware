@@ -14,7 +14,7 @@ EEPROMconfig::EEPROMconfig(){
     paramEnd[IFTTT_EVENT]   = paramEnd[IFTTT_KEY] +32;  //160
     paramEnd[CUSTOM_HOST]   = paramEnd[IFTTT_EVENT] +64;//224
     paramEnd[CUSTOM_URL]    = paramEnd[CUSTOM_HOST] +64;//288
-    configEnd = paramEnd[sizeof(paramEnd)];
+    configEnd = paramEnd[LAST-1];
 }
 
 int *EEPROMconfig::eepromRange(int configs){

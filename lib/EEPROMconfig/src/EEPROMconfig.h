@@ -18,7 +18,9 @@ typedef enum {
     //Custom Service
     CUSTOM,
     CUSTOM_HOST,
-    CUSTOM_URL
+    CUSTOM_URL,
+    //Array dimension
+    LAST
 } configs;
 
 class EEPROMconfig{
@@ -34,7 +36,7 @@ public:
 private:
     int *eepromRange(int configs);
     int configStart;
-    int paramEnd[10];
+    int paramEnd[LAST];
     int configEnd;
 
 //    int wifiParam[3]
