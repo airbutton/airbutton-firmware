@@ -22,9 +22,7 @@ typedef enum {
 } configs;
 
 class EEPROMconfig{
-    int wifiParam[3];
-    int iftttParam[2];
-    int customParam[2];
+
 public:
     EEPROMconfig();
     String getParam(int configs);
@@ -35,6 +33,11 @@ public:
 
 private:
     int *eepromRange(int configs);
+    int configStart;
+    int paramEnd[10];
+    int configEnd;
+
+//    int wifiParam[3]
 };
 
 #endif // EEPROMCONFIG_H

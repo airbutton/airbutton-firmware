@@ -7,57 +7,58 @@ EEPROMconfig::EEPROMconfig(){
     // event 96-128 key 128-159
     // Custom Service
     // host 160-224 url 224-287
-    wifiParam[0] = 0;                   // 0
-    wifiParam[1] = wifiParam[0]+32;     // 32
-    wifiParam[2] = wifiParam[1]+64;     // 96
-    iftttParam[0] = wifiParam[2]+32;    // 128
-    iftttParam[1] = iftttParam[0]+32;   // 160
-    customParam[0] = iftttParam[1]+64;  // 224
-    customParam[1] = customParam[0]+64; // 288
+    configStart = 0;
+    paramEnd[WIFI_SSID] = configStart + 32;             //32
+    paramEnd[WIFI_PSW]  = paramEnd[WIFI_SSID] + 64;     //96
+    paramEnd[IFTTT_KEY] = paramEnd[WIFI_PSW] +32;       //128
+    paramEnd[IFTTT_EVENT]   = paramEnd[IFTTT_KEY] +32;  //160
+    paramEnd[CUSTOM_HOST]   = paramEnd[IFTTT_EVENT] +64;//224
+    paramEnd[CUSTOM_URL]    = paramEnd[CUSTOM_HOST] +64;//288
+    configEnd = paramEnd[sizeof(paramEnd)];
 }
 
 int *EEPROMconfig::eepromRange(int configs){
     int *range = new int[2];
     switch (configs) {
     case ALL:
-        range[0] = wifiParam[0];
-        range[1] = customParam[1];
+        range[0] = configStart;
+        range[1] = configEnd;
         break;
     case WIFI:
-        range[0] = wifiParam[0];
-        range[1] = wifiParam[2];
+        range[0] = configStart;
+        range[1] = paramEnd[WIFI_PSW];
         break;
     case WIFI_SSID:
-        range[0] = wifiParam[0];
-        range[1] = wifiParam[1];
+        range[0] = configStart;
+        range[1] = paramEnd[WIFI_SSID];
         break;
     case WIFI_PSW:
-        range[0] = wifiParam[1];
-        range[1] = wifiParam[2];
+        range[0] = paramEnd[WIFI_SSID];
+        range[1] = paramEnd[WIFI_PSW];
         break;
     case IFTTT:
-        range[0] = wifiParam[2];
-        range[1] = iftttParam[1];
+        range[0] = paramEnd[WIFI_PSW];
+        range[1] = paramEnd[IFTTT_EVENT];
         break;
     case IFTTT_KEY:
-        range[0] = wifiParam[2];
-        range[1] = iftttParam[0];
+        range[0] = paramEnd[WIFI_PSW];
+        range[1] = paramEnd[IFTTT_KEY];
         break;
     case IFTTT_EVENT:
-        range[0] = iftttParam[0];
-        range[1] = iftttParam[1];
+        range[0] = paramEnd[IFTTT_KEY];
+        range[1] = paramEnd[IFTTT_EVENT];
         break;
     case CUSTOM:
-        range[0] = iftttParam[1];
-        range[1] = customParam[1];
+        range[0] = paramEnd[IFTTT_EVENT];
+        range[1] = paramEnd[CUSTOM_URL];
         break;
     case CUSTOM_HOST:
-        range[0] = iftttParam[1];
-        range[1] = customParam[0];
+        range[0] = paramEnd[IFTTT_EVENT];
+        range[1] = paramEnd[CUSTOM_HOST];
         break;
     case CUSTOM_URL:
-        range[0] = customParam[0];
-        range[1] = customParam[1];
+        range[0] = paramEnd[CUSTOM_HOST];
+        range[1] = paramEnd[CUSTOM_URL];
         break;
     default:
         break;
