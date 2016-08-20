@@ -2,15 +2,31 @@
 
 void handleNotFound() {
     String s = "<h2>Configuration Mode</h2>\n";
-    s += "<p>\n<a href='/wifi'>WiFi</a></p>\n";
-    s += "<p>\n<a href='/ifttt'>IFTTT</a></p>\n";
-    s += "<p>\n<a href='/customurl'>Custom URL</a></p>\n";
-    s += "<p>All done! Please <a href='/reboot'>Reboot</a></p>\n";
+    s += "<p><a href='/wifi'>WiFi</a></p>\n";
+    s += "<form method='get' action='reboot'>\n";
+    s += "<fieldset>\n<legend>Select services that you want to enable.</legend><br>\n";
+    s += "<p><input type='checkbox' name='ifttt' value='true' />&nbsp;&nbsp;&nbsp;<a href='/ifttt'>IFTTT</a></p>\n";
+    s += "<p><input type='checkbox' name='custom' value='true' />&nbsp;&nbsp;&nbsp;<a href='/customurl'>Custom URL</a></p><br>\n";
+    s += "<p><input type='submit' value='Submit & Reboot' /></p>\n";
+    s += "</fieldset>";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,"Configuration mode", s));
 }
 
 void handleReboot(){
     String s = "<h2>Rebooting!</h2>\n";
+    s += "<p>Services enabled: <p>\n";
+    String ifttt = urlDecode(WEB_SERVER.arg("ifttt"));
+    String custom = urlDecode(WEB_SERVER.arg("custom"));
+    if (ifttt.equals("true")){
+    //    ABconfigs.setParam(IFTTT,true);
+        Serial.println("IFTTT Enabled");
+        s += "<p><b>IFTTT</b><p>\n";
+    }
+    if (custom.equals("true")){
+    //    ABconfigs.setParam(CUSTOM,true);
+        Serial.println("CUSTOM URL Enabled");
+        s += "<p><b>Custom URL</b><p>\n";
+    }
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,"Rebooting", s));
     Serial.println("Rebooting...");
     WiFi.mode(WIFI_OFF);
@@ -29,10 +45,7 @@ void handleWiFi() {
     s += "\n</select>\n";
     s += "<br><label>or</label>\n<input name='dssid' maxlength='32' placeholder='SSID'/>\n";
     s += "<br><br><label>Password: </label>\n<input name='pass' maxlength='64' type='password' placeholder='password'>\n";
-    /*  s += "<br><br><h2>IFTTT Settings</h2>\n";
-    s += "<label>IFTTT Key: </label><input name='IFTTT_KEY' maxlenght='32'><br>\n";
-    s += "<br><label>IFTTT Event: </label><input name='IFTTT_EVENT' maxlenght='32'><br>\n";
-*/  s += "<br><br><input type='submit' value='Submit'>\n</form>";
+    s += "<br><br><input type='submit' value='Submit'>\n</form>";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,"Wi-Fi Settings", s));
 }
 
