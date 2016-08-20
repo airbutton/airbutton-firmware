@@ -21,10 +21,9 @@ void setup(){
     led.begin();
     led.show();
     blinkLed.green(&led, 100, 2);
-
     //EEPROM debug!
     //ABconfigs.delParam(ALL);
-    //ABconfigs.debugEEPROMrange();
+    ABconfigs.debugEEPROMrange();
 
     //Try to load saved config
     if (!loadWiFiSavedConfig()) {

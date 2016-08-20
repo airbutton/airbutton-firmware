@@ -29,10 +29,13 @@ void EEPROMconfig::debugEEPROMrange(){
                                 "LAST"};
     for (int i = 1; i < LAST; i++){
         int *range = eepromRange(i);
-        Serial.print("paramEnd[" + String(i) + "] = " + paramEnd[i]
-                     + "   \t" + config_name[i-1] + "\t" );
-        Serial.printf("Start = %d\t",range[0]);
-        Serial.printf("\tEnd = %d\n",range[1]);
+        String param = getParam(i);
+        Serial.printf("%2d",i);
+        Serial.printf("paramEnd[%-11s] =",config_name[i-1].c_str());
+        Serial.printf("%d",paramEnd[i]);
+        Serial.printf("\tStart = %3d",range[0]);
+        Serial.printf("End = %3d",range[1]);
+        Serial.printf("Value = %s\n",param.c_str());
     }
     Serial.printf("configEnd = %d\n",configEnd);
     Serial.println("--------------------------");
@@ -89,13 +92,11 @@ int *EEPROMconfig::eepromRange(int configs){
 
 String EEPROMconfig::getParam(int configs){
     int *range=eepromRange(configs);
-    String param = "";
-    if (EEPROM.read(0) != 0) {
-        for ( int i = range[0]; i < range[1]; ++i){
-            param += char(EEPROM.read(i));
-        }
-        param = param.c_str();
+    String param;
+    for ( int i = range[0]; i < range[1]; ++i){
+        param += char(EEPROM.read(i));
     }
+    param = param.c_str();
     return param;
 }
 
