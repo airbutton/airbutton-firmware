@@ -6,7 +6,7 @@
 
 typedef enum {
     //ALL configs
-    ALL,
+    ALL = 1,
     //WIFI configs
     WIFI,
     WIFI_SSID,
@@ -38,8 +38,6 @@ private:
     int configStart;
     int paramEnd[LAST];
     int configEnd;
-
-//    int wifiParam[3]
 };
 
 #endif // EEPROMCONFIG_H
