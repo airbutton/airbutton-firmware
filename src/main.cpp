@@ -22,8 +22,9 @@ void setup(){
     led.show();
     blinkLed.green(&led, 100, 2);
 
-    //Wipe EEPROM for testing only!
+    //EEPROM debug!
     //ABconfigs.delParam(ALL);
+    //ABconfigs.debugEEPROMrange();
 
     //Try to load saved config
     if (!loadWiFiSavedConfig()) {

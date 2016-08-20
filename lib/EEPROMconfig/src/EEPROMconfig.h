@@ -27,6 +27,7 @@ class EEPROMconfig{
 
 public:
     EEPROMconfig();
+    void debugEEPROMrange();
     String getParam(int configs);
     //TODO better overloading here
     void setParam(int configs, String param);
