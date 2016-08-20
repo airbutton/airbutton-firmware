@@ -10,6 +10,8 @@
 #include <ESP8266WebServer.h>
 #include "utils.h"
 #include "webserver.h"
+#include "ifttt.h"
+#include "customurl.h"
 
 extern uint8_t RETPIN;
 extern boolean setupModeStatus;

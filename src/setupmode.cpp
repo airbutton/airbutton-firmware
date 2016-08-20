@@ -1,8 +1,4 @@
 #include "setupmode.h"
-#include "ifttt.h"
-#include "customurl.h"
-
-//void handleCustomURL();
 
 void setupMode(){
     digitalWrite(RETPIN,HIGH);
