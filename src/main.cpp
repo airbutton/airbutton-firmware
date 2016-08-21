@@ -5,10 +5,8 @@
 #include "config.h"
 #include "utils.h"
 #include "setupmode.h"
-#include "ifttt.h"
-#include "customurl.h"
 
-void setup(){
+void setup() {
     //Set WiFi to station mode
     WiFi.mode(WIFI_STA);
     //Set GPIO4 to HIGH for retain on APixel board useless on others boards
@@ -23,7 +21,7 @@ void setup(){
     blinkLed.green(&led, 100, 2);
     //EEPROM debug!
     //ABconfigs.delParam(ALL);
-    ABconfigs.debugEEPROMrange();
+    //ABconfigs.debugEEPROMrange();
 
     //Try to load saved config
     if (!loadWiFiSavedConfig()) {
@@ -43,26 +41,30 @@ void setup(){
 
     //TODO
     //Button is connected! try to call to IFTTT
-    for (int i = 0; i < 3; i++) {
-        if (ifttt()) {
-            blinkLed.green(&led, 100, 2);
-            break;
-        } else {
-            int attempt = i+1;
-            Serial.println("WARNING: IFTTT failed! attempt nr " + String(attempt));
-            blinkLed.red(&led, 100, 2);
+    if (ABconfigs.getServiceStatus(IFTTT)) {
+        for (int i = 0; i < 3; i++) {
+            if (ifttt()) {
+                blinkLed.green(&led, 100, 2);
+                break;
+            } else {
+                int attempt = i + 1;
+                Serial.println("WARNING: IFTTT failed! attempt nr " + String(attempt));
+                blinkLed.red(&led, 100, 2);
+            }
         }
     }
 
     //Button is connected! try to call custom URL
-    for (int i = 0; i < 3; i++) {
-        if (customurl()) {
-            blinkLed.green(&led, 100, 2);
-            break;
-        } else {
-            int attempt = i+1;
-            Serial.println("WARNING: Custom URL failed! attempt nr " + String(attempt));
-            blinkLed.red(&led, 100, 2);
+    if (ABconfigs.getServiceStatus(CUSTOM)) {
+        for (int i = 0; i < 3; i++) {
+            if (customurl()) {
+                blinkLed.green(&led, 100, 2);
+                break;
+            } else {
+                int attempt = i + 1;
+                Serial.println("WARNING: Custom URL failed! attempt nr " + String(attempt));
+                blinkLed.red(&led, 100, 2);
+            }
         }
     }
 
@@ -82,8 +84,8 @@ void setup(){
 void loop() {
     if (setupModeStatus) {
         WEB_SERVER.handleClient();
-        blinkLed.violet(&led, 0,10);
-        if ((millis()-startTime) > TIMEOUT){
+        blinkLed.violet(&led, 0, 10);
+        if ((millis() - startTime) > TIMEOUT) {
             Serial.println("Set up mode timed out.");
             Serial.println("WARNING: APixel Board power off");
             delay(1000);

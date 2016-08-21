@@ -1,12 +1,20 @@
 #include "webserver.h"
 
 void handleNotFound() {
+    String iftt_status;
+    String custom_status;
+    if (ABconfigs.getServiceStatus(IFTTT)){
+        iftt_status = "checked";
+    }
+    if (ABconfigs.getServiceStatus(CUSTOM)){
+        custom_status = "checked";
+    }
     String s = "<h2>Configuration Mode</h2>\n";
     s += "<p><a href='/wifi'>WiFi</a></p>\n";
     s += "<form method='get' action='reboot'>\n";
     s += "<fieldset>\n<legend>Select services that you want to enable.</legend><br>\n";
-    s += "<p><input type='checkbox' name='ifttt' value='true' />&nbsp;&nbsp;&nbsp;<a href='/ifttt'>IFTTT</a></p>\n";
-    s += "<p><input type='checkbox' name='custom' value='true' />&nbsp;&nbsp;&nbsp;<a href='/customurl'>Custom URL</a></p><br>\n";
+    s += "<p><input type='checkbox' name='ifttt' value='true' " + iftt_status + "/>&nbsp;&nbsp;&nbsp;<a href='/ifttt'>IFTTT</a></p>\n";
+    s += "<p><input type='checkbox' name='custom' value='true' " + custom_status + "/>&nbsp;&nbsp;&nbsp;<a href='/customurl'>Custom URL</a></p><br>\n";
     s += "<p><input type='submit' value='Submit & Reboot' /></p>\n";
     s += "</fieldset>";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,"Configuration mode", s));
@@ -18,19 +26,21 @@ void handleReboot(){
     String ifttt = urlDecode(WEB_SERVER.arg("ifttt"));
     String custom = urlDecode(WEB_SERVER.arg("custom"));
     if (ifttt.equals("true")){
-    //    ABconfigs.setParam(IFTTT,true);
-        Serial.println("IFTTT Enabled");
+        ABconfigs.setService(IFTTT, (boolean) true);
         s += "<p><b>IFTTT</b><p>\n";
+    } else {
+        ABconfigs.setService(IFTTT, (boolean) false);
     }
     if (custom.equals("true")){
-    //    ABconfigs.setParam(CUSTOM,true);
-        Serial.println("CUSTOM URL Enabled");
+        ABconfigs.setService(CUSTOM, (boolean) true);
         s += "<p><b>Custom URL</b><p>\n";
+    } else {
+        ABconfigs.setService(CUSTOM, (boolean) false);
     }
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,"Rebooting", s));
     Serial.println("Rebooting...");
     WiFi.mode(WIFI_OFF);
-    delay(500);
+    delay(1000);
     ESP.restart();
     //NOTE only the first time after flash Reboot will stuck the chip
 }

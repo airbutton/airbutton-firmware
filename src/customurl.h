@@ -14,7 +14,9 @@ extern Adafruit_NeoPixel led;
 extern ColorBlink blinkLed;
 
 boolean customurl();
+
 void handleCustomURL();
+
 void handleSetCustomURL();
 
 #endif // CUSTOMURL_H

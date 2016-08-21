@@ -23,19 +23,29 @@ typedef enum {
     LAST
 } configs;
 
-class EEPROMconfig{
+class EEPROMconfig {
 
 public:
     EEPROMconfig();
+
     void debugEEPROMrange();
+
     String getParam(int configs);
+
+    boolean getServiceStatus(int configs);
+
     //TODO better overloading here
+    void setService(int configs, boolean status);
+
     void setParam(int configs, String param);
+
     void setParam(int configs, String param1, String param2);
+
     void delParam(int configs);
 
 private:
     int *eepromRange(int configs);
+
     int configStart;
     int paramEnd[LAST];
     int configEnd;

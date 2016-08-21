@@ -14,7 +14,9 @@ extern Adafruit_NeoPixel led;
 extern ColorBlink blinkLed;
 
 boolean ifttt();
+
 void handleIFTTT();
+
 void handleSetIFTTT();
 
 #endif // IFTT_H

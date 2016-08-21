@@ -12,7 +12,7 @@ boolean customurl() {
     // Make sure we can connect
     if (!client.connect(HOST.c_str(), 80)) {
         Serial.println("ERROR: Can't connect to host!");
-        return false;
+        return (boolean) false;
     }
 
     // Build JSON data string
@@ -41,8 +41,8 @@ boolean customurl() {
 
     // Wait for a response
     while (client.connected()) {
-        if (client.available()){
-            char response = client.read();
+        if (client.available()) {
+            char response = (char) client.read();
             Serial.print(response);
         }
     }
@@ -50,19 +50,21 @@ boolean customurl() {
     blinkLed.blue(&led, 100, 1);
 
     Serial.println("Custom URL request sent. Goodbye");
-    return true;
+    return (boolean) true;
 }
 
-void handleCustomURL(){
+void handleCustomURL() {
     String s = "<h2>Custom URL Settings</h2>\n";
     s += "<form method='get' action='setcustomurl'>\n";
-    s += "<label>Host: </label><input value='" + ABconfigs.getParam(CUSTOM_HOST) + "' name='HOST' maxlenght='200'><br>\n";
-    s += "<label>Custom URL: </label><input value='" +  ABconfigs.getParam(CUSTOM_URL) + "' name='URL' maxlenght='200'><br>\n";
+    s += "<label>Host: </label><input value='" + ABconfigs.getParam(CUSTOM_HOST) +
+            "' name='HOST' maxlenght='200'><br>\n";
+    s += "<label>Custom URL: </label><input value='" + ABconfigs.getParam(CUSTOM_URL) +
+            "' name='URL' maxlenght='200'><br>\n";
     s += "<br><br><input type='submit' value='Submit'>\n</form>";
-    WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,"Custom URL Settings", s));
+    WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE, "Custom URL Settings", s));
 }
 
-void handleSetCustomURL(){
+void handleSetCustomURL() {
 
     ABconfigs.delParam(CUSTOM);
 
@@ -75,7 +77,7 @@ void handleSetCustomURL(){
     Serial.println(URL);
 
     Serial.println("Writing Custom HOST and URL to EEPROM...");
-    ABconfigs.setParam(CUSTOM,HOST,URL);
+    ABconfigs.setParam(CUSTOM, HOST, URL);
 
     Serial.println("Custom URL setting write to EEPROM done!");
     String s = "<h1>Custom URL Setup complete.</h1>\n";
@@ -83,6 +85,6 @@ void handleSetCustomURL(){
     s += "Custom URL: <b>";
     s += HOST + URL;
     s += "</b>.\n";
-    s +="<br><a href='/'>Back</a></p>";
+    s += "<br><a href='/'>Back</a></p>";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE, "Write Custom URL Settings", s));
 }

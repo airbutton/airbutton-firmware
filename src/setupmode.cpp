@@ -1,9 +1,9 @@
 #include "setupmode.h"
 
-void setupMode(){
-    digitalWrite(RETPIN,HIGH);
+void setupMode() {
+    digitalWrite(RETPIN, HIGH);
     Serial.println("Setup mode started");
-    setupModeStatus = true;
+    setupModeStatus = (boolean) true;
     DNSServer DNS_SERVER;
 
     //WiFI start in client mode
@@ -38,7 +38,7 @@ void setupMode(){
     WEB_SERVER.on("/setifttt", handleSetIFTTT);
     WEB_SERVER.on("/setcustomurl", handleSetCustomURL);
 
-    WEB_SERVER.on("/reboot",handleReboot);
+    WEB_SERVER.on("/reboot", handleReboot);
     WEB_SERVER.begin();
     startTime = millis();
 }
