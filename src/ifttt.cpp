@@ -24,7 +24,9 @@ boolean ifttt() {
     String value_2 = WiFi.SSID();
     String value_3 = String(vcc());
     String data;
-    data = data + "\n" + "{\"value1\":\"" + value_1 + "\",\"value2\":\"" + value_2 + "\",\"value3\":\"" + value_3 +
+    data = data + "\n" + "{\"value1\":\"" + value_1 +
+            "\",\"value2\":\"" + value_2 +
+            "\",\"value3\":\"" + value_3 +
             "\"}";
 
     blinkLed.blue(&led, 100, 1);
@@ -61,12 +63,15 @@ boolean ifttt() {
 void handleIFTTT() {
     String s = "<h2>IFTTT Settings</h2>\n";
     s += "<form method='get' action='setifttt'>\n";
-    s += "<label>IFTTT Key: </label><input value='" + ABconfigs.getParam(IFTTT_KEY) +
+    s += "<label>IFTTT Key: </label><input value='" +
+            ABconfigs.getParam(IFTTT_KEY) +
             "' name='KEY' maxlenght='32'><br>\n";
-    s += "<br><label>IFTTT Event: </label><input value='" + ABconfigs.getParam(IFTTT_EVENT) +
+    s += "<br><label>IFTTT Event: </label><input value='" +
+            ABconfigs.getParam(IFTTT_EVENT) +
             "' name='EVENT' maxlenght='32'><br>\n";
     s += "<br><br><input type='submit' value='Submit'>\n</form>";
-    WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE, "IFTTT Settings", s));
+    WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,
+                                               "IFTTT Settings", s));
 }
 
 void handleSetIFTTT() {
@@ -93,5 +98,6 @@ void handleSetIFTTT() {
     s += KEY;
     s += "</b>.\n";
     s += "<br><a href='/'>Back</a></p>";
-    WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE, "Write IFTTT Settings", s));
+    WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,
+                                               "Write IFTTT Settings", s));
 }

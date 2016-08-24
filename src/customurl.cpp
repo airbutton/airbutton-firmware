@@ -21,7 +21,9 @@ boolean customurl() {
     String vVCC = String(vcc());
 
     String data;
-    data = "{\"macaddress\":\"" + vMac + "\",\"ssid\":\"" + vSid + "\",\"vcc\":\"" + vVCC + "\"}";
+    data = "{\"macaddress\":\"" + vMac +
+            "\",\"ssid\":\"" + vSid +
+            "\",\"vcc\":\"" + vVCC + "\"}";
 
     blinkLed.blue(&led, 100, 1);
 
@@ -56,12 +58,15 @@ boolean customurl() {
 void handleCustomURL() {
     String s = "<h2>Custom URL Settings</h2>\n";
     s += "<form method='get' action='setcustomurl'>\n";
-    s += "<label>Host: </label><input value='" + ABconfigs.getParam(CUSTOM_HOST) +
+    s += "<label>Host: </label><input value='" +
+            ABconfigs.getParam(CUSTOM_HOST) +
             "' name='HOST' maxlenght='200'><br>\n";
-    s += "<label>Custom URL: </label><input value='" + ABconfigs.getParam(CUSTOM_URL) +
+    s += "<label>Custom URL: </label><input value='" +
+            ABconfigs.getParam(CUSTOM_URL) +
             "' name='URL' maxlenght='200'><br>\n";
     s += "<br><br><input type='submit' value='Submit'>\n</form>";
-    WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE, "Custom URL Settings", s));
+    WEB_SERVER.send(200, "text/html",
+                    makePage(DEVICE_TITLE, "Custom URL Settings", s));
 }
 
 void handleSetCustomURL() {
@@ -86,5 +91,6 @@ void handleSetCustomURL() {
     s += HOST + URL;
     s += "</b>.\n";
     s += "<br><a href='/'>Back</a></p>";
-    WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE, "Write Custom URL Settings", s));
+    WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,
+                                               "Write Custom URL Settings", s));
 }

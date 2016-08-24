@@ -48,7 +48,8 @@ void setup() {
                 break;
             } else {
                 int attempt = i + 1;
-                Serial.println("WARNING: IFTTT failed! attempt nr " + String(attempt));
+                Serial.println("WARNING: IFTTT failed! attempt nr "
+                               + String(attempt));
                 blinkLed.red(&led, 100, 2);
             }
         }
@@ -62,7 +63,8 @@ void setup() {
                 break;
             } else {
                 int attempt = i + 1;
-                Serial.println("WARNING: Custom URL failed! attempt nr " + String(attempt));
+                Serial.println("WARNING: Custom URL failed! attempt nr "
+                               + String(attempt));
                 blinkLed.red(&led, 100, 2);
             }
         }

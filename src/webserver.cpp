@@ -13,8 +13,10 @@ void handleNotFound() {
     s += "<p><a href='/wifi'>WiFi</a></p>\n";
     s += "<form method='get' action='reboot'>\n";
     s += "<fieldset>\n<legend>Select services that you want to enable.</legend><br>\n";
-    s += "<p><input type='checkbox' name='ifttt' value='true' " + iftt_status + "/>&nbsp;&nbsp;&nbsp;<a href='/ifttt'>IFTTT</a></p>\n";
-    s += "<p><input type='checkbox' name='custom' value='true' " + custom_status + "/>&nbsp;&nbsp;&nbsp;<a href='/customurl'>Custom URL</a></p><br>\n";
+    s += "<p><input type='checkbox' name='ifttt' value='true' " +
+            iftt_status + "/>&nbsp;&nbsp;&nbsp;<a href='/ifttt'>IFTTT</a></p>\n";
+    s += "<p><input type='checkbox' name='custom' value='true' " +
+            custom_status + "/>&nbsp;&nbsp;&nbsp;<a href='/customurl'>Custom URL</a></p><br>\n";
     s += "<p><input type='submit' value='Submit & Reboot' /></p>\n";
     s += "</fieldset>";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,"Configuration mode", s));
