@@ -65,10 +65,10 @@ void handleIFTTT() {
     s += "<form method='get' action='setifttt'>\n";
     s += "<label>IFTTT Key: <input value='" +
             ABconfigs.getParam(IFTTT_KEY) +
-            "' name='KEY' maxlenght='32'></label><br>\n";
+            "' name='KEY' maxlenght='200'></label><br>\n";
     s += "<br><label>IFTTT Event: <input value='" +
             ABconfigs.getParam(IFTTT_EVENT) +
-            "' name='EVENT' maxlenght='32'></label><br>\n";
+            "' name='EVENT' maxlenght='200'></label><br>\n";
     s += "<br><br><input type='submit' value='Submit'>\n</form>";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,
                                                "IFTTT Settings", s));
