@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include <ESP8266WebServer.h>
 #include <EEPROM.h>
+#include <FS.h>
 #include "utils.h"
 #include "setupmode.h"
 
@@ -18,5 +19,7 @@ void handleReboot();
 void handleWiFi();
 
 void handleSetWiFi();
+
+void handleLogo();
 
 #endif // WEBSERVER_H

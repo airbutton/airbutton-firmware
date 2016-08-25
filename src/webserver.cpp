@@ -90,3 +90,10 @@ void handleSetWiFi() {
     s +="<br><a href='/'>Back</a></p>";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,"Write Wi-Fi Settings", s));
 }
+
+void handleLogo() {
+    SPIFFS.begin();
+    File file = SPIFFS.open("/img/logo_color_small.png","r");
+    WEB_SERVER.streamFile(file, "image/png");
+    file.close();
+}

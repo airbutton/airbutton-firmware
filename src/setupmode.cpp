@@ -39,6 +39,7 @@ void setupMode() {
     WEB_SERVER.on("/setcustomurl", handleSetCustomURL);
 
     WEB_SERVER.on("/reboot", handleReboot);
+    WEB_SERVER.on("/img/logo_color_small.png", handleLogo);
     WEB_SERVER.begin();
     startTime = millis();
 }
