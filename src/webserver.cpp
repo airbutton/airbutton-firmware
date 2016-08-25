@@ -29,13 +29,13 @@ void handleReboot(){
     String custom = urlDecode(WEB_SERVER.arg("custom"));
     if (ifttt.equals("true")){
         ABconfigs.setService(IFTTT, (boolean) true);
-        s += "<p><b>IFTTT</b><p>\n";
+        s += "<p><b>IFTTT</b></p>\n";
     } else {
         ABconfigs.setService(IFTTT, (boolean) false);
     }
     if (custom.equals("true")){
         ABconfigs.setService(CUSTOM, (boolean) true);
-        s += "<p><b>Custom URL</b><p>\n";
+        s += "<p><b>Custom URL</b></p>\n";
     } else {
         ABconfigs.setService(CUSTOM, (boolean) false);
     }
