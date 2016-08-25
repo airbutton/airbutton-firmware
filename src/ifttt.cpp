@@ -56,19 +56,19 @@ boolean ifttt() {
 
     blinkLed.blue(&led, 100, 1);
 
-    Serial.println("IFTTT request sent. Goodbye");
+    Serial.println("\nIFTTT request sent. Goodbye");
     return (boolean) true;
 }
 
 void handleIFTTT() {
     String s = "<h2>IFTTT Settings</h2>\n";
     s += "<form method='get' action='setifttt'>\n";
-    s += "<label>IFTTT Key: </label><input value='" +
+    s += "<label>IFTTT Key: <input value='" +
             ABconfigs.getParam(IFTTT_KEY) +
-            "' name='KEY' maxlenght='32'><br>\n";
-    s += "<br><label>IFTTT Event: </label><input value='" +
+            "' name='KEY' maxlenght='32'></label><br>\n";
+    s += "<br><label>IFTTT Event: <input value='" +
             ABconfigs.getParam(IFTTT_EVENT) +
-            "' name='EVENT' maxlenght='32'><br>\n";
+            "' name='EVENT' maxlenght='32'></label><br>\n";
     s += "<br><br><input type='submit' value='Submit'>\n</form>";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,
                                                "IFTTT Settings", s));
