@@ -51,19 +51,19 @@ boolean customurl() {
 
     blinkLed.blue(&led, 100, 1);
 
-    Serial.println("Custom URL request sent. Goodbye");
+    Serial.println("/nCustom URL request sent. Goodbye");
     return (boolean) true;
 }
 
 void handleCustomURL() {
     String s = "<h2>Custom URL Settings</h2>\n";
     s += "<form method='get' action='setcustomurl'>\n";
-    s += "<label>Host: </label><input value='" +
+    s += "<label>Host: <input value='" +
             ABconfigs.getParam(CUSTOM_HOST) +
-            "' name='HOST' maxlenght='200'><br>\n";
-    s += "<label>Custom URL: </label><input value='" +
+            "' name='HOST' maxlenght='200'></label><br>\n";
+    s += "<label>Custom URL: <input value='" +
             ABconfigs.getParam(CUSTOM_URL) +
-            "' name='URL' maxlenght='200'><br>\n";
+            "' name='URL' maxlenght='200'></label><br>\n";
     s += "<br><br><input type='submit' value='Submit'>\n</form>";
     WEB_SERVER.send(200, "text/html",
                     makePage(DEVICE_TITLE, "Custom URL Settings", s));
