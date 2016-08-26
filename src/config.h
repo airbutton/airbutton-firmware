@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include <Adafruit_NeoPixel.h>
 #include <ESP8266WebServer.h>
+#include <DNSServer.h>
 #include <ColorBlink.h>
 #include <EEPROMconfig.h>
 
@@ -22,6 +23,7 @@ EEPROMconfig ABconfigs;
 Adafruit_NeoPixel led = Adafruit_NeoPixel(1, RGBPIN, NEO_GRB + NEO_KHZ800);
 ColorBlink blinkLed = ColorBlink();
 ESP8266WebServer WEB_SERVER(80);
+DNSServer DNS_SERVER;
 
 //Global vars
 boolean setupModeStatus = false;

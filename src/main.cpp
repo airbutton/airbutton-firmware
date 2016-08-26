@@ -85,6 +85,7 @@ void setup() {
 
 void loop() {
     if (setupModeStatus) {
+        DNS_SERVER.processNextRequest();
         WEB_SERVER.handleClient();
         blinkLed.violet(&led, 0, 10);
         if ((millis() - startTime) > TIMEOUT) {

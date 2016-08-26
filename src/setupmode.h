@@ -8,6 +8,7 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266WiFiAP.h>
 #include <ESP8266WebServer.h>
+#include <ESP8266mDNS.h>
 #include "utils.h"
 #include "webserver.h"
 #include "ifttt.h"
@@ -20,6 +21,7 @@ extern String AP_SSID;
 extern unsigned long startTime;
 extern String SSID_LIST;
 extern ESP8266WebServer WEB_SERVER;
+extern DNSServer DNS_SERVER;
 extern Adafruit_NeoPixel led;
 extern ColorBlink blinkLed;
 
