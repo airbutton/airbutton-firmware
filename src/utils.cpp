@@ -130,3 +130,7 @@ float vcc() {
     vdd = (float) ESP.getVcc() / (float) 920;
     return vdd;
 }
+
+boolean loadConfig(){
+
+};

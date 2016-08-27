@@ -7,6 +7,7 @@
 #include <Adafruit_NeoPixel.h>
 #include <ColorBlink.h>
 #include <EEPROMconfig.h>
+#include <ArduinoJson.h>
 
 extern EEPROMconfig ABconfigs;
 extern Adafruit_NeoPixel led;
@@ -38,5 +39,8 @@ void APixelPowerOff(uint8_t pin);
 
 //get vcc
 float vcc();
+
+//Load config file from SPIFF
+boolean loadConfig();
 
 #endif // UTILS_H
