@@ -1,11 +1,11 @@
 #include "utils.h"
 
 boolean loadWiFiSavedConfig() {
-    String ssid = ABconfigs.getParam(WIFI_SSID);
+    String ssid = loadJsonParam("wifi","ssid");
     if (ssid == "") {
         return (boolean) false;
     }
-    String password = ABconfigs.getParam(WIFI_PSW);
+    String password = loadJsonParam("wifi","password");
     if (WiFi.begin(ssid.c_str(), password.c_str())) {
         Serial.print("SSID: ");
         Serial.println(ssid);
@@ -131,60 +131,70 @@ float vcc() {
     return vdd;
 }
 
-boolean loadConfig() {
+//Print Json config file for debug
+boolean printConfig() {
     SPIFFS.begin();
     File configFile = SPIFFS.open("/config/config.json", "r");
     if (!configFile) {
         Serial.println("Failed to open config file");
         return (boolean) false;
     }
-
-    size_t size = configFile.size();
-    if (size > 1024) {
-        Serial.println("Config file size is too large");
-        return (boolean) false;
+    while(configFile.available()){
+        String line = configFile.readString();
+        Serial.println(line);
     }
-    // Allocate a buffer to store contents of the file.
-    std::unique_ptr<char[]> buf(new char[size]);
-
-    // We don't use String here because ArduinoJson library requires the input
-    // buffer to be mutable. If you don't use ArduinoJson, you may as well
-    // use configFile.readString instead.
-    configFile.readBytes(buf.get(), size);
-
-    StaticJsonBuffer<200> jsonBuffer;
-    JsonObject &json = jsonBuffer.parseObject(buf.get());
-
-    if (!json.success()) {
-        Serial.println("Failed to parse config file");
-        return (boolean) false;
-    }
-    const char* jsonConfigs[9][2] = {{"ssid",""},{"ifttt_enable",""},{"ifttt_url",""},{"ifttt_key",""},{"ifttt_event",""},
-                                     {"custom_enable",""},{"custom_url",""},{"custom_host",""}};
-
-    for (int i = 0; i < 8; i++) {
-        jsonConfigs[i][1] = json[jsonConfigs[i][0]];
-        Serial.print("Loaded ");
-        Serial.print(jsonConfigs[i][0]);
-        Serial.print(" value is ");
-        Serial.println(jsonConfigs[i][1]);
-    }
-
+    configFile.close();
     return (boolean) true;
 }
 
-boolean saveConfig() {
-    StaticJsonBuffer<200> jsonBuffer;
-    JsonObject &json = jsonBuffer.createObject();
-    json["serverName"] = "api.example.com";
-    json["accessToken"] = "128du9as8du12eoue8da98h123ueh9h98";
-
-    File configFile = SPIFFS.open("/config/config.json", "w");
+//Load config from Json file in SPIFFS
+const char * loadJsonParam(const char* service, const char* param){
+    SPIFFS.begin();
+    File configFile = SPIFFS.open("/config/config.json", "r");
     if (!configFile) {
-        Serial.println("Failed to open config file for writing");
+        Serial.println("ERROR: Failed to open config file (loadJsonParam)");
         return (boolean) false;
     }
-
-    json.printTo(configFile);
+    size_t size = configFile.size();
+    if (size > 1024) {
+        Serial.println("ERROR: Config file size is too large (loadJsonParam)");
+        return (boolean) false;
+    }
+    std::unique_ptr<char[]> buf(new char[size]);
+    configFile.readBytes(buf.get(), size);
+    StaticJsonBuffer<300> jsonBuffer;
+    JsonObject &json = jsonBuffer.parseObject(buf.get());
+    if (!json.success()) {
+        Serial.println("ERROR: Failed to parse config file (loadJsonParam)");
+        return (boolean) false;
+    }
+    const char* config = json[service][param];
+    return (char *) config;
+}
+//Write config in Json file in SPIFFS
+boolean saveJsonConfig(const char* service, const char* param, const char* config){
+    File configFile = SPIFFS.open("/config/config.json", "r");
+    if (!configFile) {
+        Serial.println("ERROR: Failed to open config file (saveJsonConfig)");
+        return (boolean) false;
+    }
+    size_t size = configFile.size();
+    if (size > 1024) {
+        Serial.println("ERROR: Config file size is too large (saveJsonConfig)");
+        return (boolean) false;
+    }
+    std::unique_ptr<char[]> buf(new char[size]);
+    configFile.readBytes(buf.get(), size);
+    StaticJsonBuffer<300> jsonBuffer;
+    JsonObject &json = jsonBuffer.parseObject(buf.get());
+    if (!json.success()) {
+        Serial.println("ERROR: Failed to parse config file (saveJsonConfig)");
+        return (boolean) false;
+    }
+    configFile.close();
+    JsonObject &nested = json[service];
+    nested.set(param,config);
+    configFile = SPIFFS.open("/config/config.json", "w+");
+    json.prettyPrintTo(configFile);
     return (boolean) true;
 }

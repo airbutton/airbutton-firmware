@@ -1,11 +1,18 @@
 {
-  "ssid"  : "WiFi SSID Value",
-  "password"  : "WiFi SSID password",
-  "ifttt_enable"  : "true",
-  "ifttt_url" : "maker.ifttt.com",
-  "ifttt_key" : "bh2t7puZws-85s9yA1d0kx",
-  "ifttt_event" : "VCC",
-  "custom_enable" : "true",
-  "custom_url"  : "/post.php",
-  "custom_host" : "testserver.com"
+  "wifi": {
+    "enabled":  "true",
+    "ssid": "",
+    "password": ""
+  },
+  "ifttt": {
+    "enabled": "false",
+    "ifttt_url": "",
+    "ifttt_key": "",
+    "ifttt_event": ""
+  },
+  "custom": {
+    "enabled": "false",
+    "custom_url": "",
+    "custom_host": ""
+  }
 }

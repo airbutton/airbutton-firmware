@@ -63,7 +63,7 @@ void handleWiFi() {
 
 void handleSetWiFi() {
 
-    ABconfigs.delParam(WIFI);
+    //ABconfigs.delParam(WIFI);
 
     String ssid = urlDecode(WEB_SERVER.arg("ssid"));
     String dssid = urlDecode(WEB_SERVER.arg("dssid"));
@@ -77,10 +77,12 @@ void handleSetWiFi() {
     Serial.print("Password: ");
     Serial.println(pass);
 
-    Serial.println("Writing SSID and Password to EEPROM...");
-    ABconfigs.setParam(WIFI,ssid,pass);
+    Serial.println("Writing SSID and Password to config.json...");
+    saveJsonConfig("wifi","ssid", ssid.c_str());
+    saveJsonConfig("wifi","password",pass.c_str());
+    //ABconfigs.setParam(WIFI,ssid,pass);
 
-    Serial.println("WiFi settings write to EEPROM done!");
+    Serial.println("WiFi settings write done!");
     String s = "<h1>Wifi Setup complete.</h1>\n";
     s += "<p>At restart airbutton will try to connected to <b>";
     s += ssid;

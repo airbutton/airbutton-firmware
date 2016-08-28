@@ -14,20 +14,16 @@ void setup() {
     digitalWrite(RETPIN, HIGH);
     //Init Serial port and EEPROM
     Serial.begin(115200);
+    Serial.println();
     EEPROM.begin(512);
     //Init RGB LED
     led.begin();
     led.show();
     blinkLed.green(&led, 100, 2);
-    //EEPROM debug!
+    //DEBUG!
     //ABconfigs.delParam(ALL);
     //ABconfigs.debugEEPROMrange();
-
-    if (!loadConfig()) {
-        Serial.println("Failed to load config");
-    } else {
-        Serial.println("Config loaded");
-    }
+    printConfig();
 
     //Try to load saved config
     if (!loadWiFiSavedConfig()) {

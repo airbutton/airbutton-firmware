@@ -42,7 +42,8 @@ void APixelPowerOff(uint8_t pin);
 float vcc();
 
 //Load and save config file from SPIFF
-boolean loadConfig();
-boolean saveConfig();
+boolean printConfig();
+const char * loadJsonParam(const char* service,const char* param);
+boolean saveJsonConfig(const char* service, const char* param, const char* config);
 
 #endif // UTILS_H
