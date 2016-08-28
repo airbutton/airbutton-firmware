@@ -131,6 +131,60 @@ float vcc() {
     return vdd;
 }
 
-boolean loadConfig(){
+boolean loadConfig() {
+    SPIFFS.begin();
+    File configFile = SPIFFS.open("/config/config.json", "r");
+    if (!configFile) {
+        Serial.println("Failed to open config file");
+        return (boolean) false;
+    }
 
-};
+    size_t size = configFile.size();
+    if (size > 1024) {
+        Serial.println("Config file size is too large");
+        return (boolean) false;
+    }
+    // Allocate a buffer to store contents of the file.
+    std::unique_ptr<char[]> buf(new char[size]);
+
+    // We don't use String here because ArduinoJson library requires the input
+    // buffer to be mutable. If you don't use ArduinoJson, you may as well
+    // use configFile.readString instead.
+    configFile.readBytes(buf.get(), size);
+
+    StaticJsonBuffer<200> jsonBuffer;
+    JsonObject &json = jsonBuffer.parseObject(buf.get());
+
+    if (!json.success()) {
+        Serial.println("Failed to parse config file");
+        return (boolean) false;
+    }
+    const char* jsonConfigs[9][2] = {{"ssid",""},{"ifttt_enable",""},{"ifttt_url",""},{"ifttt_key",""},{"ifttt_event",""},
+                                     {"custom_enable",""},{"custom_url",""},{"custom_host",""}};
+
+    for (int i = 0; i < 8; i++) {
+        jsonConfigs[i][1] = json[jsonConfigs[i][0]];
+        Serial.print("Loaded ");
+        Serial.print(jsonConfigs[i][0]);
+        Serial.print(" value is ");
+        Serial.println(jsonConfigs[i][1]);
+    }
+
+    return (boolean) true;
+}
+
+boolean saveConfig() {
+    StaticJsonBuffer<200> jsonBuffer;
+    JsonObject &json = jsonBuffer.createObject();
+    json["serverName"] = "api.example.com";
+    json["accessToken"] = "128du9as8du12eoue8da98h123ueh9h98";
+
+    File configFile = SPIFFS.open("/config/config.json", "w");
+    if (!configFile) {
+        Serial.println("Failed to open config file for writing");
+        return (boolean) false;
+    }
+
+    json.printTo(configFile);
+    return (boolean) true;
+}

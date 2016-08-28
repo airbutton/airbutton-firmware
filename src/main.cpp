@@ -23,6 +23,12 @@ void setup() {
     //ABconfigs.delParam(ALL);
     //ABconfigs.debugEEPROMrange();
 
+    if (!loadConfig()) {
+        Serial.println("Failed to load config");
+    } else {
+        Serial.println("Config loaded");
+    }
+
     //Try to load saved config
     if (!loadWiFiSavedConfig()) {
         Serial.println("WARNING: WiFi configuration not found");

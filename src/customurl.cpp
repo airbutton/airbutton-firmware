@@ -3,14 +3,14 @@
 boolean customurl() {
     Serial.println("Custom URL called");
 
-    String HOST = ABconfigs.getParam(CUSTOM_HOST);
-    String URL = ABconfigs.getParam(CUSTOM_URL);
+    String custom_host = ABconfigs.getParam(CUSTOM_HOST);
+    String custom_url = ABconfigs.getParam(CUSTOM_URL);
 
     // Define the WiFi Client
     WiFiClient client;
 
     // Make sure we can connect
-    if (!client.connect(HOST.c_str(), 80)) {
+    if (!client.connect(custom_host.c_str(), 80)) {
         Serial.println("ERROR: Can't connect to host!");
         return (boolean) false;
     }
@@ -30,8 +30,8 @@ boolean customurl() {
     Serial.println("=== Custom URL ===");
 
     String strPayload;
-    strPayload += "POST " + URL + " HTTP/1.1\r\n";
-    strPayload += "Host: " + HOST + "\r\n";
+    strPayload += "POST " + custom_url + " HTTP/1.1\r\n";
+    strPayload += "Host: " + custom_host + "\r\n";
     strPayload += "User-Agent: Arduino/1.0\r\n";
     strPayload += "Connection: close\r\n";
     strPayload += "Content-Type: application/json\r\n";

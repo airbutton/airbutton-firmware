@@ -3,21 +3,21 @@
 boolean ifttt() {
     Serial.println("IFTT Button fired");
 
-    const char *IFTTT_URL = "maker.ifttt.com";
-    String KEY = ABconfigs.getParam(IFTTT_KEY);
-    String EVENT = ABconfigs.getParam(IFTTT_EVENT);
+    const char *ifttt_url = "maker.ifttt.com";
+    String ifttt_key = ABconfigs.getParam(IFTTT_KEY);
+    String ifttt_event = ABconfigs.getParam(IFTTT_EVENT);
 
     // Define the WiFi Client
     WiFiClient client;
 
     // Make sure we can connect
-    if (!client.connect(IFTTT_URL, 80) || KEY == "" || EVENT == "") {
+    if (!client.connect(ifttt_url, 80) || ifttt_key == "" || ifttt_event == "") {
         Serial.println("ERROR: Can't connect to IFTTT!");
         return (boolean) false;
     }
 
     // We now create a URI for the request
-    String url = "/trigger/" + EVENT + "/with/key/" + KEY;
+    String url = "/trigger/" + ifttt_event + "/with/key/" + ifttt_key;
 
     // Build JSON data string
     String value_1 = WiFi.macAddress();
@@ -31,11 +31,11 @@ boolean ifttt() {
 
     blinkLed.blue(&led, 100, 1);
 
-    Serial.println("=== IFTT ===");
+    Serial.println("=== IFTTT ===");
 
     String strPayload;
     strPayload += "POST " + url + " HTTP/1.1\r\n";
-    strPayload += "Host: " + String(IFTTT_URL) + "\r\n";
+    strPayload += "Host: " + String(ifttt_url) + "\r\n";
     strPayload += "User-Agent: Arduino/1.0\r\n";
     strPayload += "Connection: close\r\n";
     strPayload += "Accept: */*\r\n";
