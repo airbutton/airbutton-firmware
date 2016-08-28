@@ -3,9 +3,13 @@
 boolean ifttt() {
     Serial.println("IFTT Button fired");
 
-    const char *ifttt_url = "maker.ifttt.com";
-    String ifttt_key = ABconfigs.getParam(IFTTT_KEY);
-    String ifttt_event = ABconfigs.getParam(IFTTT_EVENT);
+//    const char *ifttt_url = "maker.ifttt.com";
+//    String ifttt_key = ABconfigs.getParam(IFTTT_KEY);
+//    String ifttt_event = ABconfigs.getParam(IFTTT_EVENT);
+
+    const char *ifttt_url = loadJsonParam("ifttt","url");
+    String ifttt_key = loadJsonParam("ifttt","key");
+    String ifttt_event = loadJsonParam("ifttt","event");
 
     // Define the WiFi Client
     WiFiClient client;
@@ -76,26 +80,30 @@ void handleIFTTT() {
 
 void handleSetIFTTT() {
 
-    ABconfigs.delParam(IFTTT);
+    //ABconfigs.delParam(IFTTT);
 
-    String KEY = urlDecode(WEB_SERVER.arg("KEY"));
+    String key = urlDecode(WEB_SERVER.arg("KEY"));
     Serial.print("IFTTT Key: ");
-    Serial.println(KEY);
+    Serial.println(key);
 
-    String EVENT = urlDecode(WEB_SERVER.arg("EVENT"));
+    String event = urlDecode(WEB_SERVER.arg("EVENT"));
     Serial.print("IFTTT Event: ");
-    Serial.println(EVENT);
+    Serial.println(event);
 
-    Serial.println("Writing IFTTT Key and event to EEPROM...");
-    ABconfigs.setParam(IFTTT, KEY, EVENT);
+    Serial.println("Writing IFTTT Key and event to config.json...");
+    saveJsonConfig("ifttt", "enable", "true");
+    saveJsonConfig("ifttt", "url", "maker.ifttt.com");
+    saveJsonConfig("ifttt", "key", key.c_str());
+    saveJsonConfig("ifttt", "event", event.c_str());
+    //ABconfigs.setParam(IFTTT, key, event);
 
     Serial.println("IFTTT settings write to EEPROM done!");
     String s = "<h1>IFTTT Setup complete.</h1>\n";
     s += "<p>At restart airbutton will try to send data to <br>\n";
     s += "IFTTT event: <b>";
-    s += EVENT;
+    s += event;
     s += "</b> with key: <b>";
-    s += KEY;
+    s += key;
     s += "</b>.\n";
     s += "<br><a href='/'>Back</a></p>";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,

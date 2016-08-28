@@ -1,18 +1,4 @@
 {
-  "wifi": {
-    "enabled":  "true",
-    "ssid": "",
-    "password": ""
-  },
-  "ifttt": {
-    "enabled": "false",
-    "ifttt_url": "",
-    "ifttt_key": "",
-    "ifttt_event": ""
-  },
-  "custom": {
-    "enabled": "false",
-    "custom_url": "",
-    "custom_host": ""
-  }
+  "wifi": {},
+  "ifttt": {}
 }

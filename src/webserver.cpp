@@ -42,7 +42,7 @@ void handleReboot(){
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,"Rebooting", s));
     Serial.println("Rebooting...");
     WiFi.mode(WIFI_OFF);
-    delay(1000);
+    delay(3000);
     ESP.restart();
     //NOTE only the first time after flash Reboot will stuck the chip
 }
@@ -78,6 +78,7 @@ void handleSetWiFi() {
     Serial.println(pass);
 
     Serial.println("Writing SSID and Password to config.json...");
+    saveJsonConfig("wifi","enabled", "true");
     saveJsonConfig("wifi","ssid", ssid.c_str());
     saveJsonConfig("wifi","password",pass.c_str());
     //ABconfigs.setParam(WIFI,ssid,pass);
