@@ -3,7 +3,7 @@
 boolean ifttt() {
     Serial.println("IFTT Button fired");
 
-    const char *ifttt_url = loadJsonParam("ifttt","url");
+    String ifttt_url = loadJsonParam("ifttt","url");
     String ifttt_key = loadJsonParam("ifttt","key");
     String ifttt_event = loadJsonParam("ifttt","event");
 
@@ -11,7 +11,7 @@ boolean ifttt() {
     WiFiClient client;
 
     // Make sure we can connect
-    if (!client.connect(ifttt_url, 80) || ifttt_key == "" || ifttt_event == "") {
+    if (!client.connect(ifttt_url.c_str(), 80) || ifttt_key == "" || ifttt_event == "") {
         Serial.println("ERROR: Can't connect to IFTTT!");
         return (boolean) false;
     }
@@ -35,7 +35,7 @@ boolean ifttt() {
 
     String strPayload;
     strPayload += "POST " + url + " HTTP/1.1\r\n";
-    strPayload += "Host: " + String(ifttt_url) + "\r\n";
+    strPayload += "Host: " + ifttt_url + "\r\n";
     strPayload += "User-Agent: Arduino/1.0\r\n";
     strPayload += "Connection: close\r\n";
     strPayload += "Accept: */*\r\n";
@@ -86,7 +86,7 @@ void handleSetIFTTT() {
     Serial.println(event);
 
     Serial.println("Writing IFTTT Key and event to config.json...");
-    saveJsonConfig("ifttt", "enabled", "true");
+    saveJsonConfig("ifttt", "enabled", (boolean) true);
     saveJsonConfig("ifttt", "url", "maker.ifttt.com");
     saveJsonConfig("ifttt", "key", key.c_str());
     saveJsonConfig("ifttt", "event", event.c_str());

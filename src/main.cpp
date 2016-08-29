@@ -45,7 +45,6 @@ void setup() {
     //TODO
     //Button is connected! try to call to IFTTT
     if (loadJsonParam("ifttt")) {
-        Serial.println("OK True IFTTTT");
         for (int i = 0; i < 3; i++) {
             if (ifttt()) {
                 blinkLed.green(&led, 100, 2);

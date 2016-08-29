@@ -1,8 +1,5 @@
 #include "utils.h"
 
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "CannotResolve"
-
 boolean loadWiFiSavedConfig() {
     String ssid = loadJsonParam("wifi", "ssid");
     if (ssid == "") {
@@ -169,7 +166,7 @@ boolean loadJsonParam(const char *service) {
         Serial.println("ERROR: Failed to parse config file (loadJsonParam)");
         return (boolean) false;
     }
-    const char *config = json[service]["enabled"];
+    boolean config = json[service]["enabled"];
     if (config) {
         return (boolean) true;
     }
@@ -249,33 +246,6 @@ boolean saveJsonConfig(const char *service, const char *param, boolean status) {
     configFile.close();
     JsonObject &nested = json[service];
     nested.set(param, status);
-    configFile = SPIFFS.open("/config/config.json", "w+");
-    json.prettyPrintTo(configFile);
-    return (boolean) true;
-}
-
-boolean saveJsonConfig(const char *service, boolean status) {
-    File configFile = SPIFFS.open("/config/config.json", "r");
-    if (!configFile) {
-        Serial.println("ERROR: Failed to open config file (saveJsonConfig)");
-        return (boolean) false;
-    }
-    size_t size = configFile.size();
-    if (size > 1024) {
-        Serial.println("ERROR: Config file size is too large (saveJsonConfig)");
-        return (boolean) false;
-    }
-    std::unique_ptr<char[]> buf(new char[size]);
-    configFile.readBytes(buf.get(), size);
-    StaticJsonBuffer<300> jsonBuffer;
-    JsonObject &json = jsonBuffer.parseObject(buf.get());
-    if (!json.success()) {
-        Serial.println("ERROR: Failed to parse config file (saveJsonConfig)");
-        return (boolean) false;
-    }
-    configFile.close();
-    JsonObject &nested = json[service];
-    nested.set("enabled", status);
     configFile = SPIFFS.open("/config/config.json", "w+");
     json.prettyPrintTo(configFile);
     return (boolean) true;

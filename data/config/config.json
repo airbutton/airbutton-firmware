@@ -1,4 +1,14 @@
 {
   "wifi": {},
-  "ifttt": {}
+  "ifttt": {
+    "enabled": 0,
+    "url": "",
+    "key": "",
+    "event": ""
+  },
+  "custom": {
+    "enabled": 0,
+    "host": "",
+    "url": ""
+  }
 }

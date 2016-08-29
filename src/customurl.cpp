@@ -3,8 +3,8 @@
 boolean customurl() {
     Serial.println("Custom URL called");
 
-    String custom_host = ABconfigs.getParam(CUSTOM_HOST);
-    String custom_url = ABconfigs.getParam(CUSTOM_URL);
+    String custom_host = loadJsonParam("custom", "host");
+    String custom_url = loadJsonParam("custom", "url");
 
     // Define the WiFi Client
     WiFiClient client;
@@ -22,12 +22,12 @@ boolean customurl() {
 
     String data;
     data = "{\"macaddress\":\"" + vMac +
-            "\",\"ssid\":\"" + vSid +
-            "\",\"vcc\":\"" + vVCC + "\"}";
+           "\",\"ssid\":\"" + vSid +
+           "\",\"vcc\":\"" + vVCC + "\"}";
 
     blinkLed.blue(&led, 100, 1);
 
-    Serial.println("=== Custom URL ===");
+    Serial.println("======= Custom URL =======");
 
     String strPayload;
     strPayload += "POST " + custom_url + " HTTP/1.1\r\n";
@@ -56,39 +56,39 @@ boolean customurl() {
 }
 
 void handleCustomURL() {
+    String custom_host = loadJsonParam("custom", "host");
+    String custom_url = loadJsonParam("custom", "url");
     String s = "<h2>Custom URL Settings</h2>\n";
     s += "<form method='get' action='setcustomurl'>\n";
-    s += "<label>Host: <input value='" +
-            ABconfigs.getParam(CUSTOM_HOST) +
-            "' name='HOST' maxlenght='200'></label><br>\n";
-    s += "<label>Custom URL: <input value='" +
-            ABconfigs.getParam(CUSTOM_URL) +
-            "' name='URL' maxlenght='200'></label><br>\n";
+    s += "<label>Host: <input value='";
+    s += custom_host;
+    s += "' name='HOST' maxlenght='200'></label><br>\n";
+    s += "<label>Custom URL: <input value='";
+    s += custom_url;
+    s += "' name='URL' maxlenght='200'></label><br>\n";
     s += "<br><br><input type='submit' value='Submit'>\n</form>";
     WEB_SERVER.send(200, "text/html",
                     makePage(DEVICE_TITLE, "Custom URL Settings", s));
 }
 
 void handleSetCustomURL() {
-
-    ABconfigs.delParam(CUSTOM);
-
-    String HOST = urlDecode(WEB_SERVER.arg("HOST"));
+    String host = urlDecode(WEB_SERVER.arg("HOST"));
     Serial.print("Base Host: ");
-    Serial.println(HOST);
+    Serial.println(host);
 
-    String URL = urlDecode(WEB_SERVER.arg("URL"));
+    String url = urlDecode(WEB_SERVER.arg("URL"));
     Serial.print("Custom URL: ");
-    Serial.println(URL);
+    Serial.println(url);
 
-    Serial.println("Writing Custom HOST and URL to EEPROM...");
-    ABconfigs.setParam(CUSTOM, HOST, URL);
-
-    Serial.println("Custom URL setting write to EEPROM done!");
+    Serial.println("Writing Custom HOST and URL to config.json...");
+    saveJsonConfig("custom", "enabled", (boolean) true);
+    saveJsonConfig("custom", "host", host.c_str());
+    saveJsonConfig("custom", "url", url.c_str());
+    Serial.println("Done!");
     String s = "<h1>Custom URL Setup complete.</h1>\n";
     s += "<p>At restart airbutton will try to send data to <br>\n";
     s += "Custom URL: <b>";
-    s += HOST + URL;
+    s += host + url;
     s += "</b>.\n";
     s += "<br><a href='/'>Back</a></p>";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,

@@ -25,18 +25,15 @@ void handleReboot(){
     s += "<p>Services enabled: <p>\n";
     String ifttt = urlDecode(WEB_SERVER.arg("ifttt"));
     String custom = urlDecode(WEB_SERVER.arg("custom"));
-
-    if (ifttt){
-        saveJsonConfig("ifttt", (boolean) true);
+    boolean ifttt_status = ifttt.equals("1");
+    saveJsonConfig("ifttt", "enabled", ifttt_status);
+    boolean custom_status = custom.equals("1");
+    saveJsonConfig("custom", "enabled", custom_status);
+    if (ifttt_status){
         s += "<p><b>IFTTT</b></p>\n";
-    } else {
-        saveJsonConfig("ifttt", (boolean) false);
     }
-    if (custom){
-        saveJsonConfig("custom", (boolean) true);
+    if (custom_status){
         s += "<p><b>Custom URL</b></p>\n";
-    } else {
-        saveJsonConfig("custom", (boolean) false);
     }
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,"Rebooting", s));
     Serial.println("Rebooting...");
