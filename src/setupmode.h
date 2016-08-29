@@ -20,6 +20,7 @@ extern IPAddress AP_IP;
 extern String AP_SSID;
 extern unsigned long startTime;
 extern String SSID_LIST;
+extern String Version;
 extern ESP8266WebServer WEB_SERVER;
 extern DNSServer DNS_SERVER;
 extern Adafruit_NeoPixel led;

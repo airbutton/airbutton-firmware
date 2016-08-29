@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
-#include <EEPROM.h>
 
 #include "config.h"
 #include "utils.h"
@@ -12,16 +11,16 @@ void setup() {
     //Set GPIO4 to HIGH for retain on APixel board useless on others boards
     pinMode(RETPIN, OUTPUT);
     digitalWrite(RETPIN, HIGH);
-    //Init Serial port and EEPROM
+    //Init Serial port and SPIFFS
     Serial.begin(115200);
-    EEPROM.begin(512);
+    Serial.println();
+    SPIFFS.begin();
     //Init RGB LED
     led.begin();
     led.show();
     blinkLed.green(&led, 100, 2);
-    //EEPROM debug!
-    //ABconfigs.delParam(ALL);
-    //ABconfigs.debugEEPROMrange();
+    //DEBUG config!
+    printConfig();
 
     //Try to load saved config
     if (!loadWiFiSavedConfig()) {
@@ -41,7 +40,7 @@ void setup() {
 
     //TODO
     //Button is connected! try to call to IFTTT
-    if (ABconfigs.getServiceStatus(IFTTT)) {
+    if (loadJsonParam("ifttt")) {
         for (int i = 0; i < 3; i++) {
             if (ifttt()) {
                 blinkLed.green(&led, 100, 2);
@@ -56,7 +55,7 @@ void setup() {
     }
 
     //Button is connected! try to call custom URL
-    if (ABconfigs.getServiceStatus(CUSTOM)) {
+    if (loadJsonParam("custom")) {
         for (int i = 0; i < 3; i++) {
             if (customurl()) {
                 blinkLed.green(&led, 100, 2);

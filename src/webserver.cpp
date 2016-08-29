@@ -3,46 +3,44 @@
 void handleNotFound() {
     String iftt_status;
     String custom_status;
-    if (ABconfigs.getServiceStatus(IFTTT)){
+    if (loadJsonParam("ifttt")) {
         iftt_status = "checked";
     }
-    if (ABconfigs.getServiceStatus(CUSTOM)){
+    if (loadJsonParam("custom")) {
         custom_status = "checked";
     }
     String s = "<h2>Configuration Mode</h2>\n";
     s += "<p><a href='/wifi'>WiFi</a></p>\n";
     s += "<form method='get' action='reboot'>\n";
     s += "<fieldset>\n<legend>Select services that you want to enable.</legend><br>\n";
-    s += "<p><input type='checkbox' name='ifttt' value='true' " +
-            iftt_status + "/>&nbsp;&nbsp;&nbsp;<a href='/ifttt'>IFTTT</a></p>\n";
-    s += "<p><input type='checkbox' name='custom' value='true' " +
-            custom_status + "/>&nbsp;&nbsp;&nbsp;<a href='/customurl'>Custom URL</a></p><br>\n";
+    s += "<p><input type='checkbox' name='ifttt' value='1' " + iftt_status +
+         "/>&nbsp;&nbsp;&nbsp;<a href='/ifttt'>IFTTT</a></p>\n";
+    s += "<p><input type='checkbox' name='custom' value='1' " + custom_status +
+         "/>&nbsp;&nbsp;&nbsp;<a href='/customurl'>Custom URL</a></p><br>\n";
     s += "<p><input type='submit' value='Submit & Reboot' /></p>\n";
     s += "</fieldset>";
-    WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,"Configuration mode", s));
+    WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE, "Configuration mode", s));
 }
 
-void handleReboot(){
+void handleReboot() {
     String s = "<h2>Rebooting!</h2>\n";
     s += "<p>Services enabled: <p>\n";
     String ifttt = urlDecode(WEB_SERVER.arg("ifttt"));
     String custom = urlDecode(WEB_SERVER.arg("custom"));
-    if (ifttt.equals("true")){
-        ABconfigs.setService(IFTTT, (boolean) true);
+    boolean ifttt_status = ifttt.equals("1");
+    saveJsonConfig("ifttt", "enabled", ifttt_status);
+    boolean custom_status = custom.equals("1");
+    saveJsonConfig("custom", "enabled", custom_status);
+    if (ifttt_status) {
         s += "<p><b>IFTTT</b></p>\n";
-    } else {
-        ABconfigs.setService(IFTTT, (boolean) false);
     }
-    if (custom.equals("true")){
-        ABconfigs.setService(CUSTOM, (boolean) true);
+    if (custom_status) {
         s += "<p><b>Custom URL</b></p>\n";
-    } else {
-        ABconfigs.setService(CUSTOM, (boolean) false);
     }
-    WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,"Rebooting", s));
+    WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE, "Rebooting", s));
     Serial.println("Rebooting...");
     WiFi.mode(WIFI_OFF);
-    delay(1000);
+    delay(3000);
     ESP.restart();
     //NOTE only the first time after flash Reboot will stuck the chip
 }
@@ -58,16 +56,13 @@ void handleWiFi() {
     s += "<br><label>or</label>\n<input name='dssid' maxlength='32' placeholder='SSID'/>\n";
     s += "<br><br><label>Password: </label>\n<input name='pass' maxlength='64' type='password' placeholder='password'>\n";
     s += "<br><br><input type='submit' value='Submit'>\n</form>";
-    WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,"Wi-Fi Settings", s));
+    WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE, "Wi-Fi Settings", s));
 }
 
 void handleSetWiFi() {
-
-    ABconfigs.delParam(WIFI);
-
     String ssid = urlDecode(WEB_SERVER.arg("ssid"));
     String dssid = urlDecode(WEB_SERVER.arg("dssid"));
-    if (!dssid.equals("")){
+    if (!dssid.equals("")) {
         ssid = dssid;
     }
     Serial.print("SSID: ");
@@ -77,23 +72,24 @@ void handleSetWiFi() {
     Serial.print("Password: ");
     Serial.println(pass);
 
-    Serial.println("Writing SSID and Password to EEPROM...");
-    ABconfigs.setParam(WIFI,ssid,pass);
-
-    Serial.println("WiFi settings write to EEPROM done!");
+    Serial.println("Writing SSID and Password to config.json...");
+    saveJsonConfig("wifi", "enabled", 1);
+    saveJsonConfig("wifi", "ssid", ssid.c_str());
+    saveJsonConfig("wifi", "password", pass.c_str());
+    Serial.println("Done!");
     String s = "<h1>Wifi Setup complete.</h1>\n";
     s += "<p>At restart airbutton will try to connected to <b>";
     s += ssid;
     s += "</b> net, with <b>";
     s += pass;
     s += "</b> as password.\n";
-    s +="<br><a href='/'>Back</a></p>";
-    WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,"Write Wi-Fi Settings", s));
+    s += "<br><a href='/'>Back</a></p>";
+    WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE, "Write Wi-Fi Settings", s));
 }
 
 void handleLogo() {
     SPIFFS.begin();
-    File file = SPIFFS.open("/img/logo_color_small.png","r");
+    File file = SPIFFS.open("/img/logo_color_small.png", "r");
     WEB_SERVER.streamFile(file, "image/png");
     file.close();
 }

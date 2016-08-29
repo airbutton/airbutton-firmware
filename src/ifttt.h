@@ -1,15 +1,12 @@
-#ifndef IFTT_H
-#define IFTT_H
+#ifndef IFTTT_H
+#define IFTTT_H
 
 #include <Arduino.h>
-#include <EEPROM.h>
 #include <ESP8266WiFi.h>
 #include <Adafruit_NeoPixel.h>
 #include <ColorBlink.h>
-#include <EEPROMconfig.h>
 #include "setupmode.h"
 
-extern EEPROMconfig ABconfigs;
 extern Adafruit_NeoPixel led;
 extern ColorBlink blinkLed;
 
@@ -19,4 +16,4 @@ void handleIFTTT();
 
 void handleSetIFTTT();
 
-#endif // IFTT_H
+#endif // IFTTT_H

@@ -1,11 +1,11 @@
 #include "utils.h"
 
 boolean loadWiFiSavedConfig() {
-    String ssid = ABconfigs.getParam(WIFI_SSID);
+    String ssid = loadJsonParam("wifi", "ssid");
     if (ssid == "") {
         return (boolean) false;
     }
-    String password = ABconfigs.getParam(WIFI_PSW);
+    String password = loadJsonParam("wifi", "password");
     if (WiFi.begin(ssid.c_str(), password.c_str())) {
         Serial.print("SSID: ");
         Serial.println(ssid);
@@ -129,4 +129,124 @@ float vcc() {
     float vdd;
     vdd = (float) ESP.getVcc() / (float) 920;
     return vdd;
+}
+
+//Print Json config file for debug
+boolean printConfig() {
+    File configFile = SPIFFS.open("/config/config.json", "r");
+    if (!configFile) {
+        Serial.println("Failed to open config file");
+        return (boolean) false;
+    }
+    while (configFile.available()) {
+        String line = configFile.readString();
+        Serial.println(line);
+    }
+    configFile.close();
+    return (boolean) true;
+}
+
+//Load config from Json file in SPIFFS
+boolean loadJsonParam(const char *service) {
+    File configFile = SPIFFS.open("/config/config.json", "r");
+    if (!configFile) {
+        Serial.println("ERROR: Failed to open config file (loadJsonParam)");
+        return (boolean) false;
+    }
+    size_t size = configFile.size();
+    if (size > 1024) {
+        Serial.println("ERROR: Config file size is too large (loadJsonParam)");
+        return (boolean) false;
+    }
+    std::unique_ptr<char[]> buf(new char[size]);
+    configFile.readBytes(buf.get(), size);
+    StaticJsonBuffer<300> jsonBuffer;
+    JsonObject &json = jsonBuffer.parseObject(buf.get());
+    if (!json.success()) {
+        Serial.println("ERROR: Failed to parse config file (loadJsonParam)");
+        return (boolean) false;
+    }
+    boolean config = json[service]["enabled"];
+    if (config) {
+        return (boolean) true;
+    }
+    return (boolean) false;
+}
+
+const char *loadJsonParam(const char *service, const char *param) {
+    File configFile = SPIFFS.open("/config/config.json", "r");
+    if (!configFile) {
+        Serial.println("ERROR: Failed to open config file (loadJsonParam)");
+        return (boolean) false;
+    }
+    size_t size = configFile.size();
+    if (size > 1024) {
+        Serial.println("ERROR: Config file size is too large (loadJsonParam)");
+        return (boolean) false;
+    }
+    std::unique_ptr<char[]> buf(new char[size]);
+    configFile.readBytes(buf.get(), size);
+    StaticJsonBuffer<300> jsonBuffer;
+    JsonObject &json = jsonBuffer.parseObject(buf.get());
+    if (!json.success()) {
+        Serial.println("ERROR: Failed to parse config file (loadJsonParam)");
+        return (boolean) false;
+    }
+    const char *config = json[service][param];
+    return (char *) config;
+}
+
+//Write config in Json file in SPIFFS
+boolean saveJsonConfig(const char *service, const char *param, const char *config) {
+    File configFile = SPIFFS.open("/config/config.json", "r");
+    if (!configFile) {
+        Serial.println("ERROR: Failed to open config file (saveJsonConfig)");
+        return (boolean) false;
+    }
+    size_t size = configFile.size();
+    if (size > 1024) {
+        Serial.println("ERROR: Config file size is too large (saveJsonConfig)");
+        return (boolean) false;
+    }
+    std::unique_ptr<char[]> buf(new char[size]);
+    configFile.readBytes(buf.get(), size);
+    StaticJsonBuffer<300> jsonBuffer;
+    JsonObject &json = jsonBuffer.parseObject(buf.get());
+    if (!json.success()) {
+        Serial.println("ERROR: Failed to parse config file (saveJsonConfig)");
+        return (boolean) false;
+    }
+    configFile.close();
+    JsonObject &nested = json[service];
+    nested.set(param, config);
+    configFile = SPIFFS.open("/config/config.json", "w+");
+    json.prettyPrintTo(configFile);
+    return (boolean) true;
+}
+
+boolean saveJsonConfig(const char *service, const char *param, boolean status) {
+    File configFile = SPIFFS.open("/config/config.json", "r");
+    if (!configFile) {
+        Serial.println("ERROR: Failed to open config file (saveJsonConfig)");
+        return (boolean) false;
+    }
+    size_t size = configFile.size();
+    if (size > 1024) {
+        Serial.println("ERROR: Config file size is too large (saveJsonConfig)");
+        return (boolean) false;
+    }
+    std::unique_ptr<char[]> buf(new char[size]);
+    configFile.readBytes(buf.get(), size);
+    StaticJsonBuffer<300> jsonBuffer;
+    JsonObject &json = jsonBuffer.parseObject(buf.get());
+    if (!json.success()) {
+        Serial.println("ERROR: Failed to parse config file (saveJsonConfig)");
+        return (boolean) false;
+    }
+    configFile.close();
+    JsonObject &nested = json[service];
+    nested.set(param, status);
+    configFile = SPIFFS.open("/config/config.json", "w+");
+    json.prettyPrintTo(configFile);
+    return (boolean) true;
 }

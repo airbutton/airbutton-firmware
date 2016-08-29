@@ -2,20 +2,19 @@
 #define UTILS_H
 
 #include <Arduino.h>
-#include <EEPROM.h>
 #include <ESP8266WiFi.h>
 #include <Adafruit_NeoPixel.h>
 #include <ColorBlink.h>
-#include <EEPROMconfig.h>
+#include <ArduinoJson.h>
+#include <FS.h>
 
-extern EEPROMconfig ABconfigs;
 extern Adafruit_NeoPixel led;
 extern ColorBlink blinkLed;
 extern "C" {
 #include "user_interface.h"
 }
 
-// Load WiFi configuration from EEPROM
+// Load WiFi configuration
 boolean loadWiFiSavedConfig();
 
 // Wi-Fi check connection
@@ -38,5 +37,16 @@ void APixelPowerOff(uint8_t pin);
 
 //get vcc
 float vcc();
+
+//Load and save config file from SPIFF
+boolean printConfig();
+
+boolean loadJsonParam(const char *service);
+
+const char *loadJsonParam(const char *service, const char *param);
+
+boolean saveJsonConfig(const char *service, const char *param, const char *config);
+
+boolean saveJsonConfig(const char *service, const char *param, boolean status);
 
 #endif // UTILS_H
