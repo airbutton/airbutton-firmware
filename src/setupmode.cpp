@@ -27,7 +27,7 @@ void setupMode() {
     Serial.println(WiFi.softAPIP());
     if (!MDNS.begin("airbutton")) {
         Serial.println("Error setting up MDNS responder!");
-            delay(1000);
+        delay(1000);
     }
     Serial.println("mDNS responder started");
     blinkLed.violet(&led, 100, 2);

@@ -3,9 +3,9 @@
 boolean ifttt() {
     Serial.println("IFTT Button fired");
 
-    String ifttt_url = loadJsonParam("ifttt","url");
-    String ifttt_key = loadJsonParam("ifttt","key");
-    String ifttt_event = loadJsonParam("ifttt","event");
+    String ifttt_url = loadJsonParam("ifttt", "url");
+    String ifttt_key = loadJsonParam("ifttt", "key");
+    String ifttt_event = loadJsonParam("ifttt", "event");
 
     // Define the WiFi Client
     WiFiClient client;
@@ -20,14 +20,14 @@ boolean ifttt() {
     String url = "/trigger/" + ifttt_event + "/with/key/" + ifttt_key;
 
     // Build JSON data string
-    String value_1 = WiFi.macAddress();
+    String value_1 = AP_SSID + Version;
     String value_2 = WiFi.SSID();
     String value_3 = String(vcc());
     String data;
     data = data + "\n" + "{\"value1\":\"" + value_1 +
-            "\",\"value2\":\"" + value_2 +
-            "\",\"value3\":\"" + value_3 +
-            "\"}";
+           "\",\"value2\":\"" + value_2 +
+           "\",\"value3\":\"" + value_3 +
+           "\"}";
 
     blinkLed.blue(&led, 100, 1);
 
@@ -61,8 +61,8 @@ boolean ifttt() {
 }
 
 void handleIFTTT() {
-    String ifttt_key = loadJsonParam("ifttt","key");
-    String ifttt_event = loadJsonParam("ifttt","event");
+    String ifttt_key = loadJsonParam("ifttt", "key");
+    String ifttt_event = loadJsonParam("ifttt", "event");
     String s = "<h2>IFTTT Settings</h2>\n";
     s += "<form method='get' action='setifttt'>\n";
     s += "<label>IFTTT Key: <input value='";

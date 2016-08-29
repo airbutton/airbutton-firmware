@@ -15,7 +15,6 @@ void setup() {
     Serial.begin(115200);
     Serial.println();
     SPIFFS.begin();
-    //EEPROM.begin(512);
     //Init RGB LED
     led.begin();
     led.show();
