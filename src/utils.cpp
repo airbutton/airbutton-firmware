@@ -1,5 +1,7 @@
 #include "utils.h"
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "CannotResolve"
 boolean loadWiFiSavedConfig() {
     String ssid = loadJsonParam("wifi","ssid");
     if (ssid == "") {
@@ -133,7 +135,6 @@ float vcc() {
 
 //Print Json config file for debug
 boolean printConfig() {
-    SPIFFS.begin();
     File configFile = SPIFFS.open("/config/config.json", "r");
     if (!configFile) {
         Serial.println("Failed to open config file");
@@ -148,8 +149,33 @@ boolean printConfig() {
 }
 
 //Load config from Json file in SPIFFS
-const char * loadJsonParam(const char* service, const char* param){
-    SPIFFS.begin();
+boolean loadJsonParam(const char* service){
+    File configFile = SPIFFS.open("/config/config.json", "r");
+    if (!configFile) {
+        Serial.println("ERROR: Failed to open config file (loadJsonParam)");
+        return (boolean) false;
+    }
+    size_t size = configFile.size();
+    if (size > 1024) {
+        Serial.println("ERROR: Config file size is too large (loadJsonParam)");
+        return (boolean) false;
+    }
+    std::unique_ptr<char[]> buf(new char[size]);
+    configFile.readBytes(buf.get(), size);
+    StaticJsonBuffer<300> jsonBuffer;
+    JsonObject &json = jsonBuffer.parseObject(buf.get());
+    if (!json.success()) {
+        Serial.println("ERROR: Failed to parse config file (loadJsonParam)");
+        return (boolean) false;
+    }
+    const char* config = json[service]["enabled"];
+    if (config){
+        return (boolean) true;
+    }
+    return (boolean) false;
+}
+
+const char* loadJsonParam(const char* service, const char* param){
     File configFile = SPIFFS.open("/config/config.json", "r");
     if (!configFile) {
         Serial.println("ERROR: Failed to open config file (loadJsonParam)");
@@ -171,6 +197,7 @@ const char * loadJsonParam(const char* service, const char* param){
     const char* config = json[service][param];
     return (char *) config;
 }
+
 //Write config in Json file in SPIFFS
 boolean saveJsonConfig(const char* service, const char* param, const char* config){
     File configFile = SPIFFS.open("/config/config.json", "r");
@@ -198,3 +225,4 @@ boolean saveJsonConfig(const char* service, const char* param, const char* confi
     json.prettyPrintTo(configFile);
     return (boolean) true;
 }
+#pragma clang diagnostic pop

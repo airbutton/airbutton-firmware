@@ -3,10 +3,10 @@
 void handleNotFound() {
     String iftt_status;
     String custom_status;
-    if (ABconfigs.getServiceStatus(IFTTT)){
+    if (loadJsonParam("ifttt")){
         iftt_status = "checked";
     }
-    if (ABconfigs.getServiceStatus(CUSTOM)){
+    if (loadJsonParam("custom")){
         custom_status = "checked";
     }
     String s = "<h2>Configuration Mode</h2>\n";

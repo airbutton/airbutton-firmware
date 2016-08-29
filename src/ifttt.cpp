@@ -3,10 +3,6 @@
 boolean ifttt() {
     Serial.println("IFTT Button fired");
 
-//    const char *ifttt_url = "maker.ifttt.com";
-//    String ifttt_key = ABconfigs.getParam(IFTTT_KEY);
-//    String ifttt_event = ABconfigs.getParam(IFTTT_EVENT);
-
     const char *ifttt_url = loadJsonParam("ifttt","url");
     String ifttt_key = loadJsonParam("ifttt","key");
     String ifttt_event = loadJsonParam("ifttt","event");
@@ -35,7 +31,7 @@ boolean ifttt() {
 
     blinkLed.blue(&led, 100, 1);
 
-    Serial.println("=== IFTTT ===");
+    Serial.println("======= IFTTT =======");
 
     String strPayload;
     strPayload += "POST " + url + " HTTP/1.1\r\n";
@@ -65,13 +61,13 @@ boolean ifttt() {
 }
 
 void handleIFTTT() {
+    String ifttt_key = loadJsonParam("ifttt","key");
+    String ifttt_event = loadJsonParam("ifttt","event");
     String s = "<h2>IFTTT Settings</h2>\n";
     s += "<form method='get' action='setifttt'>\n";
-    s += "<label>IFTTT Key: <input value='" +
-            ABconfigs.getParam(IFTTT_KEY) +
+    s += "<label>IFTTT Key: <input value='" + ifttt_key +
             "' name='KEY' maxlenght='200'></label><br>\n";
-    s += "<br><label>IFTTT Event: <input value='" +
-            ABconfigs.getParam(IFTTT_EVENT) +
+    s += "<br><label>IFTTT Event: <input value='" + ifttt_event +
             "' name='EVENT' maxlenght='200'></label><br>\n";
     s += "<br><br><input type='submit' value='Submit'>\n</form>";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,
@@ -79,9 +75,6 @@ void handleIFTTT() {
 }
 
 void handleSetIFTTT() {
-
-    //ABconfigs.delParam(IFTTT);
-
     String key = urlDecode(WEB_SERVER.arg("KEY"));
     Serial.print("IFTTT Key: ");
     Serial.println(key);
@@ -95,9 +88,8 @@ void handleSetIFTTT() {
     saveJsonConfig("ifttt", "url", "maker.ifttt.com");
     saveJsonConfig("ifttt", "key", key.c_str());
     saveJsonConfig("ifttt", "event", event.c_str());
-    //ABconfigs.setParam(IFTTT, key, event);
+    Serial.println("Done!");
 
-    Serial.println("IFTTT settings write to EEPROM done!");
     String s = "<h1>IFTTT Setup complete.</h1>\n";
     s += "<p>At restart airbutton will try to send data to <br>\n";
     s += "IFTTT event: <b>";

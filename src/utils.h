@@ -43,7 +43,8 @@ float vcc();
 
 //Load and save config file from SPIFF
 boolean printConfig();
-const char * loadJsonParam(const char* service,const char* param);
+boolean loadJsonParam(const char* service);
+const char* loadJsonParam(const char* service,const char* param);
 boolean saveJsonConfig(const char* service, const char* param, const char* config);
 
 #endif // UTILS_H
