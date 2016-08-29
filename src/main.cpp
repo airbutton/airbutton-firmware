@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
-#include <EEPROM.h>
 
 #include "config.h"
 #include "utils.h"
@@ -12,7 +11,7 @@ void setup() {
     //Set GPIO4 to HIGH for retain on APixel board useless on others boards
     pinMode(RETPIN, OUTPUT);
     digitalWrite(RETPIN, HIGH);
-    //Init Serial port and EEPROM
+    //Init Serial port and SPIFFS
     Serial.begin(115200);
     Serial.println();
     SPIFFS.begin();
@@ -21,9 +20,7 @@ void setup() {
     led.begin();
     led.show();
     blinkLed.green(&led, 100, 2);
-    //DEBUG!
-    //ABconfigs.delParam(ALL);
-    //ABconfigs.debugEEPROMrange();
+    //DEBUG config!
     printConfig();
 
     //Try to load saved config
