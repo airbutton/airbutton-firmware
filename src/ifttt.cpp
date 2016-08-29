@@ -65,10 +65,12 @@ void handleIFTTT() {
     String ifttt_event = loadJsonParam("ifttt","event");
     String s = "<h2>IFTTT Settings</h2>\n";
     s += "<form method='get' action='setifttt'>\n";
-    s += "<label>IFTTT Key: <input value='" + ifttt_key +
-            "' name='KEY' maxlenght='200'></label><br>\n";
-    s += "<br><label>IFTTT Event: <input value='" + ifttt_event +
-            "' name='EVENT' maxlenght='200'></label><br>\n";
+    s += "<label>IFTTT Key: <input value='";
+    s += ifttt_key;
+    s += "' name='KEY' maxlenght='200'></label><br>\n";
+    s += "<br><label>IFTTT Event: <input value='";
+    s += ifttt_event;
+    s += "' name='EVENT' maxlenght='200'></label><br>\n";
     s += "<br><br><input type='submit' value='Submit'>\n</form>";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,
                                                "IFTTT Settings", s));
@@ -84,7 +86,7 @@ void handleSetIFTTT() {
     Serial.println(event);
 
     Serial.println("Writing IFTTT Key and event to config.json...");
-    saveJsonConfig("ifttt", "enable", "true");
+    saveJsonConfig("ifttt", "enabled", "true");
     saveJsonConfig("ifttt", "url", "maker.ifttt.com");
     saveJsonConfig("ifttt", "key", key.c_str());
     saveJsonConfig("ifttt", "event", event.c_str());

@@ -46,5 +46,7 @@ boolean printConfig();
 boolean loadJsonParam(const char* service);
 const char* loadJsonParam(const char* service,const char* param);
 boolean saveJsonConfig(const char* service, const char* param, const char* config);
+boolean saveJsonConfig(const char *service, const char *param, boolean status);
+boolean saveJsonConfig(const char *service, boolean status);
 
 #endif // UTILS_H

@@ -13,10 +13,8 @@ void handleNotFound() {
     s += "<p><a href='/wifi'>WiFi</a></p>\n";
     s += "<form method='get' action='reboot'>\n";
     s += "<fieldset>\n<legend>Select services that you want to enable.</legend><br>\n";
-    s += "<p><input type='checkbox' name='ifttt' value='true' " +
-            iftt_status + "/>&nbsp;&nbsp;&nbsp;<a href='/ifttt'>IFTTT</a></p>\n";
-    s += "<p><input type='checkbox' name='custom' value='true' " +
-            custom_status + "/>&nbsp;&nbsp;&nbsp;<a href='/customurl'>Custom URL</a></p><br>\n";
+    s += "<p><input type='checkbox' name='ifttt' value='1' " + iftt_status + "/>&nbsp;&nbsp;&nbsp;<a href='/ifttt'>IFTTT</a></p>\n";
+    s += "<p><input type='checkbox' name='custom' value='1' " + custom_status + "/>&nbsp;&nbsp;&nbsp;<a href='/customurl'>Custom URL</a></p><br>\n";
     s += "<p><input type='submit' value='Submit & Reboot' /></p>\n";
     s += "</fieldset>";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,"Configuration mode", s));
@@ -27,17 +25,18 @@ void handleReboot(){
     s += "<p>Services enabled: <p>\n";
     String ifttt = urlDecode(WEB_SERVER.arg("ifttt"));
     String custom = urlDecode(WEB_SERVER.arg("custom"));
-    if (ifttt.equals("true")){
-        ABconfigs.setService(IFTTT, (boolean) true);
+
+    if (ifttt){
+        saveJsonConfig("ifttt", (boolean) true);
         s += "<p><b>IFTTT</b></p>\n";
     } else {
-        ABconfigs.setService(IFTTT, (boolean) false);
+        saveJsonConfig("ifttt", (boolean) false);
     }
-    if (custom.equals("true")){
-        ABconfigs.setService(CUSTOM, (boolean) true);
+    if (custom){
+        saveJsonConfig("custom", (boolean) true);
         s += "<p><b>Custom URL</b></p>\n";
     } else {
-        ABconfigs.setService(CUSTOM, (boolean) false);
+        saveJsonConfig("custom", (boolean) false);
     }
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,"Rebooting", s));
     Serial.println("Rebooting...");
@@ -62,9 +61,6 @@ void handleWiFi() {
 }
 
 void handleSetWiFi() {
-
-    //ABconfigs.delParam(WIFI);
-
     String ssid = urlDecode(WEB_SERVER.arg("ssid"));
     String dssid = urlDecode(WEB_SERVER.arg("dssid"));
     if (!dssid.equals("")){
@@ -78,12 +74,10 @@ void handleSetWiFi() {
     Serial.println(pass);
 
     Serial.println("Writing SSID and Password to config.json...");
-    saveJsonConfig("wifi","enabled", "true");
+    saveJsonConfig("wifi","enabled", 1);
     saveJsonConfig("wifi","ssid", ssid.c_str());
     saveJsonConfig("wifi","password",pass.c_str());
-    //ABconfigs.setParam(WIFI,ssid,pass);
-
-    Serial.println("WiFi settings write done!");
+    Serial.println("Done!");
     String s = "<h1>Wifi Setup complete.</h1>\n";
     s += "<p>At restart airbutton will try to connected to <b>";
     s += ssid;
