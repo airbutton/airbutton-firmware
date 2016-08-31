@@ -69,6 +69,20 @@ void setup() {
         }
     }
 
+    //Button is connected! try to call MQTT
+    if (loadJsonParam("mqtt")) {
+        for (int i = 0; i < 3; i++) {
+            if (mqtt()) {
+                blinkLed.green(&led, 100, 2);
+                break;
+            } else {
+                int attempt = i + 1;
+                Serial.println("WARNING: MQTT failed! attempt nr "
+                               + String(attempt));
+                blinkLed.red(&led, 100, 2);
+            }
+        }
+    }
     if (APixelBoard) {
         //put retain pin to LOW for power off APixel board
         Serial.println("WARNING: APixel Board power off");

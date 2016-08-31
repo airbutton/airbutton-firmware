@@ -37,10 +37,12 @@ void setupMode() {
     WEB_SERVER.on("/wifi", handleWiFi);
     WEB_SERVER.on("/ifttt", handleIFTTT);
     WEB_SERVER.on("/customurl", handleCustomURL);
+    WEB_SERVER.on("/mqtt",handleMQTT);
 
     WEB_SERVER.on("/setwifi", handleSetWiFi);
     WEB_SERVER.on("/setifttt", handleSetIFTTT);
     WEB_SERVER.on("/setcustomurl", handleSetCustomURL);
+    WEB_SERVER.on("/setmqtt", handleSetMQTT);
 
     WEB_SERVER.on("/reboot", handleReboot);
     WEB_SERVER.on("/img/logo_color_small.png", handleLogo);

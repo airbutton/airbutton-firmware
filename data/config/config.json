@@ -10,5 +10,12 @@
     "enabled": 0,
     "host": "",
     "url": ""
+  },
+  "mqtt": {
+    "enabled":  0,
+    "server": "",
+    "user"  : "",
+    "pass"  : "",
+    "topic" : ""
   }
 }

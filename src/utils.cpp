@@ -160,7 +160,7 @@ boolean loadJsonParam(const char *service) {
     }
     std::unique_ptr<char[]> buf(new char[size]);
     configFile.readBytes(buf.get(), size);
-    StaticJsonBuffer<300> jsonBuffer;
+    StaticJsonBuffer<500> jsonBuffer;
     JsonObject &json = jsonBuffer.parseObject(buf.get());
     if (!json.success()) {
         Serial.println("ERROR: Failed to parse config file (loadJsonParam)");
@@ -186,7 +186,7 @@ const char *loadJsonParam(const char *service, const char *param) {
     }
     std::unique_ptr<char[]> buf(new char[size]);
     configFile.readBytes(buf.get(), size);
-    StaticJsonBuffer<300> jsonBuffer;
+    StaticJsonBuffer<500> jsonBuffer;
     JsonObject &json = jsonBuffer.parseObject(buf.get());
     if (!json.success()) {
         Serial.println("ERROR: Failed to parse config file (loadJsonParam)");
@@ -210,7 +210,7 @@ boolean saveJsonConfig(const char *service, const char *param, const char *confi
     }
     std::unique_ptr<char[]> buf(new char[size]);
     configFile.readBytes(buf.get(), size);
-    StaticJsonBuffer<300> jsonBuffer;
+    StaticJsonBuffer<500> jsonBuffer;
     JsonObject &json = jsonBuffer.parseObject(buf.get());
     if (!json.success()) {
         Serial.println("ERROR: Failed to parse config file (saveJsonConfig)");
@@ -237,7 +237,7 @@ boolean saveJsonConfig(const char *service, const char *param, boolean status) {
     }
     std::unique_ptr<char[]> buf(new char[size]);
     configFile.readBytes(buf.get(), size);
-    StaticJsonBuffer<300> jsonBuffer;
+    StaticJsonBuffer<500> jsonBuffer;
     JsonObject &json = jsonBuffer.parseObject(buf.get());
     if (!json.success()) {
         Serial.println("ERROR: Failed to parse config file (saveJsonConfig)");
