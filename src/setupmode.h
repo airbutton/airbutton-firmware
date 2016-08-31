@@ -13,6 +13,7 @@
 #include "webserver.h"
 #include "ifttt.h"
 #include "customurl.h"
+#include "mqtt.h"
 
 extern uint8_t RETPIN;
 extern boolean setupModeStatus;

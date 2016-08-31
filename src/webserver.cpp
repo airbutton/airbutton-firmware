@@ -1,13 +1,15 @@
 #include "webserver.h"
 
 void handleNotFound() {
-    String iftt_status;
-    String custom_status;
+    String iftt_status,custom_status,mqtt_status;
     if (loadJsonParam("ifttt")) {
         iftt_status = "checked";
     }
     if (loadJsonParam("custom")) {
         custom_status = "checked";
+    }
+    if (loadJsonParam("mqtt")) {
+        mqtt_status = "checked";
     }
     String s = "<h2>Configuration Mode</h2>\n";
     s += "<p><a href='/wifi'>WiFi</a></p>\n";
@@ -17,6 +19,8 @@ void handleNotFound() {
          "/>&nbsp;&nbsp;&nbsp;<a href='/ifttt'>IFTTT</a></p>\n";
     s += "<p><input type='checkbox' name='custom' value='1' " + custom_status +
          "/>&nbsp;&nbsp;&nbsp;<a href='/customurl'>Custom URL</a></p><br>\n";
+    s += "<p><input type='checkbox' name='mqtt' value='1' " + mqtt_status +
+         "/>&nbsp;&nbsp;&nbsp;<a href='/mqtt'>MQTT</a></p><br>\n";
     s += "<p><input type='submit' value='Submit & Reboot' /></p>\n";
     s += "</fieldset>";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE, "Configuration mode", s));
@@ -27,15 +31,21 @@ void handleReboot() {
     s += "<p>Services enabled: <p>\n";
     String ifttt = urlDecode(WEB_SERVER.arg("ifttt"));
     String custom = urlDecode(WEB_SERVER.arg("custom"));
+    String mqtt = urlDecode(WEB_SERVER.arg("mqtt"));
     boolean ifttt_status = ifttt.equals("1");
     saveJsonConfig("ifttt", "enabled", ifttt_status);
     boolean custom_status = custom.equals("1");
     saveJsonConfig("custom", "enabled", custom_status);
+    boolean mqtt_status = mqtt.equals("1");
+    saveJsonConfig("mqtt", "enabled", mqtt_status);
     if (ifttt_status) {
         s += "<p><b>IFTTT</b></p>\n";
     }
     if (custom_status) {
         s += "<p><b>Custom URL</b></p>\n";
+    }
+    if (mqtt_status) {
+        s += "<p><b>MQTT</b></p>\n";
     }
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE, "Rebooting", s));
     Serial.println("Rebooting...");
