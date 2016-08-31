@@ -39,6 +39,14 @@
  script:
      - platformio run
 
+deploy:
+  on:
+repo: gallochri/gallAButton
+all_branches: true
+skip_cleanup: true
+  provider: releases
+overwrite: true
+file: ".pioenvs/nodemcuv2_deploy/firmware.bin"
 
 #
 # Template #2: The project is intended to by used as a library with examples
