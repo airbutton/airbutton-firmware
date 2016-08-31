@@ -11,7 +11,9 @@ boolean mqtt() {
     WiFiClient wclient;
     MQTTClient client;
 
-    //client.begin(mqtt_server.c_str(), wclient);
+    client.begin(mqtt_server.c_str(), wclient);
+    client.subscribe("/example");
+  //  client.connect(mqtt_topic.c_str(),mqtt_user.c_str(),mqtt_pass.c_str());
     // publish a message roughly every second.
     for (int i = 1; i < 10; i++) {
         client.publish("/hello", "world");
@@ -19,6 +21,14 @@ boolean mqtt() {
     }
     Serial.println("\nMQTT message published. Goodbye");
     return (boolean) true;
+}
+
+void messageReceived(String topic, String payload, char * bytes, unsigned int length) {
+    Serial.print("incoming: ");
+    Serial.print(topic);
+    Serial.print(" - ");
+    Serial.print(payload);
+    Serial.println();
 }
 
 void handleMQTT() {
