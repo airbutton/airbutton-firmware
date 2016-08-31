@@ -5,7 +5,7 @@
 #include <ESP8266WiFi.h>
 #include <Adafruit_NeoPixel.h>
 #include <ColorBlink.h>
-#include <MQTTClient.h>
+#include <PubSubClient.h>
 #include "setupmode.h"
 
 extern Adafruit_NeoPixel led;

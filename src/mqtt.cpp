@@ -6,29 +6,38 @@ boolean mqtt() {
     String mqtt_user = loadJsonParam("mqtt", "user");
     String mqtt_pass = loadJsonParam("mqtt", "pass");
     String mqtt_topic = loadJsonParam("mqtt", "topic");
+    mqtt_topic += "/" + DEVICE_TITLE + "/" + CHIP_ID + "/Battery";
 
     // Define the WiFi and MQTT Client
     WiFiClient wclient;
-    MQTTClient client;
+    PubSubClient client(wclient);
 
-    client.begin(mqtt_server.c_str(), wclient);
-    client.subscribe("/example");
-  //  client.connect(mqtt_topic.c_str(),mqtt_user.c_str(),mqtt_pass.c_str());
-    // publish a message roughly every second.
-    for (int i = 1; i < 10; i++) {
-        client.publish("/hello", "world");
-        blinkLed.blue(&led, 100, 1);
+    // Make sure we can connect
+    client.setServer(mqtt_server.c_str(),1883);
+    if (!client.connect(AP_SSID.c_str(),mqtt_user.c_str(),mqtt_pass.c_str())){
+        Serial.println("ERROR: Can't connect to MQTT Broker!");
+        return (boolean) false;
     }
+
+    String payload = String(vcc()) + "V";
+
+    // We check that client can connect or print error message
+    if (client.state() == MQTT_CONNECTED){
+        Serial.println();
+        Serial.println("Client connected!");
+        client.publish(mqtt_topic.c_str(), payload.c_str(), (boolean) true);
+        Serial.print("Sent message ");
+        Serial.println(payload);
+        Serial.print("to topic ");
+        Serial.println(mqtt_topic);
+    } else {
+        Serial.printf("ERROR: client code %d/n", client.state());
+    }
+
+    blinkLed.blue(&led, 100, 1);
+
     Serial.println("\nMQTT message published. Goodbye");
     return (boolean) true;
-}
-
-void messageReceived(String topic, String payload, char * bytes, unsigned int length) {
-    Serial.print("incoming: ");
-    Serial.print(topic);
-    Serial.print(" - ");
-    Serial.print(payload);
-    Serial.println();
 }
 
 void handleMQTT() {
@@ -37,6 +46,7 @@ void handleMQTT() {
     String mqtt_pass = loadJsonParam("mqtt", "pass");
     String mqtt_topic = loadJsonParam("mqtt", "topic");
     String s = "<h2>MQTT Settings</h2>\n";
+    s += "<p>MQTT Client ID: " + AP_SSID + "</p>\n";
     s += "<form method='get' action='setmqtt'>\n";
     s += "<label>MQTT server: <input value='";
     s += mqtt_server;
@@ -47,9 +57,9 @@ void handleMQTT() {
     s += "<label>MQTT user password: <input value='";
     s += mqtt_pass;
     s += "' name='pass' type='password' maxlenght='200'></label><br><br>\n";
-    s += "<label>MQTT topic: <input value='";
-    s += mqtt_topic;
-    s += "' name='topic' maxlenght='200'></label><br><br>\n";
+    s += "<label>MQTT topic: <input placeholder='ES. MyHome/bedroom' value='" + mqtt_topic;
+    s += "' name='topic' maxlenght='200'>/" + DEVICE_TITLE + "/" + CHIP_ID;
+    s += "/Battery</label><br><br>\n";
     s += "<br><br><input type='submit' value='Submit'>\n</form>";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,
                                                "MQTT Settings", s));

@@ -19,6 +19,7 @@ extern uint8_t RETPIN;
 extern boolean setupModeStatus;
 extern IPAddress AP_IP;
 extern String AP_SSID;
+extern String CHIP_ID;
 extern unsigned long startTime;
 extern String SSID_LIST;
 extern String Version;
