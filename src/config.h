@@ -7,7 +7,7 @@
 #include <DNSServer.h>
 #include <ColorBlink.h>
 
-String Version = "v0.7.git";
+String Version = "v0.8.git";
 
 //This for ESP.getVcc()
 ADC_MODE(ADC_VCC)
