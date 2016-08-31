@@ -18,7 +18,7 @@ void handleNotFound() {
     s += "<p><input type='checkbox' name='ifttt' value='1' " + iftt_status +
          "/>&nbsp;&nbsp;&nbsp;<a href='/ifttt'>IFTTT</a></p>\n";
     s += "<p><input type='checkbox' name='custom' value='1' " + custom_status +
-         "/>&nbsp;&nbsp;&nbsp;<a href='/customurl'>Custom URL</a></p><br>\n";
+         "/>&nbsp;&nbsp;&nbsp;<a href='/customurl'>Custom URL</a></p>\n";
     s += "<p><input type='checkbox' name='mqtt' value='1' " + mqtt_status +
          "/>&nbsp;&nbsp;&nbsp;<a href='/mqtt'>MQTT</a></p><br>\n";
     s += "<p><input type='submit' value='Submit & Reboot' /></p>\n";

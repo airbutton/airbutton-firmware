@@ -11,7 +11,7 @@ boolean mqtt() {
     WiFiClient wclient;
     MQTTClient client;
 
-    client.begin("test", wclient, 1);
+    //client.begin(mqtt_server.c_str(), wclient);
     // publish a message roughly every second.
     for (int i = 1; i < 10; i++) {
         client.publish("/hello", "world");
@@ -30,16 +30,16 @@ void handleMQTT() {
     s += "<form method='get' action='setmqtt'>\n";
     s += "<label>MQTT server: <input value='";
     s += mqtt_server;
-    s += "' name='server' maxlenght='200'></label><br>\n";
+    s += "' name='server' maxlenght='200'></label><br><br>\n";
     s += "<label>MQTT user: <input value='";
     s += mqtt_user;
-    s += "' name='user' maxlenght='200'></label><br>\n";
+    s += "' name='user' maxlenght='200'></label><br><br>\n";
     s += "<label>MQTT user password: <input value='";
     s += mqtt_pass;
-    s += "' name='pass' type='password' maxlenght='200'></label><br>\n";
+    s += "' name='pass' type='password' maxlenght='200'></label><br><br>\n";
     s += "<label>MQTT topic: <input value='";
     s += mqtt_topic;
-    s += "' name='topic' maxlenght='200'></label><br>\n";
+    s += "' name='topic' maxlenght='200'></label><br><br>\n";
     s += "<br><br><input type='submit' value='Submit'>\n</form>";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,
                                                "MQTT Settings", s));
