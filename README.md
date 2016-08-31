@@ -1,5 +1,4 @@
-# gallAButton
-
+# gallAButton   [![Build Status](https://travis-ci.org/gallochri/gallAButton.svg?branch=TravisCI)](https://travis-ci.org/gallochri/gallAButton)
 A beautifull IOT button with a cagarissimo name !
 
 [![](http://img.youtube.com/vi/AoWVcrVlDQk/0.jpg)](http://www.youtube.com/watch?v=AoWVcrVlDQk)
