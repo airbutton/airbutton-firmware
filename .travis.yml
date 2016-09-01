@@ -1,73 +1,23 @@
-# Continuous Integration (CI) is the practice, in software
-# engineering, of merging all developer working copies with a shared mainline
-# several times a day < http://docs.platformio.org/en/latest/ci/index.html >
-#
-# Documentation:
-#
-# * Travis CI Embedded Builds with PlatformIO
-#   < https://docs.travis-ci.com/user/integration/platformio/ >
-#
-# * PlatformIO integration with Travis CI
-#   < http://docs.platformio.org/en/latest/ci/travis.html >
-#
-# * User Guide for `platformio ci` command
-#   < http://docs.platformio.org/en/latest/userguide/cmd_ci.html >
-#
-#
-# Please choice one of the following templates (proposed below) and uncomment
-# it (remove "# " before each line) or use own configuration according to the
-# Travis CI documentation (see above).
-#
-
-
-#
-# Template #1: General project. Test it using existing `platformio.ini`.
-#
-
- language: python
- python:
-     - "2.7"
-
- sudo: false
- cache:
-     directories:
-         - "~/.platformio"
-
- install:
-     - pip install -U platformio
-
- script:
-     - platformio run
-
+language: python
+python:
+- '2.7'
+sudo: false
+cache:
+  directories:
+  - "~/.platformio"
+install:
+- pip install -U platformio
+script:
+- platformio run -e esp12e_deploy
 deploy:
   on:
-repo: gallochri/gallAButton
-all_branches: true
-skip_cleanup: true
+    repo: gallochri/gallAButton
+    all_branches: true
+    condition: $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$
+  skip_cleanup: true
   provider: releases
-overwrite: true
-file: ".pioenvs/nodemcuv2_deploy/firmware.bin"
-
-#
-# Template #2: The project is intended to by used as a library with examples
-#
-
-# language: python
-# python:
-#     - "2.7"
-#
-# sudo: false
-# cache:
-#     directories:
-#         - "~/.platformio"
-#
-# env:
-#     - PLATFORMIO_CI_SRC=path/to/test/file.c
-#     - PLATFORMIO_CI_SRC=examples/file.ino
-#     - PLATFORMIO_CI_SRC=path/to/test/directory
-#
-# install:
-#     - pip install -U platformio
-#
-# script:
-#     - platformio ci --lib="." --board=TYPE_1 --board=TYPE_2 --board=TYPE_N
+  overwrite: true
+  api_key:
+    secure: d1RHDOpsrwcpKvgo1vVCSxavQU+UpPuMiwKiHwDGGdQHG2nGwfW4zILXtWYfhncOa43838Za2x0s5CAMFVhyZfBJ3EfiA6m72gH+CU3gQbdEvQ2GOPoONheKajPcHCfNCsdAu0djTYcC6Bbhl2RZf95Hf03VnoF9JCQq1tdVC9w0J9V73zEhll8nqhPoSomowxbbHyauTVfeXWQuXnfc0tWyqpOiKEMtgHbvBg7hfA0z6hElfRxJH2lj+PSHYGe+t7cf+USfIdhkgit9sYFdTcryv2fHyZQqMIQR+T62e8HcyPJW8Ukv7tsSXXvtKSWWJeXYW2PGDsHpZyP/8bjKm61PYQYTbfD9tlUyyiY4r6kzqecftMo++l468qB8mjlp2mgqNOTklzOgKa1GmoKamG3u9hz3Di0kBt00rMdp7/tF3FZq068a6z8i/B11Pa3/+U/+zvZsHLmojKmBDM28eGkPSMfpYJDaBl4Veq3hEWWH6T/zS25Xee6TisYYkukeokXqcMzBykuv6a/kDugsJ8sh6DJIvEtrR0Sve+guIWq9JSvTFa7w8r42xVAP82ZUpR86CZgJ6JWdJpRWS1fJaz7rne9oXjZbUAOXxOtIGqSinRAFPSAS/1B4/jLtrrU6x9Rm1lVempIM5PPwO+T5ErLAluai1ypCx+PgnGGTJiY=
+  file: ".pioenvs/esp12e_deploy/firmware.elf"
+  file: ".pioenvs/esp12e_deploy/spiffs.bin"
