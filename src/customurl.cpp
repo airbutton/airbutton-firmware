@@ -59,7 +59,7 @@ void handleCustomURL() {
     String custom_host = loadJsonParam("custom", "host");
     String custom_url = loadJsonParam("custom", "url");
     String s = "<h2>Custom URL Settings</h2>\n";
-    s += "<form method='get' action='setcustomurl'>\n";
+    s += "<form method='get' action='setcustomurl.html'>\n";
     s += "<label>Host: <input value='";
     s += custom_host;
     s += "' name='HOST' maxlenght='200'></label><br>\n";

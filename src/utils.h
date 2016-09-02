@@ -49,4 +49,6 @@ boolean saveJsonConfig(const char *service, const char *param, const char *confi
 
 boolean saveJsonConfig(const char *service, const char *param, boolean status);
 
+void debugSPIFFS();
+
 #endif // UTILS_H

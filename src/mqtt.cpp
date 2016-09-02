@@ -47,20 +47,20 @@ void handleMQTT() {
     String mqtt_topic = loadJsonParam("mqtt", "topic");
     String s = "<h2>MQTT Settings</h2>\n";
     s += "<p>MQTT Client ID: " + AP_SSID + "</p>\n";
-    s += "<form method='get' action='setmqtt'>\n";
-    s += "<label>MQTT server: <input value='";
+    s += "<form method='get' action='setmqtt.html'>\n";
+    s += "<label>MQTT server: <input placeholder='IP or hostname' value='";
     s += mqtt_server;
     s += "' name='server' maxlenght='200'></label><br><br>\n";
-    s += "<label>MQTT user: <input value='";
+    s += "<label>MQTT user: <input placeholder='Username (optional)' value='";
     s += mqtt_user;
     s += "' name='user' maxlenght='200'></label><br><br>\n";
-    s += "<label>MQTT user password: <input value='";
+    s += "<label>MQTT password: <input placeholder='User password (optional)' value='";
     s += mqtt_pass;
-    s += "' name='pass' type='password' maxlenght='200'></label><br><br>\n";
+    s += "' name='pass' maxlenght='200'></label><br><br>\n";
     s += "<label>MQTT topic: <input placeholder='ES. MyHome/bedroom' value='" + mqtt_topic;
     s += "' name='topic' maxlenght='200'>/" + DEVICE_TITLE + "/" + CHIP_ID;
     s += "/Battery</label><br><br>\n";
-    s += "<br><br><input type='submit' value='Submit'>\n</form>";
+    s += "<br><br><input type='submit' value='Submit'>\n</form>\n";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE,
                                                "MQTT Settings", s));
 }

@@ -1,0 +1,78 @@
+*, *:before, *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+html {
+    font-size: 100%;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%
+}
+
+html, button, input, select, textarea {
+    font-family: sans-serif
+}
+
+article, aside, details, figcaption, figure, footer, header, main, nav, section, summary {
+    display: block
+}
+
+body, form, fieldset, legend, input, select, textarea, button {
+    margin: 0
+}
+
+audio, canvas, progress, video {
+    display: inline-block;
+    vertical-align: baseline
+}
+
+audio:not([controls]) {
+    display: none;
+    height: 0
+}
+
+[hidden], template {
+    display: none
+}
+
+img {
+    border: 0
+}
+
+svg:not(:root) {
+    overflow: hidden
+}
+
+body {
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 22px;
+    color: #585858;
+    font-weight: 400;
+    background: #fff
+}
+
+p {
+    margin: 0 0 1em 0
+}
+
+a {
+    color: #cd5c5c;
+    background: transparent;
+    text-decoration: underline
+}
+
+a:active, a:hover {
+    outline: 0;
+    text-decoration: none
+}
+
+strong {
+    font-weight: 700
+}
+
+em {
+    font-style: italic
+}
+
