@@ -19,8 +19,9 @@ void setup() {
     led.begin();
     led.show();
     blinkLed.green(&led, 100, 2);
-    //DEBUG config!
-    printConfig();
+    //DEBUG!
+    //printConfig();
+    //debugSPIFFS();
 
     //Try to load saved config
     if (!loadWiFiSavedConfig()) {

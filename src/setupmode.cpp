@@ -33,19 +33,22 @@ void setupMode() {
     blinkLed.violet(&led, 100, 2);
 
     // Settings Page
+    WEB_SERVER.on("/wifi.html", handleWiFi);
+    WEB_SERVER.on("/ifttt.html", handleIFTTT);
+    WEB_SERVER.on("/customurl.html", handleCustomURL);
+    WEB_SERVER.on("/mqtt.html",handleMQTT);
+
+    WEB_SERVER.on("/setwifi.html", handleSetWiFi);
+    WEB_SERVER.on("/setifttt.html", handleSetIFTTT);
+    WEB_SERVER.on("/setcustomurl.html", handleSetCustomURL);
+    WEB_SERVER.on("/setmqtt.html", handleSetMQTT);
+
+    WEB_SERVER.on("/reboot.html", handleReboot);
+    WEB_SERVER.serveStatic("/css/basic.css",SPIFFS,"/css/basic.css");
+    WEB_SERVER.serveStatic("/css/custom.css",SPIFFS,"/css/custom.css");
+    WEB_SERVER.serveStatic("/css/simple.css",SPIFFS,"/css/simple.css");
+    WEB_SERVER.serveStatic("/img/logo_color_small.png",SPIFFS,"/img/logo_color_small.png");
     WEB_SERVER.onNotFound(handleNotFound);
-    WEB_SERVER.on("/wifi", handleWiFi);
-    WEB_SERVER.on("/ifttt", handleIFTTT);
-    WEB_SERVER.on("/customurl", handleCustomURL);
-    WEB_SERVER.on("/mqtt",handleMQTT);
-
-    WEB_SERVER.on("/setwifi", handleSetWiFi);
-    WEB_SERVER.on("/setifttt", handleSetIFTTT);
-    WEB_SERVER.on("/setcustomurl", handleSetCustomURL);
-    WEB_SERVER.on("/setmqtt", handleSetMQTT);
-
-    WEB_SERVER.on("/reboot", handleReboot);
-    WEB_SERVER.on("/img/logo_color_small.png", handleLogo);
     WEB_SERVER.begin();
     MDNS.addService("http", "tcp", 80);
     startTime = millis();

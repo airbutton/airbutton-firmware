@@ -12,17 +12,17 @@ void handleNotFound() {
         mqtt_status = "checked";
     }
     String s = "<h2>Configuration Mode</h2>\n";
-    s += "<p><a href='/wifi'>WiFi</a></p>\n";
-    s += "<form method='get' action='reboot'>\n";
-    s += "<fieldset>\n<legend>Select services that you want to enable.</legend><br>\n";
-    s += "<p><input type='checkbox' name='ifttt' value='1' " + iftt_status +
-         "/>&nbsp;&nbsp;&nbsp;<a href='/ifttt'>IFTTT</a></p>\n";
-    s += "<p><input type='checkbox' name='custom' value='1' " + custom_status +
-         "/>&nbsp;&nbsp;&nbsp;<a href='/customurl'>Custom URL</a></p>\n";
-    s += "<p><input type='checkbox' name='mqtt' value='1' " + mqtt_status +
-         "/>&nbsp;&nbsp;&nbsp;<a href='/mqtt'>MQTT</a></p><br>\n";
+    s += "<p><a href='wifi.html'>WiFi</a></p>\n";
+    s += "<form method='get' action='reboot.html'>\n";
+    s += "<fieldset>\n<legend>Select services that you want to enable.</legend>\n<br>\n";
+    s += "<p><input type='checkbox' name='ifttt' value='1' title='IFTTT'" + iftt_status +
+         "/>&nbsp;&nbsp;&nbsp;<a href='ifttt.html'>IFTTT</a></p>\n";
+    s += "<p><input type='checkbox' name='custom' value='1' title='customurl' " + custom_status +
+         "/>&nbsp;&nbsp;&nbsp;<a href='customurl.html'>Custom URL</a></p>\n";
+    s += "<p><input type='checkbox' name='mqtt' value='1' title='mqtt' " + mqtt_status +
+         "/>&nbsp;&nbsp;&nbsp;<a href='mqtt.html'>MQTT</a></p>\n<br>\n";
     s += "<p><input type='submit' value='Submit & Reboot' /></p>\n";
-    s += "</fieldset>";
+    s += "</fieldset>\n</form>\n";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE, "Configuration mode", s));
 }
 
@@ -59,8 +59,8 @@ void handleWiFi() {
     String s = "<h2>Wi-Fi Settings</h2>\n";
     s += "<p>Please select an SSID from the list or add your own.</p>\n";
     s += "<p>Enter the password and submit.</p>\n";
-    s += "<form method='get' action='setwifi'>\n";
-    s += "<label>SSID: </label>\n<select name='ssid'>";
+    s += "<form method='get' action='setwifi.html'>\n";
+    s += "<label>SSID: </label>\n<select name='ssid' title='ssid'>";
     s += SSID_LIST;
     s += "\n</select>\n";
     s += "<br><label>or</label>\n<input name='dssid' maxlength='32' placeholder='SSID'/>\n";
@@ -95,11 +95,4 @@ void handleSetWiFi() {
     s += "</b> as password.\n";
     s += "<br><a href='/'>Back</a></p>";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE, "Write Wi-Fi Settings", s));
-}
-
-void handleLogo() {
-    SPIFFS.begin();
-    File file = SPIFFS.open("/img/logo_color_small.png", "r");
-    WEB_SERVER.streamFile(file, "image/png");
-    file.close();
 }

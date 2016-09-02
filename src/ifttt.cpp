@@ -64,7 +64,7 @@ void handleIFTTT() {
     String ifttt_key = loadJsonParam("ifttt", "key");
     String ifttt_event = loadJsonParam("ifttt", "event");
     String s = "<h2>IFTTT Settings</h2>\n";
-    s += "<form method='get' action='setifttt'>\n";
+    s += "<form method='get' action='setifttt.html'>\n";
     s += "<label>IFTTT Key: <input value='";
     s += ifttt_key;
     s += "' name='KEY' maxlenght='200'></label><br>\n";
