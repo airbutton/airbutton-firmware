@@ -1,8 +1,8 @@
 .pioenvs
-CMakeListsPrivate.txt
 .clang_complete
 .gcc-flags.json
-CMakeLists.txt
+CMakeListsPrivate.txt
+CMakeLists.tx
 .cproject
 .directory
 gallAButton.pro
