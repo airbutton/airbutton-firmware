@@ -21,23 +21,29 @@ void handleNotFound() {
          "/>&nbsp;&nbsp;&nbsp;<a href='customurl.html'>Custom URL</a></p>\n";
     s += "<p><input type='checkbox' name='mqtt' value='1' title='mqtt' " + mqtt_status +
          "/>&nbsp;&nbsp;&nbsp;<a href='mqtt.html'>MQTT</a></p>\n<br>\n";
-    s += "<p><input type='submit' value='Submit & Reboot' /></p>\n";
+    s += "<p><input type='submit' value='Submit' /></p>\n";
     s += "</fieldset>\n</form>\n";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE, "Configuration mode", s));
 }
 
 void handleReboot() {
-    String s = "<h2>Rebooting!</h2>\n";
+    String s = "<h2>Summary</h2>\n";
     s += "<p>Services enabled: <p>\n";
     String ifttt = urlDecode(WEB_SERVER.arg("ifttt"));
     String custom = urlDecode(WEB_SERVER.arg("custom"));
     String mqtt = urlDecode(WEB_SERVER.arg("mqtt"));
+    String reboot = urlDecode(WEB_SERVER.arg("reboot"));
     boolean ifttt_status = ifttt.equals("1");
     saveJsonConfig("ifttt", "enabled", ifttt_status);
     boolean custom_status = custom.equals("1");
     saveJsonConfig("custom", "enabled", custom_status);
     boolean mqtt_status = mqtt.equals("1");
     saveJsonConfig("mqtt", "enabled", mqtt_status);
+    boolean rebootnow = reboot.equals("Reboot Now!");
+    if (rebootnow){
+        Serial.println("Rebooting...");
+        ESP.restart();
+    }
     if (ifttt_status) {
         s += "<p><b>IFTTT</b></p>\n";
     }
@@ -47,11 +53,10 @@ void handleReboot() {
     if (mqtt_status) {
         s += "<p><b>MQTT</b></p>\n";
     }
+    s +="<form method='get' action='reboot.html'>\n";
+    s +="<input type='submit' name='reboot' value='Reboot Now!'>\n";
+    s +="</form>";
     WEB_SERVER.send(200, "text/html", makePage(DEVICE_TITLE, "Rebooting", s));
-    Serial.println("Rebooting...");
-    WiFi.mode(WIFI_OFF);
-    delay(3000);
-    ESP.restart();
     //NOTE only the first time after flash Reboot will stuck the chip
 }
 
