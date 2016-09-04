@@ -6,6 +6,7 @@ cache:
   directories:
   - "~/.platformio"
 install:
+- ls -l ..
 - pip install -U platformio
 script:
 - ls -lisah ~/.platformio/packages/
