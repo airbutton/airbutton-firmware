@@ -9,6 +9,7 @@ install:
 - pip install -U platformio
 script:
 - platformio run -e esp12e_deploy
+- ~/.platformio/packages/tool-mkspiffs/mkspiffs -c data -p 256 -b 8192 -s 1028096 .pioenvs/esp12e_deploy/spiffs.bin
 
 deploy:
   on:
@@ -20,4 +21,6 @@ deploy:
   overwrite: true
   api_key:
     secure: d1RHDOpsrwcpKvgo1vVCSxavQU+UpPuMiwKiHwDGGdQHG2nGwfW4zILXtWYfhncOa43838Za2x0s5CAMFVhyZfBJ3EfiA6m72gH+CU3gQbdEvQ2GOPoONheKajPcHCfNCsdAu0djTYcC6Bbhl2RZf95Hf03VnoF9JCQq1tdVC9w0J9V73zEhll8nqhPoSomowxbbHyauTVfeXWQuXnfc0tWyqpOiKEMtgHbvBg7hfA0z6hElfRxJH2lj+PSHYGe+t7cf+USfIdhkgit9sYFdTcryv2fHyZQqMIQR+T62e8HcyPJW8Ukv7tsSXXvtKSWWJeXYW2PGDsHpZyP/8bjKm61PYQYTbfD9tlUyyiY4r6kzqecftMo++l468qB8mjlp2mgqNOTklzOgKa1GmoKamG3u9hz3Di0kBt00rMdp7/tF3FZq068a6z8i/B11Pa3/+U/+zvZsHLmojKmBDM28eGkPSMfpYJDaBl4Veq3hEWWH6T/zS25Xee6TisYYkukeokXqcMzBykuv6a/kDugsJ8sh6DJIvEtrR0Sve+guIWq9JSvTFa7w8r42xVAP82ZUpR86CZgJ6JWdJpRWS1fJaz7rne9oXjZbUAOXxOtIGqSinRAFPSAS/1B4/jLtrrU6x9Rm1lVempIM5PPwO+T5ErLAluai1ypCx+PgnGGTJiY=
-  file: ".pioenvs/esp12e_deploy/firmware.elf"
+  file:
+  - ".pioenvs/esp12e_deploy/firmware.elf"
+  - ".pioenvs/esp12e/spiffs.bin"
