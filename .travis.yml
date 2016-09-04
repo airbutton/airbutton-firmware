@@ -6,10 +6,9 @@ cache:
   directories:
   - "~/.platformio"
 install:
+- pip install -U setuptools pip
 - pip install -U platformio
 script:
-- ls -l ..
-- ls -l
 - ls -lisah ~/.platformio/packages/
 - platformio run -e esp12e_deploy
 - ~/.platformio/packages/tool-mkspiffs/mkspiffs -c data -p 256 -b 8192 -s 1028096 .pioenvs/esp12e_deploy/spiffs.bin
