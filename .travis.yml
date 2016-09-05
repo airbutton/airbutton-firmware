@@ -8,6 +8,8 @@ cache:
 install:
 - pip install -U setuptools pip
 - pip install -U platformio
+- git clone https://github.com/igrr/mkspiffs.git
+- mv mkspiffs ~/.platformio/packages/tool-mkspiffs/
 script:
 - ls -lisah ~/.platformio/packages/
 - platformio run -e esp12e_deploy
