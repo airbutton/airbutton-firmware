@@ -13,3 +13,4 @@ gallAButton.pro.user
 .project
 .settings/
 src/utils.h.gch
+.piolibdeps
