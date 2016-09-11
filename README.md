@@ -1,8 +1,6 @@
-# gallAButton
+# Airbutton
 
-[![Build Status](https://travis-ci.org/gallochri/gallAButton.svg?branch=master)](https://travis-ci.org/gallochri/gallAButton)
-
-A beautifull IOT button with a cagarissimo name !
+[![Build Status](https://travis-ci.org/gallochri/gallAButton.svg?branch=master)](https://travis-ci.org/airbutton/airbutton-firmware)
 
 [![](http://img.youtube.com/vi/AoWVcrVlDQk/0.jpg)](http://www.youtube.com/watch?v=AoWVcrVlDQk)
 
@@ -13,18 +11,18 @@ Getting Started with QT Creator
 **Install Platformio CLI and QTCreator**
 
 ```
-$ git clone https://github.com/gallochri/gallAButton.git
+$ git clone https://github.com/airbutton/airbutton-firmware.git
 
-$ cd gallAButton
+$ cd airbutton-firmware
 
 $ platformio init --ide qtcreator
 
-$ mv platformio.pro gallAButton.pro
+$ mv platformio.pro airbutton.pro
 ````
 
 **Open QTCreator**
 
-Click on File -> Open File or Project -> (select gallAButton.pro) -> Configure Project
+Click on File -> Open File or Project -> (select airbutton.pro) -> Configure Project
 
 (Left panel) Projects ->
 
